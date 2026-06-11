@@ -618,6 +618,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
             <div class="fg"><label>Vincular projeto</label><select id="ep-proj"><option value="">— Nenhum —</option></select></div>
           </div>
           <div class="fr s"><div class="fg"><label>URL foto</label><input type="url" id="ep-ft" placeholder="https://…"></div></div>
+          <label style="display:flex;gap:8px;font-size:13px;margin:4px 0 10px;align-items:center;cursor:pointer"><input type="checkbox" id="ep-loja"> 🛍 Publicar na vitrine da loja</label>
           <div class="fr s"><div class="fg"><label>Obs</label><textarea id="ep-o" rows="2"></textarea></div></div>
         </div>
       </div>
@@ -682,6 +683,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
             <div id="pr-sug" style="display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;margin-top:4px;flex-wrap:wrap"></div>
           </div>
           <label style="display:flex;gap:8px;font-size:13px;margin-top:10px;align-items:center;cursor:pointer"><input type="checkbox" id="pr-baixa" checked> Dar baixa dos materiais no estoque</label>
+          <label style="display:flex;gap:8px;font-size:13px;margin-top:6px;align-items:center;cursor:pointer"><input type="checkbox" id="pr-loja" checked> 🛍 Publicar na vitrine da loja ao concluir</label>
         </div></div>
         <button class="bsv" onclick="prodConcluir()">✓ Concluir produção</button>
       </div>
@@ -708,6 +710,10 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
     <div class="cb"><p style="font-size:12px;color:#aaa;margin-bottom:10px">A fase ativa é definida pela data de início. Metas aparecem no painel.</p><div id="cfg-fases"></div></div></div>
   <div class="card"><div class="ch"><h2>👜 Modelos do catálogo</h2><button class="ba" style="margin:0;padding:5px 12px;font-size:12px" onclick="addModelo()">+ Modelo</button></div>
     <div class="cb" id="cfg-modelos"></div></div>
+  <div class="card"><div class="ch"><h2>🛍 Loja (vitrine pública)</h2></div><div class="cb">
+    <div class="fg"><label>WhatsApp da loja (só números, com DDD — ex.: 51999998888)</label><input type="tel" id="cfg-whats" placeholder="51999998888" oninput="CFG.whats=this.value"></div>
+    <p style="font-size:12px;color:#888;margin-top:8px">Produtos marcados com 🛍 aparecem automaticamente em <a href="loja.html" target="_blank" style="color:var(--rose);font-weight:700">sua loja pública</a> — compartilhe esse link com clientes. O botão de compra abre o seu WhatsApp com a mensagem pronta.</p>
+  </div></div>
   <button class="bsv" onclick="salvarConfig()">Salvar configurações</button>
   <div class="card" style="margin-top:1rem"><div class="ch"><h2>💾 Backup dos dados</h2></div><div class="cb">
     <p style="font-size:13px;color:#888;margin-bottom:10px">Exporte todos os seus dados em um arquivo JSON ou restaure de um backup anterior.</p>
@@ -747,7 +753,8 @@ const CFG_PADRAO={
     {nome:'Primeiras Vendas',emoji:'🌱',inicio:'2026-09-01',meta_v:10,meta_r:3000,desc:'Validar, feedback, 10 vendas'},
     {nome:'Crescimento',emoji:'🚀',inicio:'2026-12-01',meta_v:40,meta_r:15000,desc:'Marca, ticket alto, recorrência'}
   ],
-  modelos:[{nome:'Flora',desc:'Crochê floral'},{nome:'Jolie',desc:'Elegante dia a dia'},{nome:'Mini Bag Lis',desc:'Compacta premium'},{nome:'Duquesa',desc:'Sofisticada noite'},{nome:'Bali',desc:'Macramê boho'}]
+  modelos:[{nome:'Flora',desc:'Crochê floral'},{nome:'Jolie',desc:'Elegante dia a dia'},{nome:'Mini Bag Lis',desc:'Compacta premium'},{nome:'Duquesa',desc:'Sofisticada noite'},{nome:'Bali',desc:'Macramê boho'}],
+  whats:''
 };
 let CFG=JSON.parse(JSON.stringify(CFG_PADRAO));
 async function carregarConfig(){
@@ -757,6 +764,7 @@ async function carregarConfig(){
       if(Array.isArray(d.taxas)&&d.taxas.length)CFG.taxas=d.taxas;
       if(Array.isArray(d.fases)&&d.fases.length)CFG.fases=d.fases;
       if(Array.isArray(d.modelos))CFG.modelos=d.modelos;
+      if(typeof d.whats==='string')CFG.whats=d.whats;
     }
   }catch(e){console.warn('config:',e);}
   aplicarConfig();
@@ -781,6 +789,7 @@ auth.onAuthStateChanged(async u=>{
   const ab=document.getElementById('adm-view');if(ab)ab.style.display='none';
   try{await migrarSeNecessario();}catch(e){console.warn('migração:',e);}
   await carregarConfig();
+  await initVitrineCache();
   startListeners();
   carregarContasAdmin();
 });
@@ -813,9 +822,36 @@ async function trocarConta(uid){
   }
   document.getElementById('lov').style.display='flex';
   CFG=JSON.parse(JSON.stringify(CFG_PADRAO));
+  _vitCache={};
   await carregarConfig();
+  await initVitrineCache();
   startListeners();
   toast(propria?'✓ De volta à sua conta':'👁 Gerenciando outra conta');
+}
+// ══ VITRINE (loja pública) ══
+let _vitCache={};
+async function initVitrineCache(){
+  _vitCache={};
+  try{const s=await db.collection('vitrine').where('uid','==',_uid).get();s.docs.forEach(d=>{_vitCache[d.id]=null;});}catch(e){}
+}
+function sincronizarVitrine(){
+  if(!_uid)return;
+  const pub={};
+  _E.filter(e=>e.tipo==='produto'&&e.naLoja&&e.status==='disponivel'&&(e.qty||0)>0).forEach(p=>{
+    pub[_uid+'_'+p._id]={uid:_uid,nome:p.nome||'',preco:p.preco||0,foto:p.foto||'',colecao:p.colecao||'',obs:p.obs||'',qty:p.qty||1,whats:(CFG.whats||'').replace(/\D/g,'')};
+  });
+  const ops=[];
+  Object.entries(pub).forEach(([id,d])=>{const j=JSON.stringify(d);if(_vitCache[id]!==j)ops.push(['set',id,d,j]);});
+  Object.keys(_vitCache).forEach(id=>{if(!pub[id])ops.push(['del',id]);});
+  if(!ops.length)return;
+  const batch=db.batch();
+  ops.forEach(o=>{const ref=db.collection('vitrine').doc(o[1]);if(o[0]==='set')batch.set(ref,{...o[2],updated_at:firebase.firestore.FieldValue.serverTimestamp()});else batch.delete(ref);});
+  batch.commit().then(()=>{ops.forEach(o=>{if(o[0]==='set')_vitCache[o[1]]=o[3];else delete _vitCache[o[1]];});}).catch(()=>{});
+}
+async function publicarProd(id){
+  const p=_E.find(x=>x._id===id);if(!p)return;
+  if(!p.naLoja&&!(CFG.whats||'').replace(/\D/g,'')){toast('Antes, informe o WhatsApp da loja em Ajustes.');aba('config');return;}
+  try{await COL.est.doc(id).update({naLoja:!p.naLoja});toast(p.naLoja?'Removido da loja.':'✓ Publicado na loja!');}catch(e){toast('❌ Erro.');}
 }
 function startListeners(){
   _unsubs.forEach(f=>f());_unsubs=[];_loaded=0;
@@ -823,7 +859,7 @@ function startListeners(){
   _unsubs.push(COL.proj.orderBy('created_at','desc').onSnapshot(s=>{_P=s.docs.map(d=>({...d.data(),_id:d.id}));renderLista();renderDropdowns();renderDash();renderPlano();renderDRE();renderPendencias();renderGrafico();chk();sync(true);},()=>{sync(false);chk();}));
   _unsubs.push(COL.hist.orderBy('created_at','desc').onSnapshot(s=>{_H=s.docs.map(d=>({...d.data(),_id:d.id}));renderHist();renderDash();renderPlano();renderDRE();renderPendencias();renderGrafico();chk();sync(true);},()=>{sync(false);chk();}));
   _unsubs.push(COL.trans.orderBy('created_at','desc').onSnapshot(s=>{_T=s.docs.map(d=>({...d.data(),_id:d.id}));renderDash();renderPlano();renderExtrato();renderFase();chk();sync(true);},()=>{sync(false);chk();}));
-  _unsubs.push(COL.est.orderBy('nome').onSnapshot(s=>{_E=s.docs.map(d=>({...d.data(),_id:d.id}));renderEst();renderDash();renderPlano();renderDRE();renderPendencias();renderGrafico();chk();sync(true);},()=>{sync(false);chk();}));
+  _unsubs.push(COL.est.orderBy('nome').onSnapshot(s=>{_E=s.docs.map(d=>({...d.data(),_id:d.id}));renderEst();renderDash();renderPlano();renderDRE();renderPendencias();renderGrafico();try{sincronizarVitrine();}catch(e){}chk();sync(true);},()=>{sync(false);chk();}));
 }
 // Migra os dados da versão antiga (coleções na raiz) para a conta do usuário — roda 1x.
 async function migrarSeNecessario(){
@@ -1437,7 +1473,7 @@ function calcProj(id,nome){document.getElementById('nm-pc').value=nome;document.
 async function delProj(id){const p=_P.find(x=>(x.id||x._id)===id);if(!p||!confirm(`Excluir "${p.nome}"?`))return;try{await COL.proj.doc(id).delete();}catch(e){toast('❌ Erro.');}}
 
 // ══ CAIXA ══
-let _mc=new Date().getMonth(),_ac=new Date().getFullYear(),_fil='todos',_tipoCx='venda',_editCx=null;
+let _mc=new Date().getMonth(),_ac=new Date().getFullYear(),_fil='todos',_tipoCx='venda',_editCx=null,_vendaProdId=null;
 function mudarMes(d){_mc+=d;if(_mc>11){_mc=0;_ac++;}if(_mc<0){_mc=11;_ac--;}document.getElementById('mes-lbl').textContent=MN[_mc]+' '+_ac;renderDash();renderDRE();renderExtrato();}
 function setFil(f){_fil=f;['t','v','d'].forEach(x=>document.getElementById('fb-'+x).classList.toggle('active',x===f[0]));renderExtrato();}
 function renderExtrato(){
@@ -1463,7 +1499,7 @@ function renderExtrato(){
   </div>`).join('');
 }
 function mostrarFormCaixa(id){
-  _editCx=id;
+  _editCx=id;_vendaProdId=null;
   document.getElementById('cx-tit').textContent=id?'Editar':'Nova transação';
   document.getElementById('c-dt').value=new Date().toISOString().split('T')[0];
   ['c-val','c-desc','c-obs','c-cst','c-cli'].forEach(i=>{const el=document.getElementById(i);if(el)el.value='';});
@@ -1495,7 +1531,19 @@ async function salvarTrans(){
   const pId=_tipoCx==='venda'?(selP.value||null):null;
   const pNome=pId?(selP.options[selP.selectedIndex]?.text||null):null;
   const t={tipo:_tipoCx,valor:val,dataIso:dIso,data:dIso?new Date(dIso+'T12:00:00').toLocaleDateString('pt-BR'):'',descricao:document.getElementById('c-desc').value,obs:document.getElementById('c-obs').value,projetoId:pId,projetoNome:pNome,...(_tipoCx==='venda'?{plataforma:document.getElementById('c-plat').value,formaPagamento:document.getElementById('c-pag').value,status:document.getElementById('c-sta').value,custoPeca:parseFloat(document.getElementById('c-cst').value)||0,cliente:document.getElementById('c-cli').value}:{categoria:document.getElementById('c-cat').value,formaPagamento:document.getElementById('c-pagd').value,status:'pago'}),created_at:_editCx?(_T.find(x=>x._id===_editCx)?.created_at||firebase.firestore.FieldValue.serverTimestamp()):firebase.firestore.FieldValue.serverTimestamp()};
-  try{if(_editCx)await COL.trans.doc(_editCx).set(t);else await COL.trans.add(t);voltarCaixa();toast('✓ Salvo!');}catch(e){toast('❌ Erro: '+e.message);}
+  try{
+    if(_editCx)await COL.trans.doc(_editCx).set(t);else await COL.trans.add(t);
+    // baixa automática do produto pronto vendido
+    if(_tipoCx==='venda'&&_vendaProdId&&!_editCx){
+      const pr=_E.find(x=>x._id===_vendaProdId);
+      if(pr){
+        const nq=Math.max(0,(pr.qty||1)-1);
+        try{await COL.est.doc(_vendaProdId).update(nq>0?{qty:nq}:{qty:0,status:'vendido',naLoja:false});}catch(e2){}
+      }
+      _vendaProdId=null;
+    }
+    voltarCaixa();toast('✓ Salvo!');
+  }catch(e){toast('❌ Erro: '+e.message);}
 }
 async function delTrans(id){if(!confirm('Excluir?'))return;try{await COL.trans.doc(id).delete();}catch(e){toast('❌ Erro.');}}
 
@@ -1514,7 +1562,8 @@ function mostrarFormEst(id,tipo){
   ['ep-n','ep-col','ep-o','ep-ft'].forEach(i=>{const el=document.getElementById(i);if(el)el.value='';});
   ['ep-c','ep-p'].forEach(i=>{const el=document.getElementById(i);if(el)el.value='';});
   const epq=document.getElementById('ep-q');if(epq)epq.value='1';
-  if(id){const item=_E.find(x=>x._id===id);if(item&&item.tipo==='material'){document.getElementById('em-n').value=item.nome||'';document.getElementById('em-cat').value=item.categoria||'Fio de malha';document.getElementById('em-u').value=item.und||'un';document.getElementById('em-q').value=item.qty||0;document.getElementById('em-qm').value=item.qtyMin||0;document.getElementById('em-c').value=item.custo||0;document.getElementById('em-f').value=item.fornecedor||'';document.getElementById('em-uc').value=item.ultimaCompra||'';document.getElementById('em-obs').value=item.obs||'';}if(item&&item.tipo==='produto'){document.getElementById('ep-n').value=item.nome||'';document.getElementById('ep-col').value=item.colecao||'';document.getElementById('ep-s').value=item.status||'disponivel';document.getElementById('ep-c').value=item.custo||0;document.getElementById('ep-p').value=item.preco||0;document.getElementById('ep-q').value=item.qty||1;document.getElementById('ep-plat').value=item.plataforma||'WhatsApp / Direto';document.getElementById('ep-proj').value=item.projetoId||'';document.getElementById('ep-ft').value=item.foto||'';document.getElementById('ep-o').value=item.obs||'';}}
+  if(id){const item=_E.find(x=>x._id===id);if(item&&item.tipo==='material'){document.getElementById('em-n').value=item.nome||'';document.getElementById('em-cat').value=item.categoria||'Fio de malha';document.getElementById('em-u').value=item.und||'un';document.getElementById('em-q').value=item.qty||0;document.getElementById('em-qm').value=item.qtyMin||0;document.getElementById('em-c').value=item.custo||0;document.getElementById('em-f').value=item.fornecedor||'';document.getElementById('em-uc').value=item.ultimaCompra||'';document.getElementById('em-obs').value=item.obs||'';}if(item&&item.tipo==='produto'){document.getElementById('ep-n').value=item.nome||'';document.getElementById('ep-col').value=item.colecao||'';document.getElementById('ep-s').value=item.status||'disponivel';document.getElementById('ep-c').value=item.custo||0;document.getElementById('ep-p').value=item.preco||0;document.getElementById('ep-q').value=item.qty||1;document.getElementById('ep-plat').value=item.plataforma||'WhatsApp / Direto';document.getElementById('ep-proj').value=item.projetoId||'';document.getElementById('ep-ft').value=item.foto||'';document.getElementById('ep-o').value=item.obs||'';const epl=document.getElementById('ep-loja');if(epl)epl.checked=!!item.naLoja;}}
+  if(!id){const epl=document.getElementById('ep-loja');if(epl)epl.checked=false;}
   svEst('form');
 }
 async function salvarEst(){
@@ -1525,7 +1574,7 @@ async function salvarEst(){
   }else{
     const nome=document.getElementById('ep-n').value.trim();if(!nome){alert('Informe o nome.');return;}
     const selP=document.getElementById('ep-proj');
-    item={tipo:'produto',nome,colecao:document.getElementById('ep-col').value,status:document.getElementById('ep-s').value,custo:parseFloat(document.getElementById('ep-c').value)||0,preco:parseFloat(document.getElementById('ep-p').value)||0,qty:parseInt(document.getElementById('ep-q').value)||1,plataforma:document.getElementById('ep-plat').value,projetoId:selP.value||null,projetoNome:selP.value?(selP.options[selP.selectedIndex]?.text||null):null,foto:document.getElementById('ep-ft').value,obs:document.getElementById('ep-o').value,created_at:_editEst?(_E.find(x=>x._id===_editEst)?.created_at||firebase.firestore.FieldValue.serverTimestamp()):firebase.firestore.FieldValue.serverTimestamp()};
+    item={tipo:'produto',nome,colecao:document.getElementById('ep-col').value,status:document.getElementById('ep-s').value,custo:parseFloat(document.getElementById('ep-c').value)||0,preco:parseFloat(document.getElementById('ep-p').value)||0,qty:parseInt(document.getElementById('ep-q').value)||1,plataforma:document.getElementById('ep-plat').value,projetoId:selP.value||null,projetoNome:selP.value?(selP.options[selP.selectedIndex]?.text||null):null,foto:document.getElementById('ep-ft').value,obs:document.getElementById('ep-o').value,naLoja:document.getElementById('ep-loja')?.checked||false,created_at:_editEst?(_E.find(x=>x._id===_editEst)?.created_at||firebase.firestore.FieldValue.serverTimestamp()):firebase.firestore.FieldValue.serverTimestamp()};
   }
   try{if(_editEst)await COL.est.doc(_editEst).update(item);else await COL.est.add(item);voltarEst();toast('✓ Salvo!');}catch(e){toast('❌ Erro: '+e.message);}
 }
@@ -1534,7 +1583,7 @@ async function ajustarQ(id,d){const item=_E.find(x=>x._id===id);if(!item)return;
 function venderProd(id){
   const p=_E.find(x=>x._id===id);if(!p)return;
   aba('caixa');
-  setTimeout(()=>{mostrarFormCaixa(null);setTipoCaixa('venda');document.getElementById('c-desc').value=p.nome||'';document.getElementById('c-val').value=p.preco||'';document.getElementById('c-cst').value=p.custo||'';if(p.projetoId)document.getElementById('c-proj').value=p.projetoId;if(p.plataforma)document.getElementById('c-plat').value=p.plataforma;toast('Produto carregado — confirme!');},200);
+  setTimeout(()=>{mostrarFormCaixa(null);setTipoCaixa('venda');document.getElementById('c-desc').value=p.nome||'';document.getElementById('c-val').value=p.preco||'';document.getElementById('c-cst').value=p.custo||'';if(p.projetoId)document.getElementById('c-proj').value=p.projetoId;if(p.plataforma)document.getElementById('c-plat').value=p.plataforma;_vendaProdId=id;toast('Produto carregado — ao salvar, dou baixa no estoque!');},200);
 }
 function renderEst(){
   const q=(document.getElementById('busca-est')?.value||'').toLowerCase().trim();
@@ -1582,6 +1631,7 @@ function renderEst(){
             <span class="tag ${scls}">${sl2}</span>
             ${p.qty>1?`<span class="tag" style="background:#f0f0f0;color:#666">${p.qty}×</span>`:''}
             ${p.plataforma?`<span class="tag tt1">${p.plataforma}</span>`:''}
+            ${p.naLoja?'<span class="tag" style="background:var(--gold-l);color:var(--gold-d)">🛍 na loja</span>':''}
           </div>
         </div>
         <div style="text-align:right"><div class="ppv">${fmt(p.preco||0)}</div>${lc>0?`<div style="font-size:11px;color:var(--green)">lucro: ${fmt(lc)}</div>`:''}</div>
@@ -1591,6 +1641,7 @@ function renderEst(){
       <div style="display:flex;gap:6px;margin-top:10px">
         <button class="bsr" onclick="mostrarFormEst('${p._id}','produto')">✏️ Editar</button>
         <button class="bsr" onclick="venderProd('${p._id}')">💰 Registrar venda</button>
+        <button class="bsr" onclick="publicarProd('${p._id}')">${p.naLoja?'🚫 Tirar da loja':'🛍 Publicar'}</button>
         <button style="background:none;border:1px solid var(--bdr);border-radius:6px;padding:5px 10px;font-size:12px;cursor:pointer;color:#999" onclick="delEst('${p._id}')">🗑️</button>
       </div>
     </div>`;
@@ -1873,7 +1924,7 @@ async function prodConcluir(){
       baixas++;
     });
   }
-  batch.set(base.collection('estoque').doc(),{tipo:'produto',nome,colecao:p?.colecao||'',status:'disponivel',custo:Math.round(custoReal*100)/100,preco:parseFloat(document.getElementById('pr-preco').value)||0,qty:qtdProd,plataforma:document.getElementById('pr-plat').value,projetoId:_prodProjId,projetoNome:p?.nome||null,foto:'',obs:'Produzido em '+new Date().toLocaleDateString('pt-BR')+' · custo real '+fmt(custoReal)+(qtdProd>1?' por unidade':''),created_at:firebase.firestore.FieldValue.serverTimestamp()});
+  batch.set(base.collection('estoque').doc(),{tipo:'produto',nome,colecao:p?.colecao||'',status:'disponivel',custo:Math.round(custoReal*100)/100,preco:parseFloat(document.getElementById('pr-preco').value)||0,qty:qtdProd,plataforma:document.getElementById('pr-plat').value,projetoId:_prodProjId,projetoNome:p?.nome||null,foto:'',naLoja:document.getElementById('pr-loja')?.checked||false,obs:'Produzido em '+new Date().toLocaleDateString('pt-BR')+' · custo real '+fmt(custoReal)+(qtdProd>1?' por unidade':''),created_at:firebase.firestore.FieldValue.serverTimestamp()});
   try{
     await batch.commit();
     toast('✓ Produção concluída!'+(baixas?' Baixa em '+baixas+' materiais.':''));
@@ -1912,6 +1963,7 @@ function renderConfig(){
     <input type="text" value="${esc(m.desc)}" placeholder="Descrição" style="${CI}" oninput="CFG.modelos[${i}].desc=this.value">
     <button class="bds" onclick="CFG.modelos.splice(${i},1);renderConfig()">✕</button>
   </div>`).join('')||'<p style="font-size:13px;color:#bbb;text-align:center;padding:.5rem">Nenhum modelo.</p>';
+  const cw=document.getElementById('cfg-whats');if(cw)cw.value=CFG.whats||'';
 }
 function addTaxa(){CFG.taxas.push({nome:'',pct:0});renderConfig();}
 function addFase(){CFG.fases.push({nome:'',emoji:'🎯',inicio:new Date().toISOString().slice(0,10),meta_v:0,meta_r:0,desc:''});renderConfig();}
@@ -1921,8 +1973,9 @@ async function salvarConfig(){
   CFG.fases=CFG.fases.filter(f=>(f.nome||'').trim()).sort((a,b)=>(a.inicio||'')<(b.inicio||'')?-1:1);
   CFG.modelos=CFG.modelos.filter(m=>(m.nome||'').trim());
   try{
-    await COL.cfg.set({taxas:CFG.taxas,fases:CFG.fases,modelos:CFG.modelos,updated_at:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
+    await COL.cfg.set({taxas:CFG.taxas,fases:CFG.fases,modelos:CFG.modelos,whats:(CFG.whats||'').trim(),updated_at:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
     aplicarConfig();renderFase();renderPlano();renderDash();renderDRE();renderExtrato();
+    try{_vitCache={};await initVitrineCache();sincronizarVitrine();}catch(e){}
     toast('✓ Configurações salvas!');
   }catch(e){toast('❌ Erro: '+e.message);}
 }

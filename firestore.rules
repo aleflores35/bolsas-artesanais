@@ -20,6 +20,13 @@ service cloud.firestore {
       allow read, write: if request.auth != null && (request.auth.uid == uid || isAdmin());
     }
 
+    // Vitrine da loja: leitura pública; escrita só do dono dos produtos (ou admin)
+    match /vitrine/{docId} {
+      allow read: if true;
+      allow create, update: if request.auth != null && (request.resource.data.uid == request.auth.uid || isAdmin());
+      allow delete: if request.auth != null && (resource.data.uid == request.auth.uid || isAdmin());
+    }
+
     // Bloqueia todo o resto (inclui as coleções antigas da raiz — só aplique
     // estas regras DEPOIS de fazer login no app e confirmar a migração!)
     match /{document=**} {

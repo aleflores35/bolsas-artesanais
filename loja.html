@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio Bolsas — Peças disponíveis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--rose:#6B1537;--rose-d:#3F0C20;--gold:#A8843C;--gold-l:#FBF5E6;--gold-d:#7A5E28;--ivory:#FAF5EF;--bdr:#EAE0D6;--gray:#1E1510;--green:#286040}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--ivory);color:var(--gray);min-height:100vh}
+header{background:linear-gradient(160deg,var(--rose) 0%,var(--rose-d) 100%);color:white;border-bottom:2px solid var(--gold);padding:2.2rem 1.25rem;text-align:center}
+header h1{font-family:'Playfair Display',Georgia,serif;font-size:28px;letter-spacing:.03em}
+header p{font-size:13px;opacity:.85;margin-top:6px}
+.ctr{max-width:980px;margin:0 auto;padding:1.5rem 1rem 3rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
+.pc{background:#FFFDF9;border:1px solid var(--bdr);border-radius:16px;overflow:hidden;box-shadow:0 2px 16px rgba(107,21,55,.07);display:flex;flex-direction:column;transition:box-shadow .2s,transform .2s}
+.pc:hover{box-shadow:0 8px 28px rgba(107,21,55,.15);transform:translateY(-2px)}
+.ph{height:210px;background:linear-gradient(135deg,#F5EAED,var(--gold-l));display:flex;align-items:center;justify-content:center;font-size:54px}
+.ph img{width:100%;height:100%;object-fit:cover}
+.pb{padding:14px 16px 16px;flex:1;display:flex;flex-direction:column}
+.pb h3{font-size:16px;font-weight:700}
+.col{display:inline-block;font-size:11px;color:var(--gold-d);background:var(--gold-l);border-radius:12px;padding:2px 9px;margin-top:5px;align-self:flex-start}
+.obs{font-size:12.5px;color:#888;margin-top:7px;line-height:1.5;flex:1}
+.preco{font-size:21px;font-weight:700;color:var(--rose);margin-top:10px}
+.un{font-size:11px;color:#aaa;margin-top:1px}
+.bw{display:flex;align-items:center;justify-content:center;gap:8px;background:#25D366;color:white;border:none;border-radius:10px;padding:12px;font-size:14.5px;font-weight:700;cursor:pointer;margin-top:12px;text-decoration:none;letter-spacing:.01em}
+.bw:hover{background:#1fb858}
+.vazio{text-align:center;padding:4rem 1rem;color:#bbb}
+.vazio .ic{font-size:54px;margin-bottom:12px}
+footer{text-align:center;font-size:12px;color:#aaa;padding:1.5rem;border-top:1px solid var(--bdr)}
+#lv{text-align:center;padding:3rem;color:#bbb}
+.sp{width:32px;height:32px;border:3px solid #eee;border-top-color:var(--rose);border-radius:50%;animation:g .8s linear infinite;margin:0 auto 10px}
+@keyframes g{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<header>
+  <h1>👜 Studio Bolsas</h1>
+  <p>Bolsas artesanais de luxo — feitas à mão, peça a peça</p>
+</header>
+<div class="ctr">
+  <div id="lv"><div class="sp"></div>Carregando as peças…</div>
+  <div class="grid" id="grid"></div>
+  <div class="vazio" id="vazio" style="display:none"><div class="ic">🧶</div><p>Nenhuma peça disponível agora.<br>Novidades estão sendo produzidas — volte em breve!</p></div>
+</div>
+<footer>Studio Bolsas · peças únicas feitas à mão · pagamento e entrega combinados pelo WhatsApp</footer>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+firebase.initializeApp({apiKey:"AIzaSyDPVjyPmwBCtnJJlXyekrW6c4hwkPxQI5g",authDomain:"bolsas-lisandra.firebaseapp.com",projectId:"bolsas-lisandra",storageBucket:"bolsas-lisandra.firebasestorage.app",messagingSenderId:"745351180534",appId:"1:745351180534:web:7c0217504fe87f7153bcd7"});
+const db=firebase.firestore();
+function fmt(v){return 'R$ '+(v||0).toFixed(2).replace('.',',').replace(/\B(?=(\d{3})+(?!\d))/g,'.');}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
+db.collection('vitrine').orderBy('updated_at','desc').onSnapshot(s=>{
+  document.getElementById('lv').style.display='none';
+  const itens=s.docs.map(d=>d.data()).filter(p=>p.nome);
+  document.getElementById('vazio').style.display=itens.length?'none':'block';
+  document.getElementById('grid').innerHTML=itens.map(p=>{
+    const num=(p.whats||'').replace(/\D/g,'');
+    const tel=num?(num.length<=11?'55'+num:num):'';
+    const msg=encodeURIComponent(`Oi! Vi a ${p.nome} na loja do Studio Bolsas (${fmt(p.preco)}) e quero comprar! 💛`);
+    return `<div class="pc">
+      <div class="ph">${p.foto?`<img src="${esc(p.foto)}" alt="${esc(p.nome)}" onerror="this.outerHTML='👜'">`:'👜'}</div>
+      <div class="pb">
+        <h3>${esc(p.nome)}</h3>
+        ${p.colecao?`<span class="col">Coleção ${esc(p.colecao)}</span>`:''}
+        ${p.obs?`<div class="obs">${esc(p.obs)}</div>`:'<div class="obs"></div>'}
+        <div class="preco">${fmt(p.preco)}</div>
+        ${(p.qty||1)>1?`<div class="un">${p.qty} unidades disponíveis</div>`:'<div class="un">peça única</div>'}
+        ${tel?`<a class="bw" href="https://wa.me/${tel}?text=${msg}" target="_blank">💬 Comprar pelo WhatsApp</a>`:''}
+      </div>
+    </div>`;
+  }).join('');
+},()=>{
+  document.getElementById('lv').innerHTML='Não foi possível carregar a loja agora.';
+});
+</script>
+</body>
+</html>
