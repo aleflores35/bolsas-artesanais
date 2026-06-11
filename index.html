@@ -712,7 +712,16 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
     <div class="cb" id="cfg-modelos"></div></div>
   <div class="card"><div class="ch"><h2>🛍 Loja (vitrine pública)</h2></div><div class="cb">
     <div class="fg"><label>WhatsApp da loja (só números, com DDD — ex.: 51999998888)</label><input type="tel" id="cfg-whats" placeholder="51999998888" oninput="CFG.whats=this.value"></div>
-    <p style="font-size:12px;color:#888;margin-top:8px">Produtos marcados com 🛍 aparecem automaticamente em <a href="loja.html" target="_blank" style="color:var(--rose);font-weight:700">sua loja pública</a> — compartilhe esse link com clientes. O botão de compra abre o seu WhatsApp com a mensagem pronta.</p>
+    <p style="font-size:12px;color:#888;margin-top:8px">Produtos marcados com 🛍 aparecem automaticamente na sua loja pública. O botão de compra abre o seu WhatsApp com a mensagem pronta.</p>
+    <div style="background:var(--gold-l);border:1px solid #e8d08a;border-radius:10px;padding:10px 12px;margin-top:10px">
+      <div style="font-size:11px;font-weight:700;color:var(--gold-d);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">🔗 Link da loja</div>
+      <div id="loja-url" style="font-size:13px;font-weight:600;color:var(--rose);word-break:break-all;margin-bottom:10px"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="bg" onclick="copiarLinkLoja()">📋 Copiar link</button>
+        <button class="bgn" onclick="compartilharLoja()">📤 Compartilhar</button>
+        <a class="bsr" href="loja.html" target="_blank" style="text-decoration:none;display:inline-flex;align-items:center">👁 Ver a loja</a>
+      </div>
+    </div>
   </div></div>
   <button class="bsv" onclick="salvarConfig()">Salvar configurações</button>
   <div class="card" style="margin-top:1rem"><div class="ch"><h2>💾 Backup dos dados</h2></div><div class="cb">
@@ -1964,6 +1973,17 @@ function renderConfig(){
     <button class="bds" onclick="CFG.modelos.splice(${i},1);renderConfig()">✕</button>
   </div>`).join('')||'<p style="font-size:13px;color:#bbb;text-align:center;padding:.5rem">Nenhum modelo.</p>';
   const cw=document.getElementById('cfg-whats');if(cw)cw.value=CFG.whats||'';
+  const lu=document.getElementById('loja-url');if(lu)lu.textContent=lojaURL();
+}
+function lojaURL(){return location.origin+'/loja.html';}
+async function copiarLinkLoja(){
+  try{await navigator.clipboard.writeText(lojaURL());toast('✓ Link copiado! É só colar.');}
+  catch(e){prompt('Copie o link:',lojaURL());}
+}
+async function compartilharLoja(){
+  const u=lojaURL();
+  if(navigator.share){try{await navigator.share({title:'Studio Bolsas — peças disponíveis',text:'Olha as bolsas feitas à mão do Studio Bolsas! 👜✨',url:u});}catch(e){}}
+  else copiarLinkLoja();
 }
 function addTaxa(){CFG.taxas.push({nome:'',pct:0});renderConfig();}
 function addFase(){CFG.fases.push({nome:'',emoji:'🎯',inicio:new Date().toISOString().slice(0,10),meta_v:0,meta_r:0,desc:''});renderConfig();}
