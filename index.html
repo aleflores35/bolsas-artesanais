@@ -784,7 +784,7 @@ function startListeners(){
   _unsubs.push(COL.proj.orderBy('created_at','desc').onSnapshot(s=>{_P=s.docs.map(d=>({...d.data(),_id:d.id}));renderLista();renderDropdowns();renderDash();renderPlano();renderDRE();renderPendencias();renderGrafico();chk();sync(true);},()=>{sync(false);chk();}));
   _unsubs.push(COL.hist.orderBy('created_at','desc').onSnapshot(s=>{_H=s.docs.map(d=>({...d.data(),_id:d.id}));renderHist();renderDash();renderPlano();renderDRE();renderPendencias();renderGrafico();chk();sync(true);},()=>{sync(false);chk();}));
   _unsubs.push(COL.trans.orderBy('created_at','desc').onSnapshot(s=>{_T=s.docs.map(d=>({...d.data(),_id:d.id}));renderDash();renderPlano();renderExtrato();renderFase();chk();sync(true);},()=>{sync(false);chk();}));
-  _unsubs.push(COL.est.orderBy('tipo').orderBy('nome').onSnapshot(s=>{_E=s.docs.map(d=>({...d.data(),_id:d.id}));renderEst();renderDash();renderPlano();renderDRE();renderPendencias();renderGrafico();chk();sync(true);},()=>{sync(false);chk();}));
+  _unsubs.push(COL.est.orderBy('nome').onSnapshot(s=>{_E=s.docs.map(d=>({...d.data(),_id:d.id}));renderEst();renderDash();renderPlano();renderDRE();renderPendencias();renderGrafico();chk();sync(true);},()=>{sync(false);chk();}));
 }
 // Migra os dados da versão antiga (coleções na raiz) para a conta do usuário — roda 1x.
 async function migrarSeNecessario(){
@@ -928,7 +928,7 @@ function renderFase(){
       <span style="font-size:11px;opacity:.7">${d0?'Desde '+MNA[d0.getMonth()]+'/'+d0.getFullYear():''}</span>
     </div>
     <h3>${f.meta_v>0?`Meta: ${f.meta_v} vendas · ${fmt(f.meta_r)}`:f.desc}</h3>
-    <p style="margin-bottom:12px">${f.desc}</p>
+    ${f.meta_v>0?`<p style="margin-bottom:12px">${f.desc||''}</p>`:''}
     <div class="pb"><div class="pf" style="width:${prog}%"></div></div>
     <div class="pl"><span>${progLabel}</span><span>${prog}%</span></div>
     ${f.meta_r>0?`<div class="mr2"><span>Receita acumulada:</span><span class="mv2">${fmt(totalR)}</span></div>`:''}
