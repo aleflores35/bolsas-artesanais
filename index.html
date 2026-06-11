@@ -676,7 +676,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
           <div style="background:var(--gold-l);border:1px solid #e8d08a;border-radius:10px;padding:10px 12px;margin-top:10px">
             <div style="font-size:11px;font-weight:700;color:var(--gold-d);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">💰 Sugestão de preço — custo real + taxa da plataforma</div>
             <div class="fr">
-              <div class="fg"><label>Mão de obra (R$)</label><input type="number" id="pr-mdo" value="0" min="0" step="1" oninput="prodSugestao()"></div>
+              <div class="fg"><label>Mão de obra (R$)</label><input type="number" id="pr-mdo" value="0" min="0" step="1" oninput="prodSugestao()"><div id="pr-mdo-hint" style="font-size:10px;color:var(--gold-d);margin-top:2px;display:none"></div></div>
               <div class="fg"><label>Margem de lucro</label><div class="rr"><input type="range" id="pr-mg" min="10" max="80" value="40" step="5" oninput="prodSugestao()"><span class="rv" id="pr-mgv">40%</span></div></div>
             </div>
             <div id="pr-sug" style="display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;margin-top:4px;flex-wrap:wrap"></div>
@@ -1303,8 +1303,10 @@ async function salvarCalc(){
   const pId=selP.value||null;
   const pNome=pId?(selP.options[selP.selectedIndex]?.text||''):null;
   const pNum=parseFloat(document.getElementById('r-sug').textContent.replace('R$ ','').replace(/\./g,'').replace(',','.'))||0;
+  const hN=parseFloat(document.getElementById('horas').value)||0;
+  const vhN=parseFloat(document.getElementById('vh').value)||0;
   try{
-    await COL.hist.add({nome,projetoId:pId,projetoNome:pNome,preco:document.getElementById('r-sug').textContent,custo:document.getElementById('r-ct').textContent,lucro:document.getElementById('r-luc').textContent,precoNum:pNum,data:new Date().toLocaleDateString('pt-BR'),created_at:firebase.firestore.FieldValue.serverTimestamp()});
+    await COL.hist.add({nome,projetoId:pId,projetoNome:pNome,preco:document.getElementById('r-sug').textContent,custo:document.getElementById('r-ct').textContent,lucro:document.getElementById('r-luc').textContent,precoNum:pNum,horasNum:hN,vhNum:vhN,mdoNum:Math.round(hN*vhN*100)/100,data:new Date().toLocaleDateString('pt-BR'),created_at:firebase.firestore.FieldValue.serverTimestamp()});
     document.getElementById('nm-pc').value='';document.getElementById('vp').value='';toast('✓ Cálculo salvo!');
   }catch(e){toast('❌ Erro.');}
 }
@@ -1785,6 +1787,25 @@ function prodCarregar(id){
   document.getElementById('pr-nome').value=p.nome||'';
   const h=_H.find(x=>x.projetoId===id&&x.precoNum);
   document.getElementById('pr-preco').value=h?h.precoNum:'';
+  // mão de obra sugerida: 1º do cálculo salvo (horas × R$/h); senão estima pelo "tempo" do projeto
+  const mdoEl=document.getElementById('pr-mdo'),hint=document.getElementById('pr-mdo-hint');
+  if(mdoEl){
+    let mdo=0,fonte='';
+    if(h&&typeof h.mdoNum==='number'&&h.mdoNum>0){
+      mdo=h.mdoNum;
+      fonte='do cálculo salvo'+(h.horasNum?` (${h.horasNum}h × ${fmt(h.vhNum||0)}/h)`:'');
+    }else{
+      const tm=(p.tempo||'').match(/(\d+(?:[.,]\d+)?)\s*h/i);
+      if(tm){
+        const hs=parseFloat(tm[1].replace(',','.'));
+        const vhPad=parseFloat(document.getElementById('vh')?.value)||25;
+        mdo=hs*vhPad;
+        fonte=`estimado pelo tempo do projeto: ${hs}h × ${fmt(vhPad)}/h`;
+      }
+    }
+    mdoEl.value=mdo?Math.round(mdo*100)/100:0;
+    if(hint){hint.textContent=fonte?'Sugerido '+fonte:'';hint.style.display=fonte?'block':'none';}
+  }
   body.style.display='block';
   renderProdMats();
 }
