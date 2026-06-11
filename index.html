@@ -561,6 +561,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
       <div style="display:flex;gap:8px;margin-bottom:1rem">
         <div class="sb" style="flex:1;margin:0"><span>🔍</span><input type="text" id="busca-est" placeholder="Buscar material ou produto…" oninput="renderEst()"></div>
         <button class="bg" style="white-space:nowrap" onclick="document.getElementById('cupom-file').click()">📷 Cupom</button>
+        <button class="bg" style="white-space:nowrap;background:linear-gradient(135deg,var(--rose),var(--rose-m))" onclick="produzirPeca('')">🧵 Produzir</button>
         <input type="file" id="cupom-file" accept="image/*,application/pdf" style="display:none" onchange="importarCupom(this.files[0])">
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
@@ -645,6 +646,36 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
       <div class="card" id="imp-raw-card" style="display:none">
         <div class="ch"><h2>📄 Texto lido do cupom</h2><button class="bsr" onclick="const t=document.getElementById('imp-raw');t.style.display=t.style.display==='none'?'block':'none'">↕ mostrar</button></div>
         <div class="cb"><textarea id="imp-raw" rows="9" readonly style="display:none;width:100%;border:1px solid var(--bdr);border-radius:8px;padding:9px;font-size:12px;font-family:monospace;background:#FDFAF7"></textarea></div>
+      </div>
+      <div style="height:2rem"></div>
+    </div>
+  </div>
+  <div id="est-prod" class="view">
+    <div class="ctr">
+      <div class="fh"><button class="bbk" onclick="voltarEst()">‹</button><h2>🧵 Produzir peça</h2></div>
+      <div class="card"><div class="ch"><h2>📓 Projeto / receita</h2></div><div class="cb">
+        <select id="pr-proj" style="width:100%;border:1px solid var(--bdr);border-radius:8px;padding:9px 11px;font-size:14px;background:#FDFAF7" onchange="prodCarregar(this.value)"><option value="">— Escolha o projeto —</option></select>
+        <p style="font-size:12px;color:#aaa;margin-top:8px">Puxa a receita planejada do caderno — ajuste para o que você usou de verdade.</p>
+      </div></div>
+      <div id="pr-body" style="display:none">
+        <div class="card"><div class="ch"><h2>🧮 Materiais usados (real)</h2></div><div class="cb">
+          <div id="pr-mats"></div>
+          <button class="bas" onclick="prodAddLinha()">+ material avulso</button>
+          <div class="mat-total-row"><span>Planejado: <strong id="pr-plan">R$ 0,00</strong></span><span>Real: <strong id="pr-real" style="color:var(--rose)">R$ 0,00</strong></span></div>
+          <div id="pr-dif" style="text-align:right;font-size:12px;margin-top:4px;color:#888"></div>
+        </div></div>
+        <div class="card"><div class="ch"><h2>🛍 Produto pronto</h2></div><div class="cb">
+          <div class="fr">
+            <div class="fg"><label>Nome do produto</label><input type="text" id="pr-nome"></div>
+            <div class="fg"><label>Preço de venda (R$)</label><input type="number" id="pr-preco" min="0" step="0.01"></div>
+          </div>
+          <div class="fr">
+            <div class="fg"><label>Qtd produzida</label><input type="number" id="pr-qtd" value="1" min="1"></div>
+            <div class="fg"><label>Plataforma</label><select id="pr-plat"></select></div>
+          </div>
+          <label style="display:flex;gap:8px;font-size:13px;margin-top:6px;align-items:center;cursor:pointer"><input type="checkbox" id="pr-baixa" checked> Dar baixa dos materiais no estoque</label>
+        </div></div>
+        <button class="bsv" onclick="prodConcluir()">✓ Concluir produção</button>
       </div>
       <div style="height:2rem"></div>
     </div>
@@ -1376,6 +1407,7 @@ function verProj(id){
       <button class="bbk" onclick="sv('lista')">‹</button>
       <button class="bg" onclick="mostrarForm('${id}')">✏️ Editar</button>
       <button class="bgn" onclick="calcProj('${id}','${(p.nome||'').replace(/'/g,"\\'")}')">💰 Calcular</button>
+      <button class="bg" onclick="produzirPeca('${id}')">🧵 Produzir</button>
     </div>
     <h2 style="font-size:20px;font-weight:700;margin-bottom:6px">${p.nome}</h2>
     <div style="font-size:13px;color:#888;margin-bottom:8px">${p.tipo||''} ${p.data?'· '+p.data:''} ${p.tecnica?'· '+p.tecnica:''} ${p.colecao?'· 🎨 '+p.colecao:''}</div>
@@ -1459,7 +1491,7 @@ async function delTrans(id){if(!confirm('Excluir?'))return;try{await COL.trans.d
 
 // ══ ESTOQUE ══
 let _etipo='material',_editEst=null;
-function svEst(v){['lista','form','import'].forEach(x=>{const el=document.getElementById('est-'+x);if(!el)return;el.classList.toggle('active',x===v);el.classList.toggle('view',true);});window.scrollTo(0,0);}
+function svEst(v){['lista','form','import','prod'].forEach(x=>{const el=document.getElementById('est-'+x);if(!el)return;el.classList.toggle('active',x===v);el.classList.toggle('view',true);});window.scrollTo(0,0);}
 function voltarEst(){svEst('lista');_editEst=null;}
 function mostrarFormEst(id,tipo){
   _editEst=id;_etipo=tipo||'material';
@@ -1713,6 +1745,91 @@ async function impSalvar(){
   }
   try{await batch.commit();toast('✓ '+sel.length+' item(ns) adicionados ao estoque!');voltarEst();}
   catch(e){toast('❌ Erro: '+e.message);}
+}
+
+// ══ PRODUÇÃO (baixa de estoque + custo real) ══
+let _prodMats=[],_prodProjId=null;
+function produzirPeca(projId){
+  aba('estoque');svEst('prod');
+  const sel=document.getElementById('pr-proj');
+  sel.innerHTML='<option value="">— Escolha o projeto —</option>'+_P.map(p=>`<option value="${p.id||p._id}" ${projId===(p.id||p._id)?'selected':''}>${p.nome}</option>`).join('');
+  const plat=document.getElementById('pr-plat');
+  if(plat)plat.innerHTML=CFG.taxas.map(t=>`<option>${t.nome}</option>`).join('');
+  if(projId)prodCarregar(projId);
+  else document.getElementById('pr-body').style.display='none';
+}
+function _matEst(m){
+  if(m.estoqueId){const e=_E.find(x=>x._id===m.estoqueId);if(e)return e;}
+  const n=(m.nome||'').toLowerCase().trim();
+  if(!n)return null;
+  return _E.find(e=>e.tipo==='material'&&(e.nome||'').toLowerCase().trim()===n)
+    ||_E.find(e=>e.tipo==='material'&&((e.nome||'').toLowerCase().includes(n)||n.includes((e.nome||'').toLowerCase())));
+}
+function prodCarregar(id){
+  _prodProjId=id||null;
+  const p=_P.find(x=>(x.id||x._id)===id);
+  const body=document.getElementById('pr-body');
+  if(!p){body.style.display='none';return;}
+  _prodMats=(p.materiais||[]).filter(m=>m.nome).map(m=>{
+    const e=_matEst(m);
+    return {nome:m.nome,plan:parseFloat(m.qtd)||0,real:parseFloat(m.qtd)||0,und:m.und||'un',custo:e?(e.custo||parseFloat(m.custoUnit)||0):(parseFloat(m.custoUnit)||0),estId:e?e._id:null,estQty:e?(e.qty||0):null};
+  });
+  document.getElementById('pr-nome').value=p.nome||'';
+  const h=_H.find(x=>x.projetoId===id&&x.precoNum);
+  document.getElementById('pr-preco').value=h?h.precoNum:'';
+  body.style.display='block';
+  renderProdMats();
+}
+function prodAddLinha(){_prodMats.push({nome:'',plan:0,real:1,und:'un',custo:0,estId:null,estQty:null});renderProdMats();}
+function renderProdMats(){
+  const el=document.getElementById('pr-mats');if(!el)return;
+  el.innerHTML=`<div class="mr-hdr" style="grid-template-columns:2fr 56px 64px 44px 80px auto"><span>Material</span><span>Plan.</span><span>Real</span><span>Und</span><span>R$/und</span><span></span></div>`+
+  _prodMats.map((m,i)=>`<div class="mr" style="grid-template-columns:2fr 56px 64px 44px 80px auto;margin-bottom:8px;align-items:start">
+    <div><input type="text" value="${esc(m.nome)}" placeholder="Material" oninput="_prodMats[${i}].nome=this.value">
+      ${m.estId?`<div style="font-size:10px;margin-top:2px;color:${(m.estQty||0)<(m.real||0)?'var(--red)':'var(--green)'}">📦 em estoque: ${m.estQty} ${esc(m.und)}</div>`:`<div style="font-size:10px;color:#bbb;margin-top:2px">sem vínculo com o estoque</div>`}
+    </div>
+    <span style="font-size:12px;color:#aaa;margin-top:9px">${m.plan||0}</span>
+    <input type="number" value="${m.real}" min="0" step="0.1" oninput="_prodMats[${i}].real=parseFloat(this.value)||0;prodTotais()">
+    <span style="font-size:12px;color:#aaa;margin-top:9px">${esc(m.und)}</span>
+    <input type="number" value="${m.custo}" min="0" step="0.01" oninput="_prodMats[${i}].custo=parseFloat(this.value)||0;prodTotais()">
+    <button class="bds" onclick="_prodMats.splice(${i},1);renderProdMats()">✕</button>
+  </div>`).join('');
+  prodTotais();
+}
+function prodTotais(){
+  const plan=_prodMats.reduce((s,m)=>s+(m.plan||0)*(m.custo||0),0);
+  const real=_prodMats.reduce((s,m)=>s+(m.real||0)*(m.custo||0),0);
+  const ep=document.getElementById('pr-plan'),er=document.getElementById('pr-real'),ed=document.getElementById('pr-dif');
+  if(ep)ep.textContent=fmt(plan);
+  if(er)er.textContent=fmt(real);
+  if(ed){const d=real-plan;ed.textContent=d===0?'Igual ao planejado':(d>0?'▲ ':'▼ ')+fmt(Math.abs(d))+(d>0?' acima do planejado — vale ajustar a receita?':' abaixo do planejado');ed.style.color=d>0?'var(--red)':d<0?'var(--green)':'#888';}
+  return real;
+}
+async function prodConcluir(){
+  const mats=_prodMats.filter(m=>(m.nome||'').trim());
+  if(!mats.length){toast('Adicione os materiais usados.');return;}
+  const nome=document.getElementById('pr-nome').value.trim();
+  if(!nome){alert('Informe o nome do produto.');return;}
+  const qtdProd=parseInt(document.getElementById('pr-qtd').value)||1;
+  const custoReal=prodTotais();
+  const p=_P.find(x=>(x.id||x._id)===_prodProjId);
+  const base=db.collection('users').doc(_uid);
+  const batch=db.batch();
+  let baixas=0;
+  if(document.getElementById('pr-baixa').checked){
+    mats.forEach(m=>{
+      if(!m.estId)return;
+      const e=_E.find(x=>x._id===m.estId);if(!e)return;
+      batch.update(base.collection('estoque').doc(m.estId),{qty:Math.max(0,(e.qty||0)-(m.real||0)*qtdProd)});
+      baixas++;
+    });
+  }
+  batch.set(base.collection('estoque').doc(),{tipo:'produto',nome,colecao:p?.colecao||'',status:'disponivel',custo:Math.round(custoReal*100)/100,preco:parseFloat(document.getElementById('pr-preco').value)||0,qty:qtdProd,plataforma:document.getElementById('pr-plat').value,projetoId:_prodProjId,projetoNome:p?.nome||null,foto:'',obs:'Produzido em '+new Date().toLocaleDateString('pt-BR')+' · custo real '+fmt(custoReal)+(qtdProd>1?' por unidade':''),created_at:firebase.firestore.FieldValue.serverTimestamp()});
+  try{
+    await batch.commit();
+    toast('✓ Produção concluída!'+(baixas?' Baixa em '+baixas+' materiais.':''));
+    voltarEst();
+  }catch(e){toast('❌ Erro: '+e.message);}
 }
 
 // ══ AJUSTES (CONFIGURAÇÕES) ══
