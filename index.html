@@ -671,9 +671,17 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
           </div>
           <div class="fr">
             <div class="fg"><label>Qtd produzida</label><input type="number" id="pr-qtd" value="1" min="1"></div>
-            <div class="fg"><label>Plataforma</label><select id="pr-plat"></select></div>
+            <div class="fg"><label>Plataforma</label><select id="pr-plat" onchange="prodSugestao()"></select></div>
           </div>
-          <label style="display:flex;gap:8px;font-size:13px;margin-top:6px;align-items:center;cursor:pointer"><input type="checkbox" id="pr-baixa" checked> Dar baixa dos materiais no estoque</label>
+          <div style="background:var(--gold-l);border:1px solid #e8d08a;border-radius:10px;padding:10px 12px;margin-top:10px">
+            <div style="font-size:11px;font-weight:700;color:var(--gold-d);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">💰 Sugestão de preço — custo real + taxa da plataforma</div>
+            <div class="fr">
+              <div class="fg"><label>Mão de obra (R$)</label><input type="number" id="pr-mdo" value="0" min="0" step="1" oninput="prodSugestao()"></div>
+              <div class="fg"><label>Margem de lucro</label><div class="rr"><input type="range" id="pr-mg" min="10" max="80" value="40" step="5" oninput="prodSugestao()"><span class="rv" id="pr-mgv">40%</span></div></div>
+            </div>
+            <div id="pr-sug" style="display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;margin-top:4px;flex-wrap:wrap"></div>
+          </div>
+          <label style="display:flex;gap:8px;font-size:13px;margin-top:10px;align-items:center;cursor:pointer"><input type="checkbox" id="pr-baixa" checked> Dar baixa dos materiais no estoque</label>
         </div></div>
         <button class="bsv" onclick="prodConcluir()">✓ Concluir produção</button>
       </div>
@@ -1803,7 +1811,27 @@ function prodTotais(){
   if(ep)ep.textContent=fmt(plan);
   if(er)er.textContent=fmt(real);
   if(ed){const d=real-plan;ed.textContent=d===0?'Igual ao planejado':(d>0?'▲ ':'▼ ')+fmt(Math.abs(d))+(d>0?' acima do planejado — vale ajustar a receita?':' abaixo do planejado');ed.style.color=d>0?'var(--red)':d<0?'var(--green)':'#888';}
+  prodSugestao();
   return real;
+}
+// planejador de preço da produção: custo real + mão de obra + taxa da plataforma + margem
+function prodSugestao(){
+  const el=document.getElementById('pr-sug');if(!el)return;
+  const real=_prodMats.reduce((s,m)=>s+(m.real||0)*(m.custo||0),0);
+  const mdo=parseFloat(document.getElementById('pr-mdo')?.value)||0;
+  const mgEl=document.getElementById('pr-mg');if(!mgEl)return;
+  const mg=parseFloat(mgEl.value)/100;
+  const mgv=document.getElementById('pr-mgv');if(mgv)mgv.textContent=mgEl.value+'%';
+  const taxa=taxaPlat(document.getElementById('pr-plat')?.value);
+  const base=real+mdo;
+  const pMin=taxa<1?base/(1-taxa):base;
+  const div=1-taxa-mg;
+  const pSug=div>0?base/div:base*2;
+  const luc=pSug*(1-taxa)-base;
+  window._prSugVal=Math.round(pSug*100)/100;
+  el.innerHTML=`<span>Mínimo: <strong>${fmt(pMin)}</strong> · Lucro: <strong style="color:var(--green)">${fmt(luc)}</strong>${taxa>0?` · taxa ${(taxa*100).toFixed(0)}%`:''}</span>
+    <span style="display:flex;align-items:center;gap:8px"><strong style="font-size:17px;color:var(--gold-d)">${fmt(pSug)}</strong>
+    <button class="bsr" onclick="document.getElementById('pr-preco').value=window._prSugVal;toast('✓ Preço aplicado!')">Usar este preço</button></span>`;
 }
 async function prodConcluir(){
   const mats=_prodMats.filter(m=>(m.nome||'').trim());
