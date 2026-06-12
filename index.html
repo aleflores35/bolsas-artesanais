@@ -2088,13 +2088,11 @@ function conferirMateriais(projId){
     return {nome:m.nome,und:m.und||'un',need,tem,falta,custo,forn:e?e.fornecedor||'':''};
   });
   const faltantes=itens.filter(i=>i.falta>0);
-  const totalCompra=faltantes.reduce((s,i)=>s+i.falta*i.custo,0);
   const links=p.links||[];
   const linkDe=it=>{
     const f=(it.forn||'').toLowerCase();
     return links.find(l=>{const n=(l.nome||'').toLowerCase();return n&&f&&(f.includes(n)||n.includes(f));})||null;
   };
-  const txt='Pedido de materiais — '+(p.nome||'')+':\n'+faltantes.map(i=>`• ${i.falta} ${i.und} — ${i.nome}`).join('\n')+(totalCompra>0?`\n(estimado: ${fmt(totalCompra)})`:'');
   const ov=document.createElement('div');
   ov.style.cssText='position:fixed;inset:0;background:rgba(30,21,16,.85);z-index:9500;display:flex;align-items:center;justify-content:center;padding:16px';
   ov.innerHTML=`<div style="background:#FFFDF9;border-radius:16px;padding:16px;max-width:560px;width:100%;max-height:92vh;overflow:auto">
@@ -2102,11 +2100,14 @@ function conferirMateriais(projId){
       <div style="font-size:15px;font-weight:700;color:var(--rose)">🛒 Materiais — ${esc(p.nome||'')}</div>
       <button class="bds" id="cm-x" style="font-size:18px">✕</button>
     </div>
+    ${faltantes.length?'<p style="font-size:11px;color:#999;margin-bottom:6px">Marque o que entra no pedido:</p>':''}
     ${itens.map(i=>{
       const ok=i.falta<=0,parcial=i.tem!==null&&i.tem>0&&i.falta>0,semv=i.tem===null;
       const selo=ok?'<span style="background:var(--green-l);color:var(--green);border-radius:10px;padding:2px 8px;font-size:11px;font-weight:600">✓ tem</span>':parcial?'<span style="background:var(--orange-l);color:var(--orange);border-radius:10px;padding:2px 8px;font-size:11px;font-weight:600">⚠ parcial</span>':'<span style="background:var(--red-l);color:var(--red);border-radius:10px;padding:2px 8px;font-size:11px;font-weight:600">✕ '+(semv?'sem cadastro':'falta')+'</span>';
       const lk=i.falta>0?linkDe(i):null;
+      const fi=faltantes.indexOf(i);
       return `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid #f5f0ea">
+        ${fi>=0?`<input type="checkbox" class="cm-ck" data-f="${fi}" checked style="width:20px;height:20px;accent-color:var(--rose);flex-shrink:0;cursor:pointer">`:'<span style="width:20px;flex-shrink:0"></span>'}
         <div style="flex:1"><div style="font-size:13px;font-weight:600">${esc(i.nome)}</div>
           <div style="font-size:11px;color:#999">precisa ${i.need} ${esc(i.und)}${i.tem!==null?' · em estoque '+i.tem:''}${i.falta>0?' · <b style="color:var(--red)">comprar '+i.falta+'</b>':''}</div>
         </div>
@@ -2115,19 +2116,35 @@ function conferirMateriais(projId){
     }).join('')}
     ${faltantes.length?`
       <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:13px">
-        <span>Faltam <b>${faltantes.length}</b> item(ns)</span><span>compra estimada: <b style="color:var(--rose)">${fmt(totalCompra)}</b></span>
+        <span id="cm-n"></span><span>compra estimada: <b id="cm-t" style="color:var(--rose)"></b></span>
       </div>
       <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
-        <a class="bgn" style="text-decoration:none;display:inline-flex;align-items:center" href="https://wa.me/?text=${encodeURIComponent(txt)}" target="_blank">📤 Pedir por WhatsApp</a>
+        <a class="bgn" id="cm-wa" style="text-decoration:none;display:inline-flex;align-items:center" href="#" target="_blank">📤 Pedir por WhatsApp</a>
         <button class="bg" id="cm-copy">📋 Copiar lista</button>
       </div>`
     :'<div style="margin-top:12px;text-align:center;color:var(--green);font-weight:600;font-size:14px">✓ Tudo em estoque — pode produzir!</div>'}
     ${links.length?`<div style="margin-top:12px;font-size:11px;color:#999">Fornecedores do projeto: ${links.map(l=>l.url?`<a href="${l.url.startsWith('http')?l.url:'https://'+l.url}" target="_blank" style="color:var(--rose)">${esc(l.nome||'link')}</a>`:esc(l.nome||'')).join(' · ')}</div>`:''}
   </div>`;
   document.body.appendChild(ov);
+  const montarTxt=()=>{
+    const sel=[...ov.querySelectorAll('.cm-ck')].filter(c=>c.checked).map(c=>faltantes[+c.dataset.f]);
+    const tot=sel.reduce((s,i)=>s+i.falta*i.custo,0);
+    const txt='Pedido de materiais — '+(p.nome||'')+':\n'+sel.map(i=>`• ${i.falta} ${i.und} — ${i.nome}`).join('\n')+(tot>0?`\n(estimado: ${fmt(tot)})`:'');
+    const n=ov.querySelector('#cm-n');if(n)n.innerHTML='No pedido: <b>'+sel.length+'</b> de '+faltantes.length+' item(ns)';
+    const t=ov.querySelector('#cm-t');if(t)t.textContent=fmt(tot);
+    const wa=ov.querySelector('#cm-wa');
+    if(wa){wa.href='https://wa.me/?text='+encodeURIComponent(txt);wa.style.opacity=sel.length?'1':'.45';wa.style.pointerEvents=sel.length?'auto':'none';}
+    return {txt,sel};
+  };
+  ov.querySelectorAll('.cm-ck').forEach(c=>c.addEventListener('change',montarTxt));
+  montarTxt();
   ov.querySelector('#cm-x').onclick=()=>ov.remove();
   const cb=ov.querySelector('#cm-copy');
-  if(cb)cb.onclick=async()=>{try{await navigator.clipboard.writeText(txt);toast('✓ Lista copiada!');}catch(e){prompt('Copie:',txt);}};
+  if(cb)cb.onclick=async()=>{
+    const {txt,sel}=montarTxt();
+    if(!sel.length){toast('Marque ao menos um item.');return;}
+    try{await navigator.clipboard.writeText(txt);toast('✓ Lista copiada!');}catch(e){prompt('Copie:',txt);}
+  };
   ov.addEventListener('click',e=>{if(e.target===ov)ov.remove();});
 }
 

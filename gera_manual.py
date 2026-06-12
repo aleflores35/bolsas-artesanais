@@ -151,7 +151,7 @@ alerta('Cadastro manual (+ Material) NÃO lança despesa — é para acerto de i
 p('Conferir materiais e lista de compras',H2)
 passo(1,'No projeto, toque em <b>Conferir</b>: cada material ganha um selo — <b>✓ tem</b>, <b>⚠ parcial</b> ou <b>✕ falta</b>.')
 passo(2,'Dos que faltam, o app monta a <b>lista de compras</b> com quantidades, custo estimado e o <b>link do fornecedor</b> (um toque e abre a página).')
-passo(3,'<b>"Pedir por WhatsApp"</b> abre a conversa com o pedido pronto; <b>"Copiar lista"</b> leva para onde quiser.')
+passo(3,'<b>Marque quais itens</b> entram no pedido (cotação com mais de um fornecedor? selecione só os dele) — <b>"Pedir por WhatsApp"</b> abre a conversa com o pedido pronto e <b>"Copiar lista"</b> leva para onde quiser.')
 passo(4,'Comprou? O cupom entra no estoque e os selos viram ✓ sozinhos.')
 p('Produzir uma peça',H2)
 passo(1,'<b>Produzir</b> > escolha o projeto. Ajuste as quantidades para o que <b>realmente usou</b>; o app avisa se faltar estoque.')
