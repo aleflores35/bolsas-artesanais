@@ -235,6 +235,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
     </div>
     <div class="fg" style="margin-bottom:10px"><label>E-mail</label><input type="email" id="lg-em" placeholder="voce@email.com" autocomplete="username"></div>
     <div class="fg" style="margin-bottom:6px"><label>Senha</label><input type="password" id="lg-pw" placeholder="mínimo 6 caracteres" autocomplete="current-password" onkeydown="if(event.key==='Enter')loginEmail(false)"></div>
+    <div style="text-align:right"><button onclick="resetSenha()" style="background:none;border:none;color:var(--rose);font-size:12px;cursor:pointer;text-decoration:underline;padding:2px 0">Esqueci / quero criar uma senha</button></div>
     <div id="login-msg" style="display:none;background:var(--red-l);color:var(--red);border-radius:8px;padding:8px 10px;font-size:12px;margin:8px 0"></div>
     <button class="bsv" style="margin-top:10px" onclick="loginEmail(false)">Entrar</button>
     <button class="ba" style="width:100%;justify-content:center;margin-top:8px" onclick="loginEmail(true)">Criar conta nova</button>
@@ -927,7 +928,16 @@ async function migrarSeNecessario(){
   if(n)await batch.commit();
   toast('✓ '+total+' registros importados para a sua conta!');
 }
-function lmsg(m){const el=document.getElementById('login-msg');if(el){el.textContent=m;el.style.display=m?'block':'none';}}
+function lmsg(m,ok){const el=document.getElementById('login-msg');if(el){el.textContent=m;el.style.display=m?'block':'none';el.style.background=ok?'var(--green-l)':'var(--red-l)';el.style.color=ok?'var(--green)':'var(--red)';}}
+async function resetSenha(){
+  lmsg('');
+  const em=document.getElementById('lg-em').value.trim();
+  if(!em){lmsg('Digite o e-mail no campo acima primeiro.');return;}
+  try{
+    await auth.sendPasswordResetEmail(em);
+    lmsg('✉ Enviamos um link para '+em+'. Abra o e-mail, defina a sua senha e volte aqui para entrar.',true);
+  }catch(e){lmsg(erroAuth(e));}
+}
 function erroAuth(e){
   const c=e.code||'';
   if(c.includes('invalid-email'))return 'E-mail inválido.';
