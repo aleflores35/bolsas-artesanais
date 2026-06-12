@@ -680,6 +680,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
           <button class="bas" onclick="prodAddLinha()">+ material avulso</button>
           <div class="mat-total-row"><span>Planejado: <strong id="pr-plan">R$ 0,00</strong></span><span>Real: <strong id="pr-real" style="color:var(--rose)">R$ 0,00</strong></span></div>
           <div id="pr-dif" style="text-align:right;font-size:12px;margin-top:4px;color:#888"></div>
+          <div id="pr-falta" style="display:none;font-size:12px;color:var(--orange);background:var(--orange-l);border:1px solid #e8c890;border-radius:8px;padding:8px 10px;margin-top:8px"></div>
         </div></div>
         <div class="card"><div class="ch"><h2>🛍 Produto pronto</h2></div><div class="cb">
           <div class="fr">
@@ -1528,6 +1529,7 @@ function verProj(id){
       <button class="bg" onclick="mostrarForm('${id}')">✏️ Editar</button>
       <button class="bgn" onclick="calcProj('${id}','${(p.nome||'').replace(/'/g,"\\'")}')">💰 Calcular</button>
       <button class="bg" onclick="produzirPeca('${id}')">🧵 Produzir</button>
+      <button class="bgr" onclick="conferirMateriais('${id}')">🛒 Conferir</button>
     </div>
     <h2 style="font-size:20px;font-weight:700;margin-bottom:6px">${p.nome}</h2>
     <div style="font-size:13px;color:#888;margin-bottom:8px">${p.tipo||''} ${p.data?'· '+p.data:''} ${p.tecnica?'· '+p.tecnica:''} ${p.colecao?'· 🎨 '+p.colecao:''}</div>
@@ -1961,9 +1963,72 @@ function prodTotais(){
   if(ep)ep.textContent=fmt(plan);
   if(er)er.textContent=fmt(real);
   if(ed){const d=real-plan;ed.textContent=d===0?'Igual ao planejado':(d>0?'▲ ':'▼ ')+fmt(Math.abs(d))+(d>0?' acima do planejado — vale ajustar a receita?':' abaixo do planejado');ed.style.color=d>0?'var(--red)':d<0?'var(--green)':'#888';}
+  const pf=document.getElementById('pr-falta');
+  if(pf){
+    const faltam=_prodMats.filter(m=>m.estId&&(m.estQty||0)<(m.real||0)).length;
+    pf.style.display=faltam?'block':'none';
+    if(faltam)pf.innerHTML=`⚠ ${faltam} material(is) sem estoque suficiente — <button onclick="conferirMateriais(_prodProjId)" style="background:none;border:none;color:var(--rose);font-weight:700;cursor:pointer;text-decoration:underline;font-size:12px;padding:0">ver lista de compras 🛒</button>`;
+  }
   prodSugestao();
   return real;
 }
+// ══ CONFERIR MATERIAIS / LISTA DE COMPRAS ══
+function conferirMateriais(projId){
+  const p=_P.find(x=>(x.id||x._id)===projId);
+  const mats=(p?.materiais||[]).filter(m=>m.nome);
+  if(!mats.length){toast('Este projeto não tem materiais cadastrados.');return;}
+  const itens=mats.map(m=>{
+    const e=_matEst(m);
+    const need=parseFloat(m.qtd)||0;
+    const tem=e?(e.qty||0):null;
+    const falta=tem===null?need:Math.max(0,need-tem);
+    const custo=e?(e.custo||parseFloat(m.custoUnit)||0):(parseFloat(m.custoUnit)||0);
+    return {nome:m.nome,und:m.und||'un',need,tem,falta,custo,forn:e?e.fornecedor||'':''};
+  });
+  const faltantes=itens.filter(i=>i.falta>0);
+  const totalCompra=faltantes.reduce((s,i)=>s+i.falta*i.custo,0);
+  const links=p.links||[];
+  const linkDe=it=>{
+    const f=(it.forn||'').toLowerCase();
+    return links.find(l=>{const n=(l.nome||'').toLowerCase();return n&&f&&(f.includes(n)||n.includes(f));})||null;
+  };
+  const txt='Pedido de materiais — '+(p.nome||'')+':\n'+faltantes.map(i=>`• ${i.falta} ${i.und} — ${i.nome}`).join('\n')+(totalCompra>0?`\n(estimado: ${fmt(totalCompra)})`:'');
+  const ov=document.createElement('div');
+  ov.style.cssText='position:fixed;inset:0;background:rgba(30,21,16,.85);z-index:9500;display:flex;align-items:center;justify-content:center;padding:16px';
+  ov.innerHTML=`<div style="background:#FFFDF9;border-radius:16px;padding:16px;max-width:560px;width:100%;max-height:92vh;overflow:auto">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <div style="font-size:15px;font-weight:700;color:var(--rose)">🛒 Materiais — ${esc(p.nome||'')}</div>
+      <button class="bds" id="cm-x" style="font-size:18px">✕</button>
+    </div>
+    ${itens.map(i=>{
+      const ok=i.falta<=0,parcial=i.tem!==null&&i.tem>0&&i.falta>0,semv=i.tem===null;
+      const selo=ok?'<span style="background:var(--green-l);color:var(--green);border-radius:10px;padding:2px 8px;font-size:11px;font-weight:600">✓ tem</span>':parcial?'<span style="background:var(--orange-l);color:var(--orange);border-radius:10px;padding:2px 8px;font-size:11px;font-weight:600">⚠ parcial</span>':'<span style="background:var(--red-l);color:var(--red);border-radius:10px;padding:2px 8px;font-size:11px;font-weight:600">✕ '+(semv?'sem cadastro':'falta')+'</span>';
+      const lk=i.falta>0?linkDe(i):null;
+      return `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid #f5f0ea">
+        <div style="flex:1"><div style="font-size:13px;font-weight:600">${esc(i.nome)}</div>
+          <div style="font-size:11px;color:#999">precisa ${i.need} ${esc(i.und)}${i.tem!==null?' · em estoque '+i.tem:''}${i.falta>0?' · <b style="color:var(--red)">comprar '+i.falta+'</b>':''}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px">${selo}${lk&&lk.url?`<a href="${lk.url.startsWith('http')?lk.url:'https://'+lk.url}" target="_blank" class="bsr" style="text-decoration:none">🔗 ${esc(lk.nome||'comprar')}</a>`:''}</div>
+      </div>`;
+    }).join('')}
+    ${faltantes.length?`
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:13px">
+        <span>Faltam <b>${faltantes.length}</b> item(ns)</span><span>compra estimada: <b style="color:var(--rose)">${fmt(totalCompra)}</b></span>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+        <a class="bgn" style="text-decoration:none;display:inline-flex;align-items:center" href="https://wa.me/?text=${encodeURIComponent(txt)}" target="_blank">📤 Pedir por WhatsApp</a>
+        <button class="bg" id="cm-copy">📋 Copiar lista</button>
+      </div>`
+    :'<div style="margin-top:12px;text-align:center;color:var(--green);font-weight:600;font-size:14px">✓ Tudo em estoque — pode produzir!</div>'}
+    ${links.length?`<div style="margin-top:12px;font-size:11px;color:#999">Fornecedores do projeto: ${links.map(l=>l.url?`<a href="${l.url.startsWith('http')?l.url:'https://'+l.url}" target="_blank" style="color:var(--rose)">${esc(l.nome||'link')}</a>`:esc(l.nome||'')).join(' · ')}</div>`:''}
+  </div>`;
+  document.body.appendChild(ov);
+  ov.querySelector('#cm-x').onclick=()=>ov.remove();
+  const cb=ov.querySelector('#cm-copy');
+  if(cb)cb.onclick=async()=>{try{await navigator.clipboard.writeText(txt);toast('✓ Lista copiada!');}catch(e){prompt('Copie:',txt);}};
+  ov.addEventListener('click',e=>{if(e.target===ov)ov.remove();});
+}
+
 // planejador de preço da produção: custo real + mão de obra + taxa da plataforma + margem
 function prodSugestao(){
   const el=document.getElementById('pr-sug');if(!el)return;
