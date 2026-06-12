@@ -945,8 +945,14 @@ async function loginEmail(criar){
 }
 async function loginGoogle(){
   lmsg('');
-  try{await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());}
-  catch(e){lmsg(erroAuth(e));}
+  const prov=new firebase.auth.GoogleAuthProvider();
+  try{await auth.signInWithPopup(prov);}
+  catch(e){
+    // celular costuma bloquear popup — cai para o fluxo de redirecionamento
+    if((e.code||'').includes('popup')){
+      try{await auth.signInWithRedirect(prov);}catch(e2){lmsg(erroAuth(e2));}
+    }else lmsg(erroAuth(e));
+  }
 }
 async function sair(){if(confirm('Sair da conta?'))await auth.signOut();}
 
