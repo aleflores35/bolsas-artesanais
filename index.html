@@ -809,6 +809,13 @@ async function carregarConfig(){
 function aplicarConfig(){renderPlatOptions();renderConfig();}
 
 // ── AUTENTICAÇÃO ──
+// captura o resultado do login por redirecionamento (celular) e mostra erro se houver
+auth.getRedirectResult().catch(e=>{
+  const c=e.code||'';
+  if(c.includes('missing-initial-state')||c.includes('web-storage')||c.includes('operation-not-supported')){
+    lmsg('Seu navegador bloqueou o login do Google. Abra o link no Chrome (fora do WhatsApp/Instagram) ou entre com e-mail e senha abaixo.');
+  }else if(c&&!c.includes('no-auth-event')){lmsg(erroAuth(e));}
+});
 auth.onAuthStateChanged(async u=>{
   if(!u){
     _unsubs.forEach(f=>f());_unsubs=[];COL=null;_uid=null;_P=[];_H=[];_T=[];_E=[];
