@@ -466,12 +466,19 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
           <button class="ba" style="background:var(--blue-l);color:var(--blue);border-color:#b8d8e8" onclick="addMatFromEstF()">📦 Do estoque</button>
         </div>
       </div></div>
+      <div class="card"><div class="ch"><h2>🔗 Fornecedores e links de compra</h2><button class="ba" onclick="addLink()" style="margin:0;padding:5px 12px;font-size:12px">+ Link</button></div>
+        <div class="cb">
+          <p style="font-size:12px;color:#aaa;margin-bottom:8px">Onde comprar os materiais desta peça (loja, link do produto, WhatsApp do fornecedor…).</p>
+          <div id="links-f"></div>
+        </div></div>
       <div class="card"><div class="ch" style="display:flex;justify-content:space-between;align-items:center"><h2>🪡 Receita de pontos</h2><button class="ba" onclick="addSec()" style="margin:0;padding:5px 12px;font-size:12px">+ Seção</button></div>
         <div class="cb" id="receita-f"></div></div>
       <div class="card"><div class="ch"><h2>📸 Fotos</h2></div><div class="cb">
         <p style="font-size:12px;color:#aaa;margin-bottom:10px">Cole URLs (Google Drive, Pinterest…)</p>
         <div id="fotos-f"></div>
-        <button class="ba" onclick="addFot()">+ Foto</button>
+        <button class="ba" onclick="addFot()">+ Link de foto</button>
+        <button class="ba" style="margin-left:8px;background:var(--blue-l);color:var(--blue);border-color:#b8d8e8" onclick="document.getElementById('pj-foto-file').click()">📷 Da câmera / galeria</button>
+        <input type="file" id="pj-foto-file" accept="image/*" style="display:none" onchange="addFotoArquivo(this.files[0])">
       </div></div>
       <div class="card"><div class="ch"><h2>💡 Observações</h2></div><div class="cb">
         <div class="fg"><label>Notas</label><textarea id="f-obs" rows="4" placeholder="Dicas, gancho, tensão…"></textarea></div>
@@ -617,7 +624,15 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
             <div class="fg"><label>Plataforma</label><select id="ep-plat"><option>WhatsApp / Direto</option><option>Elo7</option><option>Shopee</option><option>Instagram</option><option>Mercado Livre</option><option>Feira</option></select></div>
             <div class="fg"><label>Vincular projeto</label><select id="ep-proj"><option value="">— Nenhum —</option></select></div>
           </div>
-          <div class="fr s"><div class="fg"><label>URL foto</label><input type="url" id="ep-ft" placeholder="https://…"></div></div>
+          <div class="fg" style="margin-bottom:10px"><label>Foto do produto</label>
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+              <img id="ep-foto-prev" style="display:none;width:74px;height:74px;object-fit:cover;border-radius:10px;border:1px solid var(--bdr)">
+              <button class="ba" style="margin:0" onclick="document.getElementById('ep-foto-file').click()">📷 Foto / galeria</button>
+              <button class="ba" style="margin:0;background:var(--purple-l);color:var(--purple);border-color:#c8b8e8" id="ep-ia-btn" onclick="melhorarFoto('ep')" disabled>✨ Premium (IA)</button>
+              <input type="file" id="ep-foto-file" accept="image/*" style="display:none" onchange="setFoto('ep',this.files[0])">
+            </div>
+          </div>
+          <div class="fr s"><div class="fg"><label>ou URL da foto</label><input type="url" id="ep-ft" placeholder="https://…"></div></div>
           <label style="display:flex;gap:8px;font-size:13px;margin:4px 0 10px;align-items:center;cursor:pointer"><input type="checkbox" id="ep-loja"> 🛍 Publicar na vitrine da loja</label>
           <div class="fr s"><div class="fg"><label>Obs</label><textarea id="ep-o" rows="2"></textarea></div></div>
         </div>
@@ -674,6 +689,14 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
             <div class="fg"><label>Qtd produzida</label><input type="number" id="pr-qtd" value="1" min="1"></div>
             <div class="fg"><label>Plataforma</label><select id="pr-plat" onchange="prodSugestao()"></select></div>
           </div>
+          <div class="fg" style="margin-top:4px"><label>Foto da peça pronta</label>
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+              <img id="pr-foto-prev" style="display:none;width:74px;height:74px;object-fit:cover;border-radius:10px;border:1px solid var(--bdr)">
+              <button class="ba" style="margin:0" onclick="document.getElementById('pr-foto-file').click()">📷 Foto / galeria</button>
+              <button class="ba" style="margin:0;background:var(--purple-l);color:var(--purple);border-color:#c8b8e8" id="pr-ia-btn" onclick="melhorarFoto('pr')" disabled>✨ Premium (IA)</button>
+              <input type="file" id="pr-foto-file" accept="image/*" style="display:none" onchange="setFoto('pr',this.files[0])">
+            </div>
+          </div>
           <div style="background:var(--gold-l);border:1px solid #e8d08a;border-radius:10px;padding:10px 12px;margin-top:10px">
             <div style="font-size:11px;font-weight:700;color:var(--gold-d);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">💰 Sugestão de preço — custo real + taxa da plataforma</div>
             <div class="fr">
@@ -723,6 +746,10 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
       </div>
     </div>
   </div></div>
+  <div class="card"><div class="ch"><h2>✨ IA de imagens (Gemini)</h2></div><div class="cb">
+    <div class="fg"><label>Chave da API do Google AI Studio</label><input type="password" id="cfg-gkey" placeholder="AIza..." oninput="CFG.gkey=this.value"></div>
+    <p style="font-size:12px;color:#888;margin-top:8px">Usada no botão <b>✨ Premium (IA)</b> das fotos: transforma a foto da peça em foto de catálogo (fundo neutro, luz de estúdio) <b>sem alterar o produto</b>. Crie a chave grátis em <b>aistudio.google.com/apikey</b>.</p>
+  </div></div>
   <button class="bsv" onclick="salvarConfig()">Salvar configurações</button>
   <div class="card" style="margin-top:1rem"><div class="ch"><h2>💾 Backup dos dados</h2></div><div class="cb">
     <p style="font-size:13px;color:#888;margin-bottom:10px">Exporte todos os seus dados em um arquivo JSON ou restaure de um backup anterior.</p>
@@ -763,7 +790,7 @@ const CFG_PADRAO={
     {nome:'Crescimento',emoji:'🚀',inicio:'2026-12-01',meta_v:40,meta_r:15000,desc:'Marca, ticket alto, recorrência'}
   ],
   modelos:[{nome:'Flora',desc:'Crochê floral'},{nome:'Jolie',desc:'Elegante dia a dia'},{nome:'Mini Bag Lis',desc:'Compacta premium'},{nome:'Duquesa',desc:'Sofisticada noite'},{nome:'Bali',desc:'Macramê boho'}],
-  whats:''
+  whats:'',gkey:''
 };
 let CFG=JSON.parse(JSON.stringify(CFG_PADRAO));
 async function carregarConfig(){
@@ -774,6 +801,7 @@ async function carregarConfig(){
       if(Array.isArray(d.fases)&&d.fases.length)CFG.fases=d.fases;
       if(Array.isArray(d.modelos))CFG.modelos=d.modelos;
       if(typeof d.whats==='string')CFG.whats=d.whats;
+      if(typeof d.gkey==='string')CFG.gkey=d.gkey;
     }
   }catch(e){console.warn('config:',e);}
   aplicarConfig();
@@ -1367,7 +1395,16 @@ async function delHist(id){try{await COL.hist.doc(id).delete();}catch(e){toast('
 async function limparHist(){if(!confirm('Limpar histórico?'))return;const b=db.batch();_H.forEach(h=>b.delete(COL.hist.doc(h._id)));await b.commit();}
 
 // ══ CADERNO ══
-let _eid=null,_mf=[],_sf=[],_ff=[];
+let _eid=null,_mf=[],_sf=[],_ff=[],_lf=[];
+function renderLF(){
+  const el=document.getElementById('links-f');if(!el)return;
+  el.innerHTML=_lf.map((l,i)=>`<div style="display:grid;grid-template-columns:1fr 1.4fr 30px;gap:8px;margin-bottom:8px;align-items:center">
+    <input type="text" value="${(l.nome||'').replace(/"/g,'&quot;')}" placeholder="Fornecedor (ex.: Tegape)" style="border:1px solid var(--bdr);border-radius:8px;padding:8px 10px;font-size:13px;background:#FDFAF7;width:100%" oninput="_lf[${i}].nome=this.value">
+    <input type="url" value="${(l.url||'').replace(/"/g,'&quot;')}" placeholder="https://… ou wa.me/55…" style="border:1px solid var(--bdr);border-radius:8px;padding:8px 10px;font-size:13px;background:#FDFAF7;width:100%" oninput="_lf[${i}].url=this.value">
+    <button class="bds" onclick="_lf.splice(${i},1);renderLF()">✕</button>
+  </div>`).join('')||'<p style="font-size:12px;color:#bbb;text-align:center;padding:.3rem">Nenhum link ainda.</p>';
+}
+function addLink(){_lf.push({nome:'',url:''});renderLF();}
 function sv(v){['lista','form','det'].forEach(x=>{const el=document.getElementById('cv-'+(x==='det'?'det':x));if(!el)return;el.classList.toggle('active',x===v);el.classList.toggle('view',true);});window.scrollTo(0,0);}
 function voltarLista(){sv('lista');}
 function renderLista(){
@@ -1391,13 +1428,13 @@ function renderLista(){
   }).join('');
 }
 function mostrarForm(id){
-  _eid=id;_mf=[];_sf=[];_ff=[];
+  _eid=id;_mf=[];_sf=[];_ff=[];_lf=[];
   document.getElementById('form-tit').textContent=id?'Editar projeto':'Novo projeto';
   if(id){const p=_P.find(x=>(x.id||x._id)===id);if(p){
     document.getElementById('f-n').value=p.nome||'';document.getElementById('f-t').value=p.tipo||'Clutch';document.getElementById('f-s').value=p.status||'rascunho';document.getElementById('f-d').value=p.dataIso||'';document.getElementById('f-tc').value=p.tecnica||'';document.getElementById('f-col').value=p.colecao||'';document.getElementById('f-desc').value=p.descricao||'';document.getElementById('f-obs').value=p.obs||'';document.getElementById('f-tmp').value=p.tempo||'';
-    _mf=(p.materiais?JSON.parse(JSON.stringify(p.materiais)):[]).map(m=>({nome:m.nome||'',qtd:parseFloat(m.qtd)||0,und:m.und||'un',custoUnit:parseFloat(m.custoUnit)||0,estoqueId:m.estoqueId||null,obs:m.obs||''}));_sf=p.secoes?JSON.parse(JSON.stringify(p.secoes)):[];_ff=p.fotos?JSON.parse(JSON.stringify(p.fotos)):[];
+    _mf=(p.materiais?JSON.parse(JSON.stringify(p.materiais)):[]).map(m=>({nome:m.nome||'',qtd:parseFloat(m.qtd)||0,und:m.und||'un',custoUnit:parseFloat(m.custoUnit)||0,estoqueId:m.estoqueId||null,obs:m.obs||''}));_sf=p.secoes?JSON.parse(JSON.stringify(p.secoes)):[];_ff=p.fotos?JSON.parse(JSON.stringify(p.fotos)):[];_lf=p.links?JSON.parse(JSON.stringify(p.links)):[];
   }}else{['f-n','f-tc','f-desc','f-obs','f-tmp','f-col'].forEach(i=>document.getElementById(i).value='');document.getElementById('f-t').value='Clutch';document.getElementById('f-s').value='rascunho';document.getElementById('f-d').value=new Date().toISOString().split('T')[0];addMatF();addMatF();addSec();addFot();}
-  renderMF();renderSF();renderFF();sv('form');
+  renderMF();renderSF();renderFF();renderLF();sv('form');
 }
 function renderMF(){
   const rows=_mf.map((m,i)=>`<div class="mr">
@@ -1439,19 +1476,24 @@ function addSec(){_sf.push({titulo:'Nova seção',passos:['']});renderSF();}
 function delSec(si){_sf.splice(si,1);renderSF();}
 function addPasso(si){_sf[si].passos.push('');renderSF();}
 function delPasso(si,pi){_sf[si].passos.splice(pi,1);renderSF();}
-function renderFF(){document.getElementById('fotos-f').innerHTML=_ff.map((f,i)=>`<div class="fr2"><div style="flex:1"><input type="url" class="fu" value="${f.url||''}" placeholder="URL da foto" oninput="_ff[${i}].url=this.value"><textarea rows="1" style="margin-top:5px" placeholder="Descrição" oninput="_ff[${i}].desc=this.value;ar(this)">${f.desc||''}</textarea></div><button class="bds" onclick="delFot(${i})" style="align-self:flex-start;margin-top:2px">✕</button></div>`).join('');}
+function renderFF(){document.getElementById('fotos-f').innerHTML=_ff.map((f,i)=>{
+  const isData=(f.url||'').startsWith('data:');
+  return `<div class="fr2">${isData?`<img src="${f.url}" style="width:64px;height:64px;object-fit:cover;border-radius:8px;border:1px solid var(--bdr);flex-shrink:0">`:''}<div style="flex:1">${isData?'':`<input type="url" class="fu" value="${f.url||''}" placeholder="URL da foto" oninput="_ff[${i}].url=this.value">`}<textarea rows="1" ${isData?'':'style="margin-top:5px"'} placeholder="Descrição" oninput="_ff[${i}].desc=this.value;ar(this)">${f.desc||''}</textarea></div><button class="bds" onclick="delFot(${i})" style="align-self:flex-start;margin-top:2px">✕</button></div>`;
+}).join('');}
 function addFot(){_ff.push({url:'',desc:''});renderFF();}
 function delFot(i){_ff.splice(i,1);renderFF();}
 async function salvarProj(){
   const nome=document.getElementById('f-n').value.trim();if(!nome){alert('Preencha o nome.');document.getElementById('f-n').focus();return;}
   // _mf já é atualizado em tempo real pelos oninput/onchange de renderMF
   document.querySelectorAll('#receita-f .ps').forEach((sec,si)=>{if(_sf[si]){_sf[si].titulo=sec.querySelector('.psh input').value;sec.querySelectorAll('.pai textarea').forEach((ta,pi)=>{if(_sf[si].passos[pi]!==undefined)_sf[si].passos[pi]=ta.value;});}});
-  document.querySelectorAll('#fotos-f .fr2').forEach((row,i)=>{if(_ff[i]){_ff[i].url=row.querySelector('.fu')?.value||'';_ff[i].desc=row.querySelector('textarea')?.value||'';}});
+  document.querySelectorAll('#fotos-f .fr2').forEach((row,i)=>{if(_ff[i]){const fu=row.querySelector('.fu');if(fu)_ff[i].url=fu.value;_ff[i].desc=row.querySelector('textarea')?.value||'';}});
   const dIso=document.getElementById('f-d').value;
   const id=_eid||Date.now().toString();
   const matsValidos=_mf.filter(m=>m.nome);
   const custoMateriais=matsValidos.reduce((s,m)=>s+(parseFloat(m.qtd)||0)*(parseFloat(m.custoUnit)||0),0);
-  const proj={id,nome,tipo:document.getElementById('f-t').value,status:document.getElementById('f-s').value,dataIso:dIso,data:dIso?new Date(dIso+'T12:00:00').toLocaleDateString('pt-BR'):'',tecnica:document.getElementById('f-tc').value,colecao:document.getElementById('f-col').value,descricao:document.getElementById('f-desc').value,obs:document.getElementById('f-obs').value,tempo:document.getElementById('f-tmp').value,materiais:matsValidos,custoMateriais,secoes:_sf.filter(s=>s.titulo||s.passos.some(p=>p)),fotos:_ff.filter(f=>f.url||f.desc),created_at:_eid?(_P.find(x=>(x.id||x._id)===_eid)?.created_at||firebase.firestore.FieldValue.serverTimestamp()):firebase.firestore.FieldValue.serverTimestamp(),updated_at:firebase.firestore.FieldValue.serverTimestamp()};
+  const _tmpProj={materiais:matsValidos,secoes:_sf,fotos:_ff};
+  if(JSON.stringify(_tmpProj).length>880000){alert('Este projeto está com fotos demais (limite ~900KB por projeto). Remova alguma foto e salve de novo.');return;}
+  const proj={id,nome,tipo:document.getElementById('f-t').value,status:document.getElementById('f-s').value,dataIso:dIso,data:dIso?new Date(dIso+'T12:00:00').toLocaleDateString('pt-BR'):'',tecnica:document.getElementById('f-tc').value,colecao:document.getElementById('f-col').value,descricao:document.getElementById('f-desc').value,obs:document.getElementById('f-obs').value,tempo:document.getElementById('f-tmp').value,materiais:matsValidos,custoMateriais,secoes:_sf.filter(s=>s.titulo||s.passos.some(p=>p)),fotos:_ff.filter(f=>f.url||f.desc),links:_lf.filter(l=>(l.nome||'').trim()||(l.url||'').trim()),created_at:_eid?(_P.find(x=>(x.id||x._id)===_eid)?.created_at||firebase.firestore.FieldValue.serverTimestamp()):firebase.firestore.FieldValue.serverTimestamp(),updated_at:firebase.firestore.FieldValue.serverTimestamp()};
   try{await COL.proj.doc(id).set(proj);_eid=null;voltarLista();toast('✓ Projeto salvo!');}catch(e){toast('❌ Erro: '+e.message);}
 }
 function verProj(id){
@@ -1472,6 +1514,8 @@ function verProj(id){
     ${p.materiais?.length?`<div class="st">🧵 Materiais${p.custoMateriais?` <span style="float:right;font-size:12px;color:var(--rose);font-weight:600">custo: ${fmt(p.custoMateriais)}</span>`:''}
 </div><div class="mv">${p.materiais.map(m=>{const tot=(parseFloat(m.qtd)||0)*(parseFloat(m.custoUnit)||0);return`<div class="mvr"><span><strong>${m.nome}</strong>${m.und?' ('+m.und+')':''}</span><span style="color:#888;font-size:12px">${m.qtd?m.qtd+(m.und?' '+m.und:''):''}${m.custoUnit?' · R$/'+m.und+': '+fmt(m.custoUnit):''}${tot>0?' = <strong style="color:var(--rose)">'+fmt(tot)+'</strong>':''}</span></div>`;}).join('')}</div>`:''}
     ${p.secoes?.length?`<div class="st">🪡 Receita</div>${p.secoes.map(s=>`<div class="psv"><h4>${s.titulo}</h4>${s.passos.filter(x=>x).map((pa,pi)=>`<div class="pav"><div class="pan">${pi+1}</div><div>${pa}</div></div>`).join('')}</div>`).join('')}`:''}
+    ${p.links?.length?`<div class="st">🔗 Fornecedores</div><div class="mv">${p.links.map(l=>`<div class="mvr"><span><strong>${l.nome||'Link'}</strong></span><span>${l.url?`<a href="${l.url.startsWith('http')||l.url.startsWith('wa.me')?l.url:'https://'+l.url}" target="_blank" style="color:var(--rose);font-weight:600;font-size:13px">abrir ↗</a>`:''}</span></div>`).join('')}</div>`:''}
+    ${p.fotos?.length?`<div class="st">📸 Fotos</div><div class="fg2">${p.fotos.map(f=>`<div class="fc">${f.url?`<img src="${f.url}" onerror="this.style.display='none'">`:`<div class="fp">👜</div>`}${f.desc?`<div class="fl">${f.desc}</div>`:''}</div>`).join('')}</div>`:''}
     ${p.obs?`<div class="st">💡 Observações</div><div class="ov">${p.obs}</div>`:''}
     ${p.tempo?`<div style="margin-top:12px;font-size:13px;color:#888">⏱ Tempo: <strong>${p.tempo}</strong></div>`:''}
     <div style="height:2rem"></div>
@@ -1571,8 +1615,9 @@ function mostrarFormEst(id,tipo){
   ['ep-n','ep-col','ep-o','ep-ft'].forEach(i=>{const el=document.getElementById(i);if(el)el.value='';});
   ['ep-c','ep-p'].forEach(i=>{const el=document.getElementById(i);if(el)el.value='';});
   const epq=document.getElementById('ep-q');if(epq)epq.value='1';
-  if(id){const item=_E.find(x=>x._id===id);if(item&&item.tipo==='material'){document.getElementById('em-n').value=item.nome||'';document.getElementById('em-cat').value=item.categoria||'Fio de malha';document.getElementById('em-u').value=item.und||'un';document.getElementById('em-q').value=item.qty||0;document.getElementById('em-qm').value=item.qtyMin||0;document.getElementById('em-c').value=item.custo||0;document.getElementById('em-f').value=item.fornecedor||'';document.getElementById('em-uc').value=item.ultimaCompra||'';document.getElementById('em-obs').value=item.obs||'';}if(item&&item.tipo==='produto'){document.getElementById('ep-n').value=item.nome||'';document.getElementById('ep-col').value=item.colecao||'';document.getElementById('ep-s').value=item.status||'disponivel';document.getElementById('ep-c').value=item.custo||0;document.getElementById('ep-p').value=item.preco||0;document.getElementById('ep-q').value=item.qty||1;document.getElementById('ep-plat').value=item.plataforma||'WhatsApp / Direto';document.getElementById('ep-proj').value=item.projetoId||'';document.getElementById('ep-ft').value=item.foto||'';document.getElementById('ep-o').value=item.obs||'';const epl=document.getElementById('ep-loja');if(epl)epl.checked=!!item.naLoja;}}
-  if(!id){const epl=document.getElementById('ep-loja');if(epl)epl.checked=false;}
+  if(id){const item=_E.find(x=>x._id===id);if(item&&item.tipo==='material'){document.getElementById('em-n').value=item.nome||'';document.getElementById('em-cat').value=item.categoria||'Fio de malha';document.getElementById('em-u').value=item.und||'un';document.getElementById('em-q').value=item.qty||0;document.getElementById('em-qm').value=item.qtyMin||0;document.getElementById('em-c').value=item.custo||0;document.getElementById('em-f').value=item.fornecedor||'';document.getElementById('em-uc').value=item.ultimaCompra||'';document.getElementById('em-obs').value=item.obs||'';}if(item&&item.tipo==='produto'){document.getElementById('ep-n').value=item.nome||'';document.getElementById('ep-col').value=item.colecao||'';document.getElementById('ep-s').value=item.status||'disponivel';document.getElementById('ep-c').value=item.custo||0;document.getElementById('ep-p').value=item.preco||0;document.getElementById('ep-q').value=item.qty||1;document.getElementById('ep-plat').value=item.plataforma||'WhatsApp / Direto';document.getElementById('ep-proj').value=item.projetoId||'';const isData=(item.foto||'').startsWith('data:');_fotos.ep=isData?item.foto:'';document.getElementById('ep-ft').value=isData?'':(item.foto||'');document.getElementById('ep-o').value=item.obs||'';const epl=document.getElementById('ep-loja');if(epl)epl.checked=!!item.naLoja;}}
+  if(!id){const epl=document.getElementById('ep-loja');if(epl)epl.checked=false;_fotos.ep='';}
+  atualizarFotoPrev('ep');
   svEst('form');
 }
 async function salvarEst(){
@@ -1583,7 +1628,7 @@ async function salvarEst(){
   }else{
     const nome=document.getElementById('ep-n').value.trim();if(!nome){alert('Informe o nome.');return;}
     const selP=document.getElementById('ep-proj');
-    item={tipo:'produto',nome,colecao:document.getElementById('ep-col').value,status:document.getElementById('ep-s').value,custo:parseFloat(document.getElementById('ep-c').value)||0,preco:parseFloat(document.getElementById('ep-p').value)||0,qty:parseInt(document.getElementById('ep-q').value)||1,plataforma:document.getElementById('ep-plat').value,projetoId:selP.value||null,projetoNome:selP.value?(selP.options[selP.selectedIndex]?.text||null):null,foto:document.getElementById('ep-ft').value,obs:document.getElementById('ep-o').value,naLoja:document.getElementById('ep-loja')?.checked||false,created_at:_editEst?(_E.find(x=>x._id===_editEst)?.created_at||firebase.firestore.FieldValue.serverTimestamp()):firebase.firestore.FieldValue.serverTimestamp()};
+    item={tipo:'produto',nome,colecao:document.getElementById('ep-col').value,status:document.getElementById('ep-s').value,custo:parseFloat(document.getElementById('ep-c').value)||0,preco:parseFloat(document.getElementById('ep-p').value)||0,qty:parseInt(document.getElementById('ep-q').value)||1,plataforma:document.getElementById('ep-plat').value,projetoId:selP.value||null,projetoNome:selP.value?(selP.options[selP.selectedIndex]?.text||null):null,foto:_fotos.ep||document.getElementById('ep-ft').value,obs:document.getElementById('ep-o').value,naLoja:document.getElementById('ep-loja')?.checked||false,created_at:_editEst?(_E.find(x=>x._id===_editEst)?.created_at||firebase.firestore.FieldValue.serverTimestamp()):firebase.firestore.FieldValue.serverTimestamp()};
   }
   try{if(_editEst)await COL.est.doc(_editEst).update(item);else await COL.est.add(item);voltarEst();toast('✓ Salvo!');}catch(e){toast('❌ Erro: '+e.message);}
 }
@@ -1866,6 +1911,7 @@ function prodCarregar(id){
     mdoEl.value=mdo?Math.round(mdo*100)/100:0;
     if(hint){hint.textContent=fonte?'Sugerido '+fonte:'';hint.style.display=fonte?'block':'none';}
   }
+  _fotos.pr='';atualizarFotoPrev('pr');
   body.style.display='block';
   renderProdMats();
 }
@@ -1933,12 +1979,118 @@ async function prodConcluir(){
       baixas++;
     });
   }
-  batch.set(base.collection('estoque').doc(),{tipo:'produto',nome,colecao:p?.colecao||'',status:'disponivel',custo:Math.round(custoReal*100)/100,preco:parseFloat(document.getElementById('pr-preco').value)||0,qty:qtdProd,plataforma:document.getElementById('pr-plat').value,projetoId:_prodProjId,projetoNome:p?.nome||null,foto:'',naLoja:document.getElementById('pr-loja')?.checked||false,obs:'Produzido em '+new Date().toLocaleDateString('pt-BR')+' · custo real '+fmt(custoReal)+(qtdProd>1?' por unidade':''),created_at:firebase.firestore.FieldValue.serverTimestamp()});
+  batch.set(base.collection('estoque').doc(),{tipo:'produto',nome,colecao:p?.colecao||'',status:'disponivel',custo:Math.round(custoReal*100)/100,preco:parseFloat(document.getElementById('pr-preco').value)||0,qty:qtdProd,plataforma:document.getElementById('pr-plat').value,projetoId:_prodProjId,projetoNome:p?.nome||null,foto:_fotos.pr||'',naLoja:document.getElementById('pr-loja')?.checked||false,obs:'Produzido em '+new Date().toLocaleDateString('pt-BR')+' · custo real '+fmt(custoReal)+(qtdProd>1?' por unidade':''),created_at:firebase.firestore.FieldValue.serverTimestamp()});
   try{
     await batch.commit();
     toast('✓ Produção concluída!'+(baixas?' Baixa em '+baixas+' materiais.':''));
     voltarEst();
   }catch(e){toast('❌ Erro: '+e.message);}
+}
+
+// ══ FOTOS (câmera/galeria → comprimida em base64) + IA PREMIUM (Gemini) ══
+const _fotos={pr:'',ep:''};
+function comprimirFoto(file,maxW,q){
+  return new Promise((res,rej)=>{
+    const img=new Image();
+    const url=URL.createObjectURL(file);
+    img.onload=()=>{
+      URL.revokeObjectURL(url);
+      const sc=Math.min(1,maxW/img.width);
+      const cv=document.createElement('canvas');
+      cv.width=Math.round(img.width*sc);cv.height=Math.round(img.height*sc);
+      cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height);
+      res(cv.toDataURL('image/jpeg',q));
+    };
+    img.onerror=rej;
+    img.src=url;
+  });
+}
+function recomprimir(dataUrl,maxW,q){
+  return new Promise((res,rej)=>{
+    const img=new Image();
+    img.onload=()=>{
+      const sc=Math.min(1,maxW/img.width);
+      const cv=document.createElement('canvas');
+      cv.width=Math.round(img.width*sc);cv.height=Math.round(img.height*sc);
+      cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height);
+      res(cv.toDataURL('image/jpeg',q));
+    };
+    img.onerror=rej;
+    img.src=dataUrl;
+  });
+}
+async function setFoto(slot,file){
+  if(!file)return;
+  try{
+    _fotos[slot]=await comprimirFoto(file,900,0.72);
+    atualizarFotoPrev(slot);
+    toast('✓ Foto pronta!');
+  }catch(e){toast('❌ Não consegui ler a imagem.');}
+  const fi=document.getElementById(slot+'-foto-file');if(fi)fi.value='';
+}
+function atualizarFotoPrev(slot){
+  const img=document.getElementById(slot+'-foto-prev');
+  const btn=document.getElementById(slot+'-ia-btn');
+  if(img){if(_fotos[slot]){img.src=_fotos[slot];img.style.display='block';}else{img.removeAttribute('src');img.style.display='none';}}
+  if(btn)btn.disabled=!_fotos[slot];
+}
+async function addFotoArquivo(file){
+  if(!file)return;
+  try{
+    const d=await comprimirFoto(file,640,0.62);
+    _ff.push({url:d,desc:''});renderFF();toast('✓ Foto adicionada!');
+  }catch(e){toast('❌ Não consegui ler a imagem.');}
+  const fi=document.getElementById('pj-foto-file');if(fi)fi.value='';
+}
+const PROMPT_PREMIUM='Transforme esta foto em fotografia profissional de produto para catálogo de bolsas artesanais de luxo: fundo neutro minimalista em tom creme/areia, iluminação de estúdio suave e difusa, sombra natural delicada, produto centralizado. MUITO IMPORTANTE: preserve o produto EXATAMENTE como está na foto — não altere formato, proporções, tamanho, cores, pontos do crochê, textura, alças, ferragens ou qualquer detalhe da peça. Não adicione texto, pessoas, logotipos ou marca d\'água.';
+async function melhorarFoto(slot){
+  const src=_fotos[slot];
+  if(!src||!src.startsWith('data:')){toast('Tire ou envie uma foto primeiro.');return;}
+  const key=(CFG.gkey||'').trim();
+  if(!key){toast('Cole a sua chave do Gemini em Ajustes → IA de imagens.');aba('config');return;}
+  const btn=document.getElementById(slot+'-ia-btn');
+  if(btn){btn.disabled=true;btn.textContent='✨ Gerando… (~15s)';}
+  try{
+    const m=src.match(/^data:(image\/\w+);base64,(.+)$/);
+    if(!m)throw new Error('formato de foto inválido');
+    const body={contents:[{parts:[{text:PROMPT_PREMIUM},{inline_data:{mime_type:m[1],data:m[2]}}]}]};
+    const r=await fetch('https://generativelanguage.googleapis.com/v1/models/gemini-3.1-flash-image:generateContent',{
+      method:'POST',
+      headers:{'x-goog-api-key':key,'Content-Type':'application/json'},
+      body:JSON.stringify(body)
+    });
+    const j=await r.json();
+    if(!r.ok)throw new Error(j.error?.message||('HTTP '+r.status));
+    const part=(j.candidates?.[0]?.content?.parts||[]).find(p=>p.inlineData||p.inline_data);
+    if(!part)throw new Error('a IA não retornou imagem — tente outra foto.');
+    const d=part.inlineData||part.inline_data;
+    const nova='data:'+(d.mimeType||d.mime_type||'image/png')+';base64,'+d.data;
+    mostrarComparacao(slot,src,nova);
+  }catch(e){toast('❌ IA: '+e.message);}
+  if(btn){btn.disabled=false;btn.textContent='✨ Premium (IA)';}
+}
+function mostrarComparacao(slot,antes,depois){
+  const ov=document.createElement('div');
+  ov.style.cssText='position:fixed;inset:0;background:rgba(30,21,16,.85);z-index:9500;display:flex;align-items:center;justify-content:center;padding:16px';
+  ov.innerHTML=`<div style="background:#FFFDF9;border-radius:16px;padding:16px;max-width:560px;width:100%;max-height:92vh;overflow:auto">
+    <div style="font-size:14px;font-weight:700;color:var(--rose);margin-bottom:10px">✨ Antes e depois — qual você prefere?</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div><div style="font-size:11px;color:#888;margin-bottom:4px">Original</div><img src="${antes}" style="width:100%;border-radius:10px"></div>
+      <div><div style="font-size:11px;color:var(--gold-d);margin-bottom:4px;font-weight:600">Premium ✨</div><img src="${depois}" style="width:100%;border-radius:10px;border:2px solid var(--gold)"></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:14px">
+      <button class="bsv" style="margin:0;flex:1" id="ia-usar">✓ Usar a premium</button>
+      <button class="bgr" style="flex:1" id="ia-manter">Manter original</button>
+    </div>
+  </div>`;
+  document.body.appendChild(ov);
+  ov.querySelector('#ia-manter').onclick=()=>ov.remove();
+  ov.querySelector('#ia-usar').onclick=async()=>{
+    try{_fotos[slot]=await recomprimir(depois,900,0.8);}catch(e){_fotos[slot]=depois;}
+    atualizarFotoPrev(slot);
+    ov.remove();
+    toast('✓ Foto premium aplicada!');
+  };
 }
 
 // ══ AJUSTES (CONFIGURAÇÕES) ══
@@ -1974,6 +2126,7 @@ function renderConfig(){
   </div>`).join('')||'<p style="font-size:13px;color:#bbb;text-align:center;padding:.5rem">Nenhum modelo.</p>';
   const cw=document.getElementById('cfg-whats');if(cw)cw.value=CFG.whats||'';
   const lu=document.getElementById('loja-url');if(lu)lu.textContent=lojaURL();
+  const gk=document.getElementById('cfg-gkey');if(gk)gk.value=CFG.gkey||'';
 }
 function lojaURL(){return location.origin+'/loja.html';}
 async function copiarLinkLoja(){
@@ -1993,7 +2146,7 @@ async function salvarConfig(){
   CFG.fases=CFG.fases.filter(f=>(f.nome||'').trim()).sort((a,b)=>(a.inicio||'')<(b.inicio||'')?-1:1);
   CFG.modelos=CFG.modelos.filter(m=>(m.nome||'').trim());
   try{
-    await COL.cfg.set({taxas:CFG.taxas,fases:CFG.fases,modelos:CFG.modelos,whats:(CFG.whats||'').trim(),updated_at:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
+    await COL.cfg.set({taxas:CFG.taxas,fases:CFG.fases,modelos:CFG.modelos,whats:(CFG.whats||'').trim(),gkey:(CFG.gkey||'').trim(),updated_at:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
     aplicarConfig();renderFase();renderPlano();renderDash();renderDRE();renderExtrato();
     try{_vitCache={};await initVitrineCache();sincronizarVitrine();}catch(e){}
     toast('✓ Configurações salvas!');
