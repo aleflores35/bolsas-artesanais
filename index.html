@@ -1842,12 +1842,12 @@ function parseCupom(texto){
     let m=l.match(reA);
     if(m){itens.push({sel:true,nome:m[1].trim(),qtd:numBr(m[2])||1,und:normUnd(m[3]),custo:numBr(m[4]),destino:'novo'});continue;}
     m=l.match(reB);
-    if(m&&/[a-zA-ZÃ€-Ãº]{3}/.test(m[1]))itens.push({sel:true,nome:m[1].trim(),qtd:1,und:'un',custo:numBr(m[2]),destino:'novo'});
+    if(m&&/[a-zA-ZÀ-ú]{3}/.test(m[1]))itens.push({sel:true,nome:m[1].trim(),qtd:1,und:'un',custo:numBr(m[2]),destino:'novo'});
   }
   itens.forEach(i=>i.destino=chutarDestino(i.nome));
   const dm=texto.match(/(\d{2})\/(\d{2})\/(\d{4})/);
   const dataIso=dm?`${dm[3]}-${dm[2]}-${dm[1]}`:'';
-  const fornecedor=(linhas.find(l=>/[A-Za-zÃ€-Ãº]{4,}/.test(l)&&!/cupom|nota|fiscal|nfc|extrato|sat/i.test(l))||'').slice(0,40);
+  const fornecedor=(linhas.find(l=>/[a-zA-ZÀ-ú]{4,}/.test(l)&&!/cupom|nota|fiscal|nfc|extrato|sat/i.test(l))||'').slice(0,40);
   return {itens,dataIso,fornecedor};
 }
 async function importarCupom(file){
