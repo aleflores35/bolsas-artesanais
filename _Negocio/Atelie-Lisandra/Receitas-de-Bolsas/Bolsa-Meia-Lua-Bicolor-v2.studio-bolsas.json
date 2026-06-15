@@ -1,0 +1,147 @@
+{
+ "app": "studio-bolsas",
+ "versao": 2,
+ "exportadoEm": "2026-06-14T00:00:00.000Z",
+ "projetos": [
+  {
+   "id": "1750000000001",
+   "nome": "Bolsa Meia-Lua Bicolor",
+   "tipo": "Bolsa",
+   "status": "rascunho",
+   "dataIso": "2026-06-14",
+   "data": "14/06/2026",
+   "tecnica": "Crochê — fio náutico 3mm",
+   "colecao": "Premium",
+   "descricao": "Bolsa meia-lua/hobo bicolor (creme + marinho) com corte de cor na diagonal, alça de mão integrada e tiracolo de couro com ferragens douradas. Referência @toxunmatic.",
+   "obs": "Receita de construção (não cópia de pontos). Tamanho ref.: média ~25 cm. Esquema de carreiras calibrado p/ amostra 10cm=30pt x 32carreiras — fazer amostra antes.",
+   "tempo": "",
+   "materiais": [
+    {
+     "nome": "Fio Fischer Poli 3mm — Off White",
+     "qtd": 150,
+     "und": "m",
+     "custoUnit": 0.2,
+     "obs": "~0,7 cone (cone 220m R$44,90)"
+    },
+    {
+     "nome": "Fio Fischer Poli 3mm — Marinho",
+     "qtd": 150,
+     "und": "m",
+     "custoUnit": 0.21,
+     "obs": "~0,7 cone (cone 220m ~R$46)"
+    },
+    {
+     "nome": "Alça tiracolo couro regulável c/ mosquetão dourado",
+     "qtd": 1,
+     "und": "un",
+     "custoUnit": 22.0,
+     "obs": ""
+    },
+    {
+     "nome": "Par de argolas articuladas douradas",
+     "qtd": 1,
+     "und": "par",
+     "custoUnit": 10.0,
+     "obs": "do kit 4 argolas + 2 fechos"
+    },
+    {
+     "nome": "Fecho dourado (zíper YKK ou botão de ímã)",
+     "qtd": 1,
+     "und": "un",
+     "custoUnit": 8.0,
+     "obs": ""
+    },
+    {
+     "nome": "Entretela termocolante firme",
+     "qtd": 1,
+     "und": "corte",
+     "custoUnit": 6.0,
+     "obs": "corte das 2 faces"
+    },
+    {
+     "nome": "Tecido de forro (algodão/oxford)",
+     "qtd": 1,
+     "und": "corte",
+     "custoUnit": 8.0,
+     "obs": "~0,5 m"
+    }
+   ],
+   "custoMateriais": 115.5,
+   "secoes": [
+    {
+     "titulo": "0. Amostra (passo obrigatório)",
+     "passos": [
+      "Faça um quadrado ~12x12 cm em ponto baixo, fio Fischer 3mm + agulha 4,5mm.",
+      "Meça 10x10 cm no centro. Este esquema é calibrado para: 10 cm = 30 pontos e 32 carreiras.",
+      "Se a sua amostra der diferente: pontos = largura(cm) x (seus pontos em 10cm /10); carreiras = altura(cm) x (suas carreiras em 10cm /10)."
+     ]
+    },
+    {
+     "titulo": "1. Cada face — faça 2 (medidas e carreiras)",
+     "passos": [
+      "Boca 28 cm, altura no centro 20 cm.",
+      "Base: corrente de 85 -> 84 pontos baixos (pb) na 1a carreira.",
+      "Carreiras 1 a 32: reto, 84 pb em cada (sobe ~10 cm).",
+      "Carreiras 33 a 64: diminuir 1 pb em CADA ponta a cada carreira (-2/carreira); na carreira 64 sobram ~20 pb -> arredonda o fundo.",
+      "Total: 64 carreiras por face."
+     ]
+    },
+    {
+     "titulo": "2. As cores — corte diagonal (intarsia, 2 novelos)",
+     "passos": [
+      "Carreira 1: ~70 pb creme + 14 pb marinho.",
+      "A cada carreira, desloque o ponto de troca ~1 ponto (creme diminui, marinho cresce).",
+      "Carreira ~32 (meio): ~42 creme + 42 marinho (50/50).",
+      "Carreira 64 (fundo): quase tudo marinho.",
+      "1a bolsa sem intarsia: face toda marinho + faixa diagonal de creme aplicada por cima."
+     ]
+    },
+    {
+     "titulo": "3. Alça de mão integrada",
+     "passos": [
+      "Na boca, faça um cordão de ~12 pb de largura x ~55 carreiras (vão ~14 cm) e una na outra face.",
+      "Alternativa: crochetar separada e costurar firme por dentro."
+     ]
+    },
+    {
+     "titulo": "4. Montagem e acabamento",
+     "passos": [
+      "Bloqueio leve para assentar o ponto.",
+      "Forro com entretela do tamanho de cada face (estrutura premium).",
+      "Unir faces pelo fundo/laterais, deixando a boca aberta.",
+      "Instalar zíper/ímã escondendo a costura no forro.",
+      "Fixar argolas em D na boca e prender a alça com os mosquetões.",
+      "Pregar o vivo/fio dourado na divisa das cores."
+     ]
+    }
+   ],
+   "fotos": [
+    {
+     "url": "https://www.instagram.com/p/DZDZL8PDJJg/",
+     "desc": "Bolsa meia-lua bicolor — foto de referência (@toxunmatic)"
+    }
+   ],
+   "links": [
+    {
+     "nome": "Foto referência (Instagram)",
+     "url": "https://www.instagram.com/p/DZDZL8PDJJg/"
+    },
+    {
+     "nome": "Fios Fischer 3mm (Mercado Livre)",
+     "url": "https://lista.mercadolivre.com.br/fio-nautico-fischer-poli-3mm"
+    },
+    {
+     "nome": "Ferragens douradas (Mercado Livre)",
+     "url": "https://lista.mercadolivre.com.br/argola-dourada-bolsa-croche-fecho-ima-dourado"
+    },
+    {
+     "nome": "Alça de couro (Mercado Livre)",
+     "url": "https://lista.mercadolivre.com.br/alca-tiracolo-regulavel-couro-bolsa-dourada"
+    }
+   ]
+  }
+ ],
+ "historico": [],
+ "transacoes": [],
+ "estoque": []
+}

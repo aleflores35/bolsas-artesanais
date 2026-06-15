@@ -1,0 +1,126 @@
+{
+ "app": "studio-bolsas",
+ "versao": 2,
+ "exportadoEm": "2026-06-14T00:00:00.000Z",
+ "projetos": [
+  {
+   "id": "1750000000003",
+   "nome": "Clutch Wave (ponto onda, fecho de madeira)",
+   "tipo": "Clutch",
+   "status": "rascunho",
+   "dataIso": "2026-06-14",
+   "data": "14/06/2026",
+   "tecnica": "Crochê — fio náutico 2mm, ponto onda",
+   "colecao": "Premium",
+   "descricao": "Clutch retangular em ponto onda (relevo) com fecho/armação de madeira. Peça aberta 35,15x38,5 cm; altura dobrada ~19 cm. Receita completa fornecida (testada).",
+   "obs": "Fio 2mm, agulha 2,5mm. Densidade define o encaixe no fecho — fazer amostra.",
+   "tempo": "",
+   "materiais": [
+    {
+     "nome": "Cordão poliéster 2mm (bege/cru)",
+     "qtd": 250,
+     "und": "m",
+     "custoUnit": 0.13,
+     "obs": "gasta >200m; sugest.: Fischer/São João/Círculo/Amazônia/Euroroma"
+    },
+    {
+     "nome": "Fecho de madeira c/ parafusos (ext. 250x125mm / int. 200x75mm)",
+     "qtd": 1,
+     "und": "un",
+     "custoUnit": 50.0,
+     "obs": "AliExpress"
+    },
+    {
+     "nome": "Tecido de forro + linhas",
+     "qtd": 1,
+     "und": "corte",
+     "custoUnit": 10.0,
+     "obs": "forro com molde na peça"
+    }
+   ],
+   "custoMateriais": 92.5,
+   "secoes": [
+    {
+     "titulo": "0. Amostra / tensão",
+     "passos": [
+      "Fazer amostra: a densidade define o tamanho que encaixa no fecho.",
+      "Fio 2mm, agulha 2,5mm."
+     ]
+    },
+    {
+     "titulo": "1. Base e aumentos",
+     "passos": [
+      "Deixar ~1m de fio. 63 correntinhas.",
+      "1a carreira: pb pela alça traseira -> 62 pb; subir 2 corr, virar.",
+      "2a carreira: pb pela alça superior -> 63 pb; subir 2 corr, virar.",
+      "A partir da 3a: aumentar 1 pb/carreira por 14 carreiras -> 75 pb; +1 -> 76 pb."
+     ]
+    },
+    {
+     "titulo": "2. Padrão de ondas (centro)",
+     "passos": [
+      "Onda = meia coluna + 14 pontos altos + meia coluna; 16 pontos de ligação entre ondas; pontas com motivo incompleto de 6.",
+      "Carreira de onda: 6 lig · onda · 16 lig · onda · 16 lig · onda · 16 lig · incompleto. Carreira seguinte = espelhada (topo da onda).",
+      "Após cada par de ondas, 4 carreiras de pb simples (76 pts).",
+      "Alternar 2 carreiras de onda + 4 simples, até 7 pares de ondas."
+     ]
+    },
+    {
+     "titulo": "3. Decréscimos",
+     "passos": [
+      "14 carreiras diminuindo 1 pt/carreira (iniciar pela 3a alça) até voltar a 62 pts.",
+      "Emendar novelos derretendo as pontas com isqueiro. Vaporizar levemente sem achatar o relevo."
+     ]
+    },
+    {
+     "titulo": "4. Montagem",
+     "passos": [
+      "Cortar forro usando a peça como molde (margem maior topo/baixo, 1-2cm laterais).",
+      "Dobrar ao meio (lado direito p/ dentro, ondas p/ dentro); costurar laterais unindo as correntinhas.",
+      "Virar; formar o fundo dobrando os cantos internos e costurando pelo avesso (alças traseiras).",
+      "Carreira de acabamento na borda (pb uniformes); fechamento invisível; esconder pontas."
+     ]
+    },
+    {
+     "titulo": "5. Instalar o fecho de madeira",
+     "passos": [
+      "Testar encaixe; centralizar as ondas; alinhar costuras aos parafusos.",
+      "Cola p/ tecido+madeira na canaleta; encaixar a borda; parafusos sem apertar demais; secar.",
+      "Forro + zíper interno opcional; finalizar pontas."
+     ]
+    }
+   ],
+   "fotos": [
+    {
+     "url": "",
+     "desc": "Clutch bege em ponto onda com fecho de madeira (foto enviada pelo Alessandro)"
+    }
+   ],
+   "links": [
+    {
+     "nome": "Tutorial ponto onda (Labellebags)",
+     "url": "https://www.youtube.com/results?search_query=clutch+ponto+onda+crochê+labellebags"
+    },
+    {
+     "nome": "Bolsa crochê ponto ondas",
+     "url": "https://youtu.be/H1nhXf8HNz8"
+    },
+    {
+     "nome": "Fecho de madeira na bolsa (tutorial)",
+     "url": "https://www.youtube.com/results?search_query=bolsa+crochê+fecho+de+madeira+passo+a+passo"
+    },
+    {
+     "nome": "Fio náutico 2mm (Mercado Livre)",
+     "url": "https://mercadolivre.com/sec/251L2yy"
+    },
+    {
+     "nome": "Fecho de madeira (AliExpress)",
+     "url": "https://s.click.aliexpress.com/e/_mKQEolx"
+    }
+   ]
+  }
+ ],
+ "historico": [],
+ "transacoes": [],
+ "estoque": []
+}

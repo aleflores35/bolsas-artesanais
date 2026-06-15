@@ -1,0 +1,140 @@
+{
+ "app": "studio-bolsas",
+ "versao": 2,
+ "exportadoEm": "2026-06-14T00:00:00.000Z",
+ "projetos": [
+  {
+   "id": "1750000000002",
+   "nome": "Bolsa Bucket Bicolor (argolas)",
+   "tipo": "Bolsa",
+   "status": "rascunho",
+   "dataIso": "2026-06-14",
+   "data": "14/06/2026",
+   "tecnica": "Crochê — fio náutico 3mm (em voltas)",
+   "colecao": "Premium",
+   "descricao": "Bolsa bucket/saco bicolor (bege + marinho) com 2 alças de argola redonda, fundo oval bege, frente franzida nas argolas, bolso com zíper atrás e tiracolo de couro. Referência @toxunmatic.",
+   "obs": "Receita de construção. Tamanho ref.: média. Números de voltas projetados — fazer amostra (10cm=30pt x 32voltas) e protótipo.",
+   "tempo": "",
+   "materiais": [
+    {
+     "nome": "Fio Fischer Poli 3mm — Bege/Cru",
+     "qtd": 300,
+     "und": "m",
+     "custoUnit": 0.2,
+     "obs": "frente+fundo (~1,4 cone)"
+    },
+    {
+     "nome": "Fio Fischer Poli 3mm — Marinho",
+     "qtd": 150,
+     "und": "m",
+     "custoUnit": 0.21,
+     "obs": "laterais/costas"
+    },
+    {
+     "nome": "Par de alças de argola redonda (bambu 15cm/resina)",
+     "qtd": 1,
+     "und": "par",
+     "custoUnit": 35.0,
+     "obs": ""
+    },
+    {
+     "nome": "Alça tiracolo couro regulável c/ mosquetão dourado",
+     "qtd": 1,
+     "und": "un",
+     "custoUnit": 22.0,
+     "obs": ""
+    },
+    {
+     "nome": "Zíper YKK metal dourado ~18cm (bolso traseiro)",
+     "qtd": 1,
+     "und": "un",
+     "custoUnit": 8.0,
+     "obs": ""
+    },
+    {
+     "nome": "Entretela termocolante firme",
+     "qtd": 1,
+     "und": "corte",
+     "custoUnit": 5.0,
+     "obs": ""
+    },
+    {
+     "nome": "Tecido de forro marinho",
+     "qtd": 1,
+     "und": "corte",
+     "custoUnit": 8.0,
+     "obs": "~0,5 m"
+    }
+   ],
+   "custoMateriais": 169.5,
+   "secoes": [
+    {
+     "titulo": "0. Amostra (obrigatório)",
+     "passos": [
+      "Quadrado ~12x12 cm em ponto baixo, fio 3mm + agulha 4,5mm.",
+      "Calibrado para 10 cm = 30 pontos e 32 voltas.",
+      "Se diferir, converta as medidas pela sua amostra."
+     ]
+    },
+    {
+     "titulo": "1. Fundo oval (bege)",
+     "passos": [
+      "Corrente de ~30 (22-12=10cm x3,0). 1a volta: ponto baixo ao redor com aumentos nas 2 pontas (estilo sola de chinelo).",
+      "Seguir em voltas, aumentando nas pontas, ~6 voltas, até o fundo medir ~22x12 cm.",
+      "Perímetro final ~160 pontos."
+     ]
+    },
+    {
+     "titulo": "2. Corpo (subir reto, em voltas) + cor",
+     "passos": [
+      "Sem aumentos, subir ~70 voltas (~22 cm) em ponto baixo.",
+      "Cor em bloco vertical: frente bege, costas marinho (fundo já é bege); emendas laterais em intarsia.",
+      "Nas costas, prever o bolso com zíper (no forro ou na malha)."
+     ]
+    },
+    {
+     "titulo": "3. Boca e argolas (franzido)",
+     "passos": [
+      "Dividir a boca em frente e costas.",
+      "Dobrar os pontos da frente por cima de 1 argola e prender com ponto baixo, juntando/puxando os pontos (franzir).",
+      "Repetir as costas na 2a argola. O franzido da frente bege dá o caimento da foto."
+     ]
+    },
+    {
+     "titulo": "4. Forro e alça",
+     "passos": [
+      "Forro marinho com entretela (corpo firme); bolso com zíper nas costas.",
+      "Fixar ferragens e prender a alça tiracolo de couro com os mosquetões."
+     ]
+    }
+   ],
+   "fotos": [
+    {
+     "url": "https://www.instagram.com/p/DZIbhUpDG6A/",
+     "desc": "Bolsa bucket bicolor — referência (@toxunmatic)"
+    }
+   ],
+   "links": [
+    {
+     "nome": "Foto referência (Instagram)",
+     "url": "https://www.instagram.com/p/DZIbhUpDG6A/"
+    },
+    {
+     "nome": "Fios Fischer 3mm (Mercado Livre)",
+     "url": "https://lista.mercadolivre.com.br/fio-nautico-fischer-poli-3mm"
+    },
+    {
+     "nome": "Alças de argola redonda (Mercado Livre)",
+     "url": "https://lista.mercadolivre.com.br/alca-argola-redonda-bambu-para-bolsa-croche-par"
+    },
+    {
+     "nome": "Alça de couro (Mercado Livre)",
+     "url": "https://lista.mercadolivre.com.br/alca-tiracolo-regulavel-couro-bolsa-dourada"
+    }
+   ]
+  }
+ ],
+ "historico": [],
+ "transacoes": [],
+ "estoque": []
+}
