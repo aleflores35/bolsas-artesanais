@@ -276,7 +276,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
   </div>
 </div>
 <header>
-  <div class="ht"><div style="display:flex;align-items:baseline;gap:8px"><h1>👜 Studio Bolsas</h1><span style="font-size:10px;font-weight:600;background:rgba(168,132,60,.35);color:#f5e6c8;border-radius:10px;padding:2px 7px;letter-spacing:.04em">v2.6</span><span id="adm-view" style="display:none;font-size:10px;font-weight:600;background:var(--gold);color:white;border-radius:10px;padding:2px 7px"></span></div><div class="sync"><div class="sd" id="sd"></div><span id="sl">…</span></div></div>
+  <div class="ht"><div style="display:flex;align-items:baseline;gap:8px"><h1>👜 Studio Bolsas</h1><span style="font-size:10px;font-weight:600;background:rgba(168,132,60,.35);color:#f5e6c8;border-radius:10px;padding:2px 7px;letter-spacing:.04em">v2.7</span><span id="adm-view" style="display:none;font-size:10px;font-weight:600;background:var(--gold);color:white;border-radius:10px;padding:2px 7px"></span></div><div class="sync"><div class="sd" id="sd"></div><span id="sl">…</span></div></div>
   <div class="tabs">
     <button class="tab active" onclick="aba('dash')"><span class="ti">📊</span><span class="tl"> Painel</span></button>
     <button class="tab" onclick="aba('caderno')"><span class="ti">📓</span><span class="tl"> Projetos</span></button>
@@ -640,6 +640,11 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
           </div>
           <div class="fr s"><div class="fg"><label>Link da última compra (opcional)</label><input type="url" id="em-link" placeholder="https://… ou wa.me/55… (onde você comprou da última vez)"></div></div>
           <div class="fr s"><div class="fg"><label>Obs</label><textarea id="em-obs" rows="2" placeholder="Cor, gramatura…"></textarea></div></div>
+          <div class="fr s" style="margin-top:6px"><div class="fg"><label style="display:flex;gap:6px;align-items:center;cursor:pointer;font-weight:600;color:var(--rose)"><input type="checkbox" id="em-lancar" onchange="emToggleLancar()"> 💰 Lançar esta compra como despesa no caixa</label></div></div>
+          <div class="fr" id="em-lancar-row" style="display:none">
+            <div class="fg"><label>Valor dos produtos (R$)</label><input type="number" id="em-valorpago" min="0" step="0.01" placeholder="pago nos produtos"></div>
+            <div class="fg"><label>Frete (R$)</label><input type="number" id="em-frete" min="0" step="0.01" placeholder="0,00"></div>
+          </div>
         </div>
       </div>
       <div class="card" id="est-fp" style="display:none">
@@ -690,7 +695,12 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
             <div class="fg"><label>Fornecedor</label><input type="text" id="imp-forn" placeholder="Loja do cupom"></div>
             <div class="fg"><label>Data da compra</label><input type="date" id="imp-data"></div>
           </div>
-          <label style="display:flex;gap:8px;font-size:13px;margin-top:10px;align-items:center;cursor:pointer"><input type="checkbox" id="imp-desp" checked> Lançar o total como <strong>despesa no caixa</strong></label>
+          <div class="fr" style="margin-top:8px">
+            <div class="fg"><label>Frete (R$) — opcional</label><input type="number" id="imp-frete" min="0" step="0.01" placeholder="0,00" oninput="impTotal()"></div>
+            <div class="fg"><label>Total da compra</label><input type="text" id="imp-tot" readonly style="font-weight:700;color:var(--rose);background:#FBEFE9"></div>
+          </div>
+          <p style="font-size:11px;color:#999;margin:2px 0 0">O custo por unidade do material usa só o valor dos produtos (sem frete). O caixa recebe produtos + frete.</p>
+          <label style="display:flex;gap:8px;font-size:13px;margin-top:10px;align-items:center;cursor:pointer"><input type="checkbox" id="imp-desp" checked> Lançar o total (produtos + frete) como <strong>despesa no caixa</strong></label>
           <button class="bsv" onclick="impSalvar()">Adicionar ao estoque</button>
         </div>
       </div>
@@ -1670,9 +1680,10 @@ function mostrarFormEst(id,tipo){
   document.getElementById('est-tit').textContent=id?'Editar':(tipo==='produto'?'Novo produto':'Novo material');
   document.getElementById('est-fm').style.display=_etipo==='material'?'block':'none';
   document.getElementById('est-fp').style.display=_etipo==='produto'?'block':'none';
-  ['em-n','em-obs','em-f'].forEach(i=>{const el=document.getElementById(i);if(el)el.value='';});
+  ['em-n','em-obs','em-f','em-link','em-valorpago','em-frete'].forEach(i=>{const el=document.getElementById(i);if(el)el.value='';});
   ['em-q','em-qm','em-c'].forEach(i=>{const el=document.getElementById(i);if(el)el.value='';});
   document.getElementById('em-uc').value='';
+  {const lc=document.getElementById('em-lancar');if(lc)lc.checked=false;const lr=document.getElementById('em-lancar-row');if(lr)lr.style.display='none';}
   ['ep-n','ep-col','ep-o','ep-ft'].forEach(i=>{const el=document.getElementById(i);if(el)el.value='';});
   ['ep-c','ep-p'].forEach(i=>{const el=document.getElementById(i);if(el)el.value='';});
   const epq=document.getElementById('ep-q');if(epq)epq.value='1';
@@ -1691,9 +1702,41 @@ async function salvarEst(){
     const selP=document.getElementById('ep-proj');
     item={tipo:'produto',nome,colecao:document.getElementById('ep-col').value,status:document.getElementById('ep-s').value,custo:parseFloat(document.getElementById('ep-c').value)||0,preco:parseFloat(document.getElementById('ep-p').value)||0,qty:parseInt(document.getElementById('ep-q').value)||1,plataforma:document.getElementById('ep-plat').value,projetoId:selP.value||null,projetoNome:selP.value?(selP.options[selP.selectedIndex]?.text||null):null,foto:_fotos.ep||document.getElementById('ep-ft').value,obs:document.getElementById('ep-o').value,naLoja:document.getElementById('ep-loja')?.checked||false,created_at:_editEst?(_E.find(x=>x._id===_editEst)?.created_at||firebase.firestore.FieldValue.serverTimestamp()):firebase.firestore.FieldValue.serverTimestamp()};
   }
-  try{if(_editEst)await COL.est.doc(_editEst).update(item);else await COL.est.add(item);voltarEst();toast('✓ Salvo!');}catch(e){toast('❌ Erro: '+e.message);}
+  try{
+    let mid=_editEst;
+    if(_editEst)await COL.est.doc(_editEst).update(item);
+    else{const ref=await COL.est.add(item);mid=ref.id;}
+    if(_etipo==='material'&&document.getElementById('em-lancar')?.checked){
+      const vp=parseFloat(document.getElementById('em-valorpago').value)||0;
+      const fr=parseFloat(document.getElementById('em-frete').value)||0;
+      const desp=Math.round((vp+fr)*100)/100;
+      if(desp>0){
+        const dIso=item.ultimaCompra||new Date().toISOString().slice(0,10);
+        const tref=await COL.trans.add({tipo:'despesa',valor:desp,dataIso:dIso,data:new Date(dIso+'T12:00:00').toLocaleDateString('pt-BR'),descricao:'Compra de '+item.nome+(item.fornecedor?' — '+item.fornecedor:''),obs:'Lançado pelo estoque'+(fr?' (inclui frete '+fmt(fr)+')':''),categoria:'Materiais (fios, aviamentos)',formaPagamento:'Pix',status:'pago',projetoId:null,projetoNome:null,materialIds:[mid],created_at:firebase.firestore.FieldValue.serverTimestamp()});
+        await COL.est.doc(mid).update({transId:tref.id});
+      }
+    }
+    voltarEst();toast('✓ Salvo!');
+  }catch(e){toast('❌ Erro: '+e.message);}
 }
-async function delEst(id){if(!confirm('Excluir?'))return;try{await COL.est.doc(id).delete();}catch(e){toast('❌ Erro.');}}
+function emToggleLancar(){
+  const lc=document.getElementById('em-lancar');if(!lc)return;
+  const row=document.getElementById('em-lancar-row');if(row)row.style.display=lc.checked?'':'none';
+  if(lc.checked){const vp=document.getElementById('em-valorpago');if(vp&&!vp.value){const q=parseFloat(document.getElementById('em-q').value)||0,c=parseFloat(document.getElementById('em-c').value)||0;if(q*c>0)vp.value=Math.round(q*c*100)/100;}}
+}
+async function delEst(id){
+  const item=_E.find(x=>x._id===id);
+  if(!confirm('Excluir?'))return;
+  try{
+    await COL.est.doc(id).delete();
+    if(item&&item.transId){
+      const compart=_E.some(e=>e._id!==id&&e.transId===item.transId);
+      const t=_T.find(x=>x._id===item.transId);
+      if(t&&!compart){if(confirm('Excluir também a despesa "'+(t.descricao||'')+'" de '+fmt(t.valor||0)+' no caixa?'))await COL.trans.doc(item.transId).delete();}
+      else if(t&&compart)toast('Material excluído. A despesa é de várias compras — mantive no caixa.');
+    }
+  }catch(e){toast('❌ Erro.');}
+}
 async function ajustarQ(id,d){const item=_E.find(x=>x._id===id);if(!item)return;try{await COL.est.doc(id).update({qty:Math.max(0,(item.qty||0)+d)});}catch(e){toast('❌ Erro.');}}
 function venderProd(id){
   const p=_E.find(x=>x._id===id);if(!p)return;
@@ -1883,41 +1926,57 @@ function renderImpItens(){
   _impItens.map((it,ix)=>{
     const opts=mats.map(m=>`<option value="${m._id}" ${it.destino===m._id?'selected':''}>↳ somar em: ${esc(m.nome)}</option>`).join('');
     return `<div class="mr" style="grid-template-columns:24px 2fr 54px 54px 74px auto;margin-bottom:10px;align-items:start">
-      <input type="checkbox" style="margin-top:9px" ${it.sel?'checked':''} onchange="_impItens[${ix}].sel=this.checked">
+      <input type="checkbox" style="margin-top:9px" ${it.sel?'checked':''} onchange="_impItens[${ix}].sel=this.checked;impTotal()">
       <div>
         <input type="text" value="${esc(it.nome)}" placeholder="Nome do material" oninput="_impItens[${ix}].nome=this.value">
         <select style="width:100%;margin-top:4px;border:1px solid var(--bdr);border-radius:6px;padding:4px 6px;font-size:11px;background:#FDFAF7" onchange="_impItens[${ix}].destino=this.value">
           <option value="novo" ${it.destino==='novo'?'selected':''}>➕ criar novo material</option>${opts}
         </select>
       </div>
-      <input type="number" value="${it.qtd}" min="0" step="0.1" oninput="_impItens[${ix}].qtd=this.value">
+      <input type="number" value="${it.qtd}" min="0" step="0.1" oninput="_impItens[${ix}].qtd=this.value;impTotal()">
       <input type="text" value="${esc(it.und)}" oninput="_impItens[${ix}].und=this.value">
-      <input type="number" value="${it.custo}" min="0" step="0.01" oninput="_impItens[${ix}].custo=this.value">
+      <input type="number" value="${it.custo}" min="0" step="0.01" oninput="_impItens[${ix}].custo=this.value;impTotal()">
       <button class="bds" onclick="_impItens.splice(${ix},1);renderImpItens()">✕</button>
     </div>`;
   }).join('');
+  if(document.getElementById('imp-tot'))impTotal();
 }
 function impAddLinha(){_impItens.push({sel:true,nome:'',qtd:1,und:'un',custo:0,destino:'novo'});renderImpItens();}
+function impTotal(){
+  const prod=(_impItens||[]).filter(i=>i.sel).reduce((s,i)=>s+(parseFloat(i.qtd)||0)*(parseFloat(i.custo)||0),0);
+  const frete=parseFloat(document.getElementById('imp-frete')?.value)||0;
+  const el=document.getElementById('imp-tot');
+  if(el)el.value=fmt(prod+frete)+(frete?` (produtos ${fmt(prod)} + frete ${fmt(frete)})`:'');
+}
 async function impSalvar(){
   const sel=_impItens.filter(i=>i.sel&&(i.nome||'').trim());
   if(!sel.length){toast('Nenhum item selecionado.');return;}
   const dataIso=document.getElementById('imp-data').value||new Date().toISOString().slice(0,10);
   const forn=document.getElementById('imp-forn').value.trim();
+  const frete=parseFloat(document.getElementById('imp-frete').value)||0;
   const base=db.collection('users').doc(_uid);
   const batch=db.batch();
-  let total=0;
+  let prod=0;
+  sel.forEach(i=>{prod+=(parseFloat(i.qtd)||1)*(parseFloat(i.custo)||0);});
+  const desp=Math.round((prod+frete)*100)/100;
+  const lancar=document.getElementById('imp-desp').checked&&desp>0;
+  const tref=lancar?base.collection('transacoes').doc():null;
+  const matIds=[];
   sel.forEach(i=>{
     const qtd=parseFloat(i.qtd)||1,custo=parseFloat(i.custo)||0;
-    total+=qtd*custo;
     const ex=i.destino!=='novo'?_E.find(e=>e._id===i.destino):null;
     if(ex){
-      batch.update(base.collection('estoque').doc(ex._id),{qty:(ex.qty||0)+qtd,custo:custo||ex.custo||0,fornecedor:forn||ex.fornecedor||'',ultimaCompra:dataIso});
+      const u={qty:(ex.qty||0)+qtd,custo:custo||ex.custo||0,fornecedor:forn||ex.fornecedor||'',ultimaCompra:dataIso};
+      if(tref)u.transId=tref.id;
+      batch.update(base.collection('estoque').doc(ex._id),u);matIds.push(ex._id);
     }else{
-      batch.set(base.collection('estoque').doc(),{tipo:'material',nome:i.nome.trim(),categoria:'Outros',und:normUnd(i.und),qty:qtd,qtyMin:0,custo,fornecedor:forn,ultimaCompra:dataIso,obs:'Importado de cupom',created_at:firebase.firestore.FieldValue.serverTimestamp()});
+      const nref=base.collection('estoque').doc();
+      batch.set(nref,{tipo:'material',nome:i.nome.trim(),categoria:'Outros',und:normUnd(i.und),qty:qtd,qtyMin:0,custo,fornecedor:forn,ultimaCompra:dataIso,obs:'Importado de cupom',...(tref?{transId:tref.id}:{}),created_at:firebase.firestore.FieldValue.serverTimestamp()});
+      matIds.push(nref.id);
     }
   });
-  if(document.getElementById('imp-desp').checked&&total>0){
-    batch.set(base.collection('transacoes').doc(),{tipo:'despesa',valor:Math.round(total*100)/100,dataIso,data:new Date(dataIso+'T12:00:00').toLocaleDateString('pt-BR'),descricao:'Compra de materiais'+(forn?' — '+forn:''),obs:'Importado de cupom',categoria:'Materiais (fios, aviamentos)',formaPagamento:'Pix',status:'pago',projetoId:null,projetoNome:null,created_at:firebase.firestore.FieldValue.serverTimestamp()});
+  if(lancar){
+    batch.set(tref,{tipo:'despesa',valor:desp,dataIso,data:new Date(dataIso+'T12:00:00').toLocaleDateString('pt-BR'),descricao:'Compra de materiais'+(forn?' — '+forn:''),obs:'Importado de cupom'+(frete?' (inclui frete '+fmt(frete)+')':''),categoria:'Materiais (fios, aviamentos)',formaPagamento:'Pix',status:'pago',projetoId:null,projetoNome:null,materialIds:matIds,created_at:firebase.firestore.FieldValue.serverTimestamp()});
   }
   try{await batch.commit();toast('✓ '+sel.length+' item(ns) adicionados ao estoque!');voltarEst();}
   catch(e){toast('❌ Erro: '+e.message);}
