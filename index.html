@@ -276,7 +276,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
   </div>
 </div>
 <header>
-  <div class="ht"><div style="display:flex;align-items:baseline;gap:8px"><h1>👜 Studio Bolsas</h1><span style="font-size:10px;font-weight:600;background:rgba(168,132,60,.35);color:#f5e6c8;border-radius:10px;padding:2px 7px;letter-spacing:.04em">v2.7</span><span id="adm-view" style="display:none;font-size:10px;font-weight:600;background:var(--gold);color:white;border-radius:10px;padding:2px 7px"></span></div><div class="sync"><div class="sd" id="sd"></div><span id="sl">…</span></div></div>
+  <div class="ht"><div style="display:flex;align-items:baseline;gap:8px"><h1>👜 Studio Bolsas</h1><span style="font-size:10px;font-weight:600;background:rgba(168,132,60,.35);color:#f5e6c8;border-radius:10px;padding:2px 7px;letter-spacing:.04em">v2.8</span><span id="adm-view" style="display:none;font-size:10px;font-weight:600;background:var(--gold);color:white;border-radius:10px;padding:2px 7px"></span></div><div class="sync"><div class="sd" id="sd"></div><span id="sl">…</span></div></div>
   <div class="tabs">
     <button class="tab active" onclick="aba('dash')"><span class="ti">📊</span><span class="tl"> Painel</span></button>
     <button class="tab" onclick="aba('caderno')"><span class="ti">📓</span><span class="tl"> Projetos</span></button>
@@ -1878,7 +1878,14 @@ function chutarDestino(nome){
 }
 function parseCupom(texto){
   const linhas=texto.split('\n').map(l=>l.replace(/\s{2,}/g,' ').trim()).filter(Boolean);
-  const ign=/TOTAL|SUBTOTAL|CPF|CNPJ|TROCO|DINHEIRO|CART[AÃ]O|D[EÉ]BITO|CR[EÉ]DITO|PIX\b|IMPOSTO|TRIBUT|VALOR PAGO|FORMA|PAGAMENTO|CUPOM|EXTRATO|CONSUMIDOR|ENDERE|DOCUMENTO|AUXILIAR|NFC|SAT\b|QTD|DESCRI|C[OÓ]DIGO|PROTOCOLO|AUTORIZA|CHAVE|R\$\s*$/i;
+  const ign=/TOTAL|SUBTOTAL|ENTREGA|FRETE|DESCONTO|PARCEL|CPF|CNPJ|TROCO|DINHEIRO|CART[AÃ]O|D[EÉ]BITO|CR[EÉ]DITO|PIX\b|IMPOSTO|TRIBUT|VALOR PAGO|VALOR A PAGAR|FORMA|PAGAMENTO|CUPOM|EXTRATO|CONSUMIDOR|ENDERE|DOCUMENTO|AUXILIAR|NFC|SAT\b|QTD|DESCRI|C[OÓ]DIGO|PROTOCOLO|AUTORIZA|CHAVE|R\$\s*$/i;
+  const reVal=/(\d{1,4}[.,]\d{2})\s*$/;
+  let frete=0,total=0;
+  linhas.forEach(l=>{
+    let m;
+    if(/\b(ENTREGA|FRETE)\b/i.test(l)&&(m=l.match(reVal)))frete=numBr(m[1]);
+    if(/\bTOTAL\b/i.test(l)&&!/SUBTOTAL/i.test(l)&&(m=l.match(reVal)))total=numBr(m[1]);
+  });
   const reA=/^(?:\d{1,4}\s+)?(?:\d{6,14}\s+)?(.{3,60}?)\s+(\d+(?:[.,]\d+)?)\s*(UN|KG|GR|G|MT|M|CM|LT|L|ML|PCT|P[CÇ]|CX|RL|KIT)\b\.?\s*[xX*]?\s*(\d{1,4}[.,]\d{2})/i;
   const reB=/^(?:\d{1,4}\s+)?(?:\d{6,14}\s+)?(.{4,60}?)\s+(\d{1,4}[.,]\d{2})$/;
   const itens=[];
@@ -1887,13 +1894,26 @@ function parseCupom(texto){
     let m=l.match(reA);
     if(m){itens.push({sel:true,nome:m[1].trim(),qtd:numBr(m[2])||1,und:normUnd(m[3]),custo:numBr(m[4]),destino:'novo'});continue;}
     m=l.match(reB);
-    if(m&&/[a-zA-ZÀ-ú]{3}/.test(m[1]))itens.push({sel:true,nome:m[1].trim(),qtd:1,und:'un',custo:numBr(m[2]),destino:'novo'});
+    if(m&&/[a-zA-ZÀ-ú]{3}/.test(m[1])&&!/^R\$/i.test(m[1]))itens.push({sel:true,nome:m[1].trim(),qtd:1,und:'un',custo:numBr(m[2]),destino:'novo'});
+  }
+  // formato e-commerce: nome numa linha, "N unidades" e "R$ x" em linhas próximas
+  for(let k=0;k<linhas.length;k++){
+    const mu=linhas[k].match(/^(\d{1,4})\s*unidades?$/i);
+    if(!mu)continue;
+    const qtd=parseInt(mu[1])||1;
+    let nome='';
+    for(let j=k-1;j>=Math.max(0,k-4);j--){const lj=linhas[j];if(/[a-zA-ZÀ-ú]{4,}/.test(lj)&&!ign.test(lj)&&!/^\d/.test(lj)&&!/^R\$/i.test(lj)){nome=lj;break;}}
+    let preco=0;for(let j=k;j<=Math.min(linhas.length-1,k+3);j++){const mp=linhas[j].match(/R\$\s*(\d{1,4}[.,]\d{2})/);if(mp){preco=numBr(mp[1]);break;}}
+    if(nome&&preco>0&&!itens.some(it=>it.nome===nome))itens.push({sel:true,nome,qtd,und:'un',custo:Math.round((preco/qtd)*100)/100,destino:'novo'});
   }
   itens.forEach(i=>i.destino=chutarDestino(i.nome));
   const dm=texto.match(/(\d{2})\/(\d{2})\/(\d{4})/);
   const dataIso=dm?`${dm[3]}-${dm[2]}-${dm[1]}`:'';
-  const fornecedor=(linhas.find(l=>/[A-Za-zÀ-ú]{4,}/.test(l)&&!/cupom|nota|fiscal|nfc|extrato|sat/i.test(l))||'').slice(0,40);
-  return {itens,dataIso,fornecedor};
+  let fornecedor='';
+  const mv=texto.match(/vendido\s+e\s+entregue\s+por\s+([A-Za-zÀ-ú0-9 .&\/-]{2,40})/i);
+  if(mv)fornecedor=mv[1].trim().replace(/\s+/g,' ');
+  else fornecedor=(linhas.find(l=>/[A-Za-zÀ-ú]{4,}/.test(l)&&!/cupom|nota|fiscal|nfc|extrato|sat|agradec|digite|favorit|pedido|realizado|aprova/i.test(l))||'').slice(0,40);
+  return {itens,dataIso,fornecedor,frete,total};
 }
 async function importarCupom(file){
   if(!file)return;
@@ -1910,6 +1930,7 @@ async function importarCupom(file){
     _impItens=r.itens.length?r.itens:[{sel:true,nome:'',qtd:1,und:'un',custo:0,destino:'novo'}];
     document.getElementById('imp-forn').value=r.fornecedor||'';
     document.getElementById('imp-data').value=r.dataIso||new Date().toISOString().slice(0,10);
+    {const fe=document.getElementById('imp-frete');if(fe)fe.value=r.frete||'';}
     document.getElementById('imp-raw').value=texto;
     document.getElementById('imp-raw-card').style.display='block';
     document.getElementById('imp-status').style.display='none';
