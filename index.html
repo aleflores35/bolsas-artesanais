@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Studio Bolsas — Gestão</title>
+<title>Studio Bolsas â€” GestÃ£o</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <style>
@@ -40,7 +40,7 @@ header{background:linear-gradient(160deg,#6B1537 0%,#3F0C20 100%);color:white;bo
 #login-ov{position:fixed;inset:0;background:linear-gradient(160deg,#6B1537,#3F0C20);display:none;align-items:center;justify-content:center;z-index:9000;padding:1rem}
 .login-card{background:#FFFDF9;border-radius:16px;padding:1.5rem;width:100%;max-width:380px;box-shadow:0 10px 40px rgba(0,0,0,.35)}
 .bgo{width:100%;background:white;border:1px solid var(--bdr);border-radius:10px;padding:11px;font-size:14px;font-weight:600;cursor:pointer;color:#444}.bgo:hover{background:#f7f7f7}
-/* modo ateliê */
+/* modo ateliÃª */
 #atelie-ov{position:fixed;inset:0;background:var(--ivory);z-index:8500;display:none;flex-direction:column;overflow:hidden}
 #atelie-ov.dark{background:#221a16;color:#f0e8e0}
 .at-hd{display:flex;align-items:center;gap:10px;padding:12px 14px;background:linear-gradient(160deg,var(--rose),var(--rose-d));color:white;border-bottom:2px solid var(--gold)}
@@ -220,7 +220,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
 /* toast */
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--gray);color:white;padding:10px 20px;border-radius:8px;font-size:14px;z-index:9999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
 .toast.show{opacity:1}
-/* ── MOBILE ── */
+/* â”€â”€ MOBILE â”€â”€ */
 #mob-nav{display:none}
 @media(max-width:768px){
   .tabs{display:none!important}
@@ -240,16 +240,16 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
 </style>
 </head>
 <body>
-<div id="lov"><div class="sp"></div><p style="font-size:14px;opacity:.8">Conectando…</p></div>
+<div id="lov"><div class="sp"></div><p style="font-size:14px;opacity:.8">Conectandoâ€¦</p></div>
 <div id="login-ov">
   <div class="login-card">
     <div style="text-align:center;margin-bottom:18px">
-      <div style="font-size:34px">👜</div>
+      <div style="font-size:34px">ðŸ‘œ</div>
       <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:22px;color:var(--rose)">Studio Bolsas</h2>
-      <p style="font-size:13px;color:#888;margin-top:4px">Entre para acessar o seu ateliê</p>
+      <p style="font-size:13px;color:#888;margin-top:4px">Entre para acessar o seu ateliÃª</p>
     </div>
     <div class="fg" style="margin-bottom:10px"><label>E-mail</label><input type="email" id="lg-em" placeholder="voce@email.com" autocomplete="username"></div>
-    <div class="fg" style="margin-bottom:6px"><label>Senha</label><input type="password" id="lg-pw" placeholder="mínimo 6 caracteres" autocomplete="current-password" onkeydown="if(event.key==='Enter')loginEmail(false)"></div>
+    <div class="fg" style="margin-bottom:6px"><label>Senha</label><input type="password" id="lg-pw" placeholder="mÃ­nimo 6 caracteres" autocomplete="current-password" onkeydown="if(event.key==='Enter')loginEmail(false)"></div>
     <div style="text-align:right"><button onclick="resetSenha()" style="background:none;border:none;color:var(--rose);font-size:12px;cursor:pointer;text-decoration:underline;padding:2px 0">Esqueci / quero criar uma senha</button></div>
     <div id="login-msg" style="display:none;background:var(--red-l);color:var(--red);border-radius:8px;padding:8px 10px;font-size:12px;margin:8px 0"></div>
     <button class="bsv" style="margin-top:10px" onclick="loginEmail(false)">Entrar</button>
@@ -260,15 +260,15 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
 </div>
 <div id="atelie-ov">
   <div class="at-hd">
-    <button class="bbk" style="color:white" onclick="fecharAtelie()">‹</button>
-    <div style="flex:1;min-width:0"><div id="at-nome" style="font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div><div style="font-size:11px;opacity:.75">modo ateliê</div></div>
+    <button class="bbk" style="color:white" onclick="fecharAtelie()">â€¹</button>
+    <div style="flex:1;min-width:0"><div id="at-nome" style="font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div><div style="font-size:11px;opacity:.75">modo ateliÃª</div></div>
     <div style="text-align:right"><div id="at-timer" style="font-size:17px;font-weight:700;font-variant-numeric:tabular-nums">0:00:00</div><div style="font-size:10px;opacity:.75">tempo de trabalho</div></div>
-    <button id="at-play" onclick="toggleTimer()" style="width:44px;height:44px;border-radius:50%;border:none;background:var(--gold);color:white;font-size:18px;cursor:pointer;flex-shrink:0">▶</button>
-    <button onclick="document.getElementById('atelie-ov').classList.toggle('dark')" style="background:none;border:none;color:white;font-size:18px;cursor:pointer">🌙</button>
+    <button id="at-play" onclick="toggleTimer()" style="width:44px;height:44px;border-radius:50%;border:none;background:var(--gold);color:white;font-size:18px;cursor:pointer;flex-shrink:0">â–¶</button>
+    <button onclick="document.getElementById('atelie-ov').classList.toggle('dark')" style="background:none;border:none;color:white;font-size:18px;cursor:pointer">ðŸŒ™</button>
   </div>
   <div class="at-body">
     <div class="at-car">
-      <button style="background:var(--rose-l);color:var(--rose)" onclick="mudarCarreira(-1)">−</button>
+      <button style="background:var(--rose-l);color:var(--rose)" onclick="mudarCarreira(-1)">âˆ’</button>
       <div><div class="at-num" id="at-car">0</div><div style="font-size:11px;color:#999;text-align:center;margin-top:4px">carreira</div></div>
       <button style="background:var(--rose);color:white" onclick="mudarCarreira(1)">+</button>
     </div>
@@ -276,97 +276,97 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
   </div>
 </div>
 <header>
-  <div class="ht"><div style="display:flex;align-items:baseline;gap:8px"><h1>👜 Studio Bolsas</h1><span style="font-size:10px;font-weight:600;background:rgba(168,132,60,.35);color:#f5e6c8;border-radius:10px;padding:2px 7px;letter-spacing:.04em">v2.0</span><span id="adm-view" style="display:none;font-size:10px;font-weight:600;background:var(--gold);color:white;border-radius:10px;padding:2px 7px"></span></div><div class="sync"><div class="sd" id="sd"></div><span id="sl">…</span></div></div>
+  <div class="ht"><div style="display:flex;align-items:baseline;gap:8px"><h1>ðŸ‘œ Studio Bolsas</h1><span style="font-size:10px;font-weight:600;background:rgba(168,132,60,.35);color:#f5e6c8;border-radius:10px;padding:2px 7px;letter-spacing:.04em">v2.4</span><span id="adm-view" style="display:none;font-size:10px;font-weight:600;background:var(--gold);color:white;border-radius:10px;padding:2px 7px"></span></div><div class="sync"><div class="sd" id="sd"></div><span id="sl">â€¦</span></div></div>
   <div class="tabs">
-    <button class="tab active" onclick="aba('dash')"><span class="ti">📊</span><span class="tl"> Painel</span></button>
-    <button class="tab" onclick="aba('caderno')"><span class="ti">📓</span><span class="tl"> Projetos</span></button>
-    <button class="tab" onclick="aba('calc')"><span class="ti">💰</span><span class="tl"> Preço</span></button>
-    <button class="tab" onclick="aba('estoque')"><span class="ti">📦</span><span class="tl"> Estoque</span></button>
-    <button class="tab" onclick="aba('caixa')"><span class="ti">💵</span><span class="tl"> Caixa</span></button>
-    <button class="tab" onclick="aba('config')"><span class="ti">⚙️</span><span class="tl"> Ajustes</span></button>
+    <button class="tab active" onclick="aba('dash')"><span class="ti">ðŸ“Š</span><span class="tl"> Painel</span></button>
+    <button class="tab" onclick="aba('caderno')"><span class="ti">ðŸ““</span><span class="tl"> Projetos</span></button>
+    <button class="tab" onclick="aba('calc')"><span class="ti">ðŸ’°</span><span class="tl"> PreÃ§o</span></button>
+    <button class="tab" onclick="aba('estoque')"><span class="ti">ðŸ“¦</span><span class="tl"> Estoque</span></button>
+    <button class="tab" onclick="aba('caixa')"><span class="ti">ðŸ’µ</span><span class="tl"> Caixa</span></button>
+    <button class="tab" onclick="aba('config')"><span class="ti">âš™ï¸</span><span class="tl"> Ajustes</span></button>
   </div>
 </header>
 <div class="toast" id="toast"></div>
 
-<!-- ═══ PAINEL (DASHBOARD) ═══ -->
+<!-- â•â•â• PAINEL (DASHBOARD) â•â•â• -->
 <div id="view-dash" class="view active">
 <div class="ctr">
-  <!-- Ações rápidas -->
+  <!-- AÃ§Ãµes rÃ¡pidas -->
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem">
     <button class="bsv" style="margin:0;font-size:13px" onclick="aba('caixa');setTimeout(()=>mostrarFormCaixa(null),100)">+ Nova venda</button>
     <button class="bsv" style="margin:0;font-size:13px;background:var(--red)" onclick="aba('caixa');setTimeout(()=>{mostrarFormCaixa(null);setTipoCaixa('despesa')},100)">+ Despesa</button>
     <button class="bsv" style="margin:0;font-size:13px;background:var(--blue)" onclick="aba('caderno');setTimeout(()=>mostrarForm(null),100)">+ Projeto</button>
-    <button class="bsv" style="margin:0;font-size:13px;background:var(--gold)" onclick="aba('calc')">💰 Calcular preço</button>
+    <button class="bsv" style="margin:0;font-size:13px;background:var(--gold)" onclick="aba('calc')">ðŸ’° Calcular preÃ§o</button>
   </div>
-  <!-- Fase do negócio -->
+  <!-- Fase do negÃ³cio -->
   <div id="fase-banner"></div>
-  <!-- KPIs mês atual -->
+  <!-- KPIs mÃªs atual -->
   <div class="d4">
-    <div class="dc vd"><div class="dl">Receita do mês</div><div class="dv vd" id="dk-rec">R$ 0</div><div class="ds" id="dk-rec-s">0 vendas</div></div>
-    <div class="dc vm"><div class="dl">Despesas mês</div><div class="dv vm" id="dk-desp">R$ 0</div><div class="ds" id="dk-desp-s">0 lançamentos</div></div>
-    <div class="dc az"><div class="dl">Lucro mês</div><div class="dv az" id="dk-lucro">R$ 0</div><div class="ds" id="dk-lucro-s">—</div></div>
+    <div class="dc vd"><div class="dl">Receita do mÃªs</div><div class="dv vd" id="dk-rec">R$ 0</div><div class="ds" id="dk-rec-s">0 vendas</div></div>
+    <div class="dc vm"><div class="dl">Despesas mÃªs</div><div class="dv vm" id="dk-desp">R$ 0</div><div class="ds" id="dk-desp-s">0 lanÃ§amentos</div></div>
+    <div class="dc az"><div class="dl">Lucro mÃªs</div><div class="dv az" id="dk-lucro">R$ 0</div><div class="ds" id="dk-lucro-s">â€”</div></div>
     <div class="dc do"><div class="dl">Saldo total</div><div class="dv do" id="dk-saldo">R$ 0</div><div class="ds">acumulado</div></div>
   </div>
   <!-- KPIs adicionais -->
   <div class="dash-wide">
-    <div class="dc pu"><div class="dl">Ticket médio</div><div class="dv pu" id="dk-ticket">R$ 0</div><div class="ds">por venda paga</div></div>
-    <div class="dc" style="border-left:4px solid #888"><div class="dl">Produtos prontos</div><div class="dv" id="dk-prontos">0</div><div class="ds">disponíveis</div></div>
-    <div class="dc vd"><div class="dl">Margem média</div><div class="dv vd" id="dk-margem">0%</div><div class="ds">lucro/receita</div></div>
+    <div class="dc pu"><div class="dl">Ticket mÃ©dio</div><div class="dv pu" id="dk-ticket">R$ 0</div><div class="ds">por venda paga</div></div>
+    <div class="dc" style="border-left:4px solid #888"><div class="dl">Produtos prontos</div><div class="dv" id="dk-prontos">0</div><div class="ds">disponÃ­veis</div></div>
+    <div class="dc vd"><div class="dl">Margem mÃ©dia</div><div class="dv vd" id="dk-margem">0%</div><div class="ds">lucro/receita</div></div>
     <div class="dc vm"><div class="dl">Estoque baixo</div><div class="dv vm" id="dk-estlow">0</div><div class="ds">materiais</div></div>
   </div>
   <!-- Top modelos + plataformas -->
   <div class="dash-wide">
-    <div class="card" style="margin:0"><div class="ch" style="padding:.6rem .9rem"><h2 style="font-size:11px">🏆 Top modelos</h2></div><div class="cb" style="padding:.75rem" id="dk-top-prod"></div></div>
-    <div class="card" style="margin:0"><div class="ch" style="padding:.6rem .9rem"><h2 style="font-size:11px">📊 Plataformas</h2></div><div class="cb" style="padding:.75rem" id="dk-top-plat"></div></div>
+    <div class="card" style="margin:0"><div class="ch" style="padding:.6rem .9rem"><h2 style="font-size:11px">ðŸ† Top modelos</h2></div><div class="cb" style="padding:.75rem" id="dk-top-prod"></div></div>
+    <div class="card" style="margin:0"><div class="ch" style="padding:.6rem .9rem"><h2 style="font-size:11px">ðŸ“Š Plataformas</h2></div><div class="cb" style="padding:.75rem" id="dk-top-plat"></div></div>
   </div>
-  <!-- Histórico mensal -->
+  <!-- HistÃ³rico mensal -->
   <div class="card" style="margin-top:1rem">
-    <div class="ch"><h2>📅 Resumo mensal</h2></div>
+    <div class="ch"><h2>ðŸ“… Resumo mensal</h2></div>
     <div class="cb" style="padding:.5rem 0">
       <table class="mini-table" style="width:100%">
-        <thead><tr><th>Mês</th><th>Vendas</th><th>Despesas</th><th>Lucro</th></tr></thead>
+        <thead><tr><th>MÃªs</th><th>Vendas</th><th>Despesas</th><th>Lucro</th></tr></thead>
         <tbody id="dk-hist-mensal"></tbody>
       </table>
     </div>
   </div>
   <!-- DRE Mensal -->
   <div class="card">
-    <div class="ch"><h2>📊 DRE — Resultado do mês</h2><span id="dre-mes-lbl" style="font-size:12px;color:#aaa"></span></div>
+    <div class="ch"><h2>ðŸ“Š DRE â€” Resultado do mÃªs</h2><span id="dre-mes-lbl" style="font-size:12px;color:#aaa"></span></div>
     <div class="cb" style="padding:.75rem 1rem" id="dre-body"></div>
   </div>
-  <!-- Pendências -->
+  <!-- PendÃªncias -->
   <div class="card" id="pend-card">
-    <div class="ch"><h2>⏳ Pendências</h2><span id="pend-count" style="font-size:12px;background:var(--red-l);color:var(--red);padding:2px 8px;border-radius:10px"></span></div>
+    <div class="ch"><h2>â³ PendÃªncias</h2><span id="pend-count" style="font-size:12px;background:var(--red-l);color:var(--red);padding:2px 8px;border-radius:10px"></span></div>
     <div class="cb" id="pend-body"></div>
   </div>
-  <!-- Reposição de materiais -->
+  <!-- ReposiÃ§Ã£o de materiais -->
   <div class="card" id="repo-card" style="display:none">
-    <div class="ch"><h2>🔔 Repor materiais</h2><span id="repo-count" style="font-size:12px;background:var(--orange-l);color:var(--orange);padding:2px 8px;border-radius:10px"></span></div>
+    <div class="ch"><h2>ðŸ”” Repor materiais</h2><span id="repo-count" style="font-size:12px;background:var(--orange-l);color:var(--orange);padding:2px 8px;border-radius:10px"></span></div>
     <div class="cb" id="repo-body"></div>
   </div>
-  <!-- Gráfico evolução -->
+  <!-- GrÃ¡fico evoluÃ§Ã£o -->
   <div class="card">
-    <div class="ch"><h2>📈 Evolução — últimos 6 meses</h2></div>
+    <div class="ch"><h2>ðŸ“ˆ EvoluÃ§Ã£o â€” Ãºltimos 6 meses</h2></div>
     <div class="cb" style="padding:.5rem" id="graf-body"></div>
   </div>
   <!-- Categoria de despesas -->
   <div class="card">
-    <div class="ch"><h2>💸 Despesas por categoria</h2></div>
+    <div class="ch"><h2>ðŸ’¸ Despesas por categoria</h2></div>
     <div class="cb" id="dk-desp-cat"></div>
   </div>
   <!-- Plano vs Realidade -->
   <div class="card">
-    <div class="ch"><h2>📋 Plano vs. Realidade</h2><button class="bsr" onclick="togglePlano()">↕ Ver detalhes</button></div>
+    <div class="ch"><h2>ðŸ“‹ Plano vs. Realidade</h2><button class="bsr" onclick="togglePlano()">â†• Ver detalhes</button></div>
     <div class="cb" id="plano-card">
       <!-- Timeline de fases -->
       <div style="display:flex;gap:6px;margin-bottom:1.25rem" id="plano-fases"></div>
-      <!-- Métricas do plano -->
+      <!-- MÃ©tricas do plano -->
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:1rem" id="plano-metas"></div>
-      <!-- Detalhes expansíveis -->
+      <!-- Detalhes expansÃ­veis -->
       <div id="plano-detalhe" style="display:none">
-        <div style="font-size:12px;font-weight:700;color:var(--rose);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">🎯 Modelos do catálogo</div>
+        <div style="font-size:12px;font-weight:700;color:var(--rose);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">ðŸŽ¯ Modelos do catÃ¡logo</div>
         <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1rem" id="plano-modelos"></div>
-        <div style="font-size:12px;font-weight:700;color:var(--rose);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">🛒 Plataformas-alvo</div>
+        <div style="font-size:12px;font-weight:700;color:var(--rose);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">ðŸ›’ Plataformas-alvo</div>
         <div id="plano-plats"></div>
       </div>
     </div>
@@ -375,40 +375,40 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
 </div>
 </div>
 
-<!-- ═══ CALCULADORA ═══ -->
+<!-- â•â•â• CALCULADORA â•â•â• -->
 <div id="view-calc" class="view">
 <div class="ctr">
   <div class="card">
-    <div class="ch"><h2>🧵 Materiais</h2><span id="total-mat" style="font-size:13px;font-weight:600;color:var(--rose)">R$ 0,00</span></div>
+    <div class="ch"><h2>ðŸ§µ Materiais</h2><span id="total-mat" style="font-size:13px;font-weight:600;color:var(--rose)">R$ 0,00</span></div>
     <div class="cb">
       <table class="mt">
         <thead><tr><th class="tn">Material</th><th class="tq">Qtd</th><th class="tu">Und</th><th class="tp">R$/und</th><th class="tt">Total</th><th class="td"></th></tr></thead>
         <tbody id="mat-body"></tbody>
       </table>
       <button class="ba" onclick="addMat()">+ Material</button>
-      <button class="ba" style="margin-left:8px;background:var(--blue-l);color:var(--blue);border-color:#b8d8e8" onclick="importarEstoque()">📦 Do estoque</button>
-      <button class="ba" style="margin-left:8px;background:var(--purple-l);color:var(--purple);border-color:#c8b8e8" onclick="importarDoProjeto()">📓 Do projeto</button>
+      <button class="ba" style="margin-left:8px;background:var(--blue-l);color:var(--blue);border-color:#b8d8e8" onclick="importarEstoque()">ðŸ“¦ Do estoque</button>
+      <button class="ba" style="margin-left:8px;background:var(--purple-l);color:var(--purple);border-color:#c8b8e8" onclick="importarDoProjeto()">ðŸ““ Do projeto</button>
       <div id="proj-import-sel" style="display:none;margin-top:10px;background:var(--purple-l);border:1px solid #c8b8e8;border-radius:10px;padding:12px">
         <div style="font-size:12px;font-weight:600;color:var(--purple);margin-bottom:8px">Selecione o projeto:</div>
         <select id="proj-import-dd" style="width:100%;border:1px solid #c8b8e8;border-radius:8px;padding:9px 11px;font-size:14px;background:white" onchange="confirmarImportProjeto(this.value)">
-          <option value="">— Escolha um projeto —</option>
+          <option value="">â€” Escolha um projeto â€”</option>
         </select>
         <div id="proj-import-preview" style="margin-top:8px;font-size:12px;color:var(--purple)"></div>
       </div>
     </div>
   </div>
   <div class="card">
-    <div class="ch"><h2>⏱ Mão de obra</h2></div>
+    <div class="ch"><h2>â± MÃ£o de obra</h2></div>
     <div class="cb">
       <div class="fr">
         <div class="fg"><label>Horas</label><input type="number" id="horas" value="4" min="0" step="0.5" oninput="calc()"></div>
         <div class="fg"><label>R$/hora</label><input type="number" id="vh" value="25" min="0" step="1" oninput="calc()"></div>
       </div>
-      <div style="font-size:13px;color:#888">Mão de obra: <strong id="mdo">R$ 100,00</strong></div>
+      <div style="font-size:13px;color:#888">MÃ£o de obra: <strong id="mdo">R$ 100,00</strong></div>
     </div>
   </div>
   <div class="card">
-    <div class="ch"><h2>📦 Custos fixos</h2></div>
+    <div class="ch"><h2>ðŸ“¦ Custos fixos</h2></div>
     <div class="cb">
       <div class="fr">
         <div class="fg"><label>Embalagem (R$)</label><input type="number" id="emb" value="8" min="0" step="0.5" oninput="calc()"></div>
@@ -417,7 +417,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
     </div>
   </div>
   <div class="card">
-    <div class="ch"><h2>🏪 Plataforma e margem</h2></div>
+    <div class="ch"><h2>ðŸª Plataforma e margem</h2></div>
     <div class="cb">
       <div class="fr" style="margin-bottom:16px">
         <div class="fg"><label>Plataforma</label>
@@ -433,7 +433,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
       </div>
       <div class="fg"><label>Margem de lucro</label>
         <div class="rr"><input type="range" id="mg" min="10" max="80" value="40" step="5" oninput="upMg()"><span class="rv" id="mgv">40%</span></div>
-        <div style="display:flex;justify-content:space-between;font-size:11px;color:#bbb;margin-top:2px"><span>10%</span><span>30% conservador</span><span>40–50% ideal</span><span>80%</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:#bbb;margin-top:2px"><span>10%</span><span>30% conservador</span><span>40â€“50% ideal</span><span>80%</span></div>
       </div>
     </div>
   </div>
@@ -441,35 +441,35 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
     <h2>Resultado</h2>
     <div class="rg">
       <div class="ri"><div class="rl">Custo total</div><div class="rv2" id="r-ct">R$ 0,00</div></div>
-      <div class="ri"><div class="rl">Preço mínimo</div><div class="rv2" id="r-min">R$ 0,00</div></div>
-      <div class="ri dest"><div class="rl">💰 Preço sugerido de venda</div><div class="rv2" id="r-sug">R$ 0,00</div></div>
-      <div class="ri"><div class="rl">Lucro líquido</div><div class="rv2" id="r-luc">R$ 0,00</div></div>
+      <div class="ri"><div class="rl">PreÃ§o mÃ­nimo</div><div class="rv2" id="r-min">R$ 0,00</div></div>
+      <div class="ri dest"><div class="rl">ðŸ’° PreÃ§o sugerido de venda</div><div class="rv2" id="r-sug">R$ 0,00</div></div>
+      <div class="ri"><div class="rl">Lucro lÃ­quido</div><div class="rv2" id="r-luc">R$ 0,00</div></div>
       <div class="ri"><div class="rl">Margem real</div><div class="rv2" id="r-mgr">0%</div></div>
     </div>
   </div>
   <div class="card">
-    <div class="ch"><h2>💾 Salvar cálculo</h2></div>
+    <div class="ch"><h2>ðŸ’¾ Salvar cÃ¡lculo</h2></div>
     <div class="cb">
       <div class="fr">
-        <div class="fg"><label>Nome</label><input type="text" id="nm-pc" placeholder="Ex: Bolsa Flora verão"></div>
-        <div class="fg"><label>Vincular projeto</label><select id="vp"><option value="">— Nenhum —</option></select></div>
+        <div class="fg"><label>Nome</label><input type="text" id="nm-pc" placeholder="Ex: Bolsa Flora verÃ£o"></div>
+        <div class="fg"><label>Vincular projeto</label><select id="vp"><option value="">â€” Nenhum â€”</option></select></div>
       </div>
-      <button class="bsv" onclick="salvarCalc()">Salvar no histórico</button>
+      <button class="bsv" onclick="salvarCalc()">Salvar no histÃ³rico</button>
     </div>
   </div>
   <div class="card">
-    <div class="ch"><h2>📋 Histórico</h2><button onclick="limparHist()" style="font-size:11px;color:#aaa;background:none;border:none;cursor:pointer">Limpar</button></div>
+    <div class="ch"><h2>ðŸ“‹ HistÃ³rico</h2><button onclick="limparHist()" style="font-size:11px;color:#aaa;background:none;border:none;cursor:pointer">Limpar</button></div>
     <div class="cb" id="hist-body"></div>
   </div>
 </div>
 </div>
 
-<!-- ═══ CADERNO ═══ -->
+<!-- â•â•â• CADERNO â•â•â• -->
 <div id="view-caderno" class="view">
   <div id="cv-lista" class="view active">
     <div class="ctr">
       <div style="display:flex;gap:8px;margin-bottom:1rem">
-        <div class="sb" style="flex:1;margin:0"><span>🔍</span><input type="text" id="busca" placeholder="Buscar…" oninput="renderLista()"></div>
+        <div class="sb" style="flex:1;margin:0"><span>ðŸ”</span><input type="text" id="busca" placeholder="Buscarâ€¦" oninput="renderLista()"></div>
         <button class="bg" onclick="mostrarForm(null)">+ Novo</button>
       </div>
       <div id="lista-proj"></div>
@@ -477,44 +477,44 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
   </div>
   <div id="cv-form" class="view">
     <div class="ctr">
-      <div class="fh"><button class="bbk" onclick="voltarLista()">‹</button><h2 id="form-tit">Novo projeto</h2></div>
-      <div class="card"><div class="ch"><h2>📌 Informações</h2></div><div class="cb">
+      <div class="fh"><button class="bbk" onclick="voltarLista()">â€¹</button><h2 id="form-tit">Novo projeto</h2></div>
+      <div class="card"><div class="ch"><h2>ðŸ“Œ InformaÃ§Ãµes</h2></div><div class="cb">
         <div class="fr s"><div class="fg"><label>Nome *</label><input type="text" id="f-n" placeholder="Ex: Bolsa Flora"></div></div>
         <div class="fr">
           <div class="fg"><label>Tipo</label><select id="f-t"><option>Clutch</option><option>Tote</option><option>Shoulder bag</option><option>Mini bag</option><option>Crossbody</option><option>Mochila</option><option>Outro</option></select></div>
-          <div class="fg"><label>Status</label><select id="f-s"><option value="rascunho">Rascunho</option><option value="em-andamento">Em andamento</option><option value="concluido">Concluído</option></select></div>
+          <div class="fg"><label>Status</label><select id="f-s"><option value="rascunho">Rascunho</option><option value="em-andamento">Em andamento</option><option value="concluido">ConcluÃ­do</option></select></div>
         </div>
         <div class="fr">
           <div class="fg"><label>Data</label><input type="date" id="f-d"></div>
-          <div class="fg"><label>Técnica</label><input type="text" id="f-tc" placeholder="Crochê, macramê…"></div>
+          <div class="fg"><label>TÃ©cnica</label><input type="text" id="f-tc" placeholder="CrochÃª, macramÃªâ€¦"></div>
         </div>
-        <div class="fr s"><div class="fg"><label>Coleção</label><input type="text" id="f-col" placeholder="Flora, Verão, Nordeste…"></div></div>
-        <div class="fr s"><div class="fg"><label>Descrição</label><textarea id="f-desc" rows="2" placeholder="Inspiração, cliente alvo…"></textarea></div></div>
+        <div class="fr s"><div class="fg"><label>ColeÃ§Ã£o</label><input type="text" id="f-col" placeholder="Flora, VerÃ£o, Nordesteâ€¦"></div></div>
+        <div class="fr s"><div class="fg"><label>DescriÃ§Ã£o</label><textarea id="f-desc" rows="2" placeholder="InspiraÃ§Ã£o, cliente alvoâ€¦"></textarea></div></div>
       </div></div>
-      <div class="card"><div class="ch"><h2>🧵 Materiais</h2><span id="proj-mat-total" style="font-size:13px;font-weight:600;color:var(--rose)">R$ 0,00</span></div><div class="cb">
+      <div class="card"><div class="ch"><h2>ðŸ§µ Materiais</h2><span id="proj-mat-total" style="font-size:13px;font-weight:600;color:var(--rose)">R$ 0,00</span></div><div class="cb">
         <div class="mr-hdr"><span>Material</span><span>Qtd</span><span>Und</span><span>R$/und</span><span>Total</span><span></span></div>
         <div id="mats-f"></div>
         <div style="display:flex;gap:8px;margin-top:4px">
           <button class="ba" onclick="addMatF()">+ Digitar</button>
-          <button class="ba" style="background:var(--blue-l);color:var(--blue);border-color:#b8d8e8" onclick="addMatFromEstF()">📦 Do estoque</button>
+          <button class="ba" style="background:var(--blue-l);color:var(--blue);border-color:#b8d8e8" onclick="addMatFromEstF()">ðŸ“¦ Do estoque</button>
         </div>
       </div></div>
-      <div class="card"><div class="ch"><h2>🔗 Fornecedores e links de compra</h2><button class="ba" onclick="addLink()" style="margin:0;padding:5px 12px;font-size:12px">+ Link</button></div>
+      <div class="card"><div class="ch"><h2>ðŸ”— Fornecedores e links de compra</h2><button class="ba" onclick="addLink()" style="margin:0;padding:5px 12px;font-size:12px">+ Link</button></div>
         <div class="cb">
-          <p style="font-size:12px;color:#aaa;margin-bottom:8px">Onde comprar os materiais desta peça (loja, link do produto, WhatsApp do fornecedor…).</p>
+          <p style="font-size:12px;color:#aaa;margin-bottom:8px">Onde comprar os materiais desta peÃ§a (loja, link do produto, WhatsApp do fornecedorâ€¦).</p>
           <div id="links-f"></div>
         </div></div>
-      <div class="card"><div class="ch" style="display:flex;justify-content:space-between;align-items:center"><h2>🪡 Receita de pontos</h2><button class="ba" onclick="addSec()" style="margin:0;padding:5px 12px;font-size:12px">+ Seção</button></div>
+      <div class="card"><div class="ch" style="display:flex;justify-content:space-between;align-items:center"><h2>ðŸª¡ Receita de pontos</h2><button class="ba" onclick="addSec()" style="margin:0;padding:5px 12px;font-size:12px">+ SeÃ§Ã£o</button></div>
         <div class="cb" id="receita-f"></div></div>
-      <div class="card"><div class="ch"><h2>📸 Fotos</h2></div><div class="cb">
-        <p style="font-size:12px;color:#aaa;margin-bottom:10px">Cole URLs (Google Drive, Pinterest…)</p>
+      <div class="card"><div class="ch"><h2>ðŸ“¸ Fotos</h2></div><div class="cb">
+        <p style="font-size:12px;color:#aaa;margin-bottom:10px">Cole URLs (Google Drive, Pinterestâ€¦)</p>
         <div id="fotos-f"></div>
         <button class="ba" onclick="addFot()">+ Link de foto</button>
-        <button class="ba" style="margin-left:8px;background:var(--blue-l);color:var(--blue);border-color:#b8d8e8" onclick="document.getElementById('pj-foto-file').click()">📷 Da câmera / galeria</button>
+        <button class="ba" style="margin-left:8px;background:var(--blue-l);color:var(--blue);border-color:#b8d8e8" onclick="document.getElementById('pj-foto-file').click()">ðŸ“· Da cÃ¢mera / galeria</button>
         <input type="file" id="pj-foto-file" accept="image/*" style="display:none" onchange="addFotoArquivo(this.files[0])">
       </div></div>
-      <div class="card"><div class="ch"><h2>💡 Observações</h2></div><div class="cb">
-        <div class="fg"><label>Notas</label><textarea id="f-obs" rows="4" placeholder="Dicas, gancho, tensão…"></textarea></div>
+      <div class="card"><div class="ch"><h2>ðŸ’¡ ObservaÃ§Ãµes</h2></div><div class="cb">
+        <div class="fg"><label>Notas</label><textarea id="f-obs" rows="4" placeholder="Dicas, gancho, tensÃ£oâ€¦"></textarea></div>
         <div class="fg" style="margin-top:10px"><label>Tempo total</label><input type="text" id="f-tmp" placeholder="Ex: 8h (2h/dia em 4 dias)"></div>
       </div></div>
       <button class="bsv" onclick="salvarProj()">Salvar projeto</button>
@@ -524,15 +524,15 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
   <div id="cv-det" class="view"><div class="ctr" id="det-ctr"></div></div>
 </div>
 
-<!-- ═══ CAIXA ═══ -->
+<!-- â•â•â• CAIXA â•â•â• -->
 <div id="view-caixa" class="view">
   <div id="cx-lista" class="view active">
     <div class="ctr">
-      <div class="mn"><button onclick="mudarMes(-1)">‹</button><span id="mes-lbl">—</span><button onclick="mudarMes(1)">›</button></div>
+      <div class="mn"><button onclick="mudarMes(-1)">â€¹</button><span id="mes-lbl">â€”</span><button onclick="mudarMes(1)">â€º</button></div>
       <div class="d4">
         <div class="dc vd"><div class="dl">Receita</div><div class="dv vd" id="d-rec">R$ 0</div><div class="ds" id="d-rec-s">0 vendas</div></div>
-        <div class="dc vm"><div class="dl">Despesas</div><div class="dv vm" id="d-desp">R$ 0</div><div class="ds" id="d-desp-s">0 lançamentos</div></div>
-        <div class="dc az"><div class="dl">Lucro mês</div><div class="dv az" id="d-luc">R$ 0</div><div class="ds" id="d-luc-s">—</div></div>
+        <div class="dc vm"><div class="dl">Despesas</div><div class="dv vm" id="d-desp">R$ 0</div><div class="ds" id="d-desp-s">0 lanÃ§amentos</div></div>
+        <div class="dc az"><div class="dl">Lucro mÃªs</div><div class="dv az" id="d-luc">R$ 0</div><div class="ds" id="d-luc-s">â€”</div></div>
         <div class="dc do"><div class="dl">Saldo total</div><div class="dv do" id="d-sal">R$ 0</div><div class="ds">acumulado</div></div>
       </div>
       <div style="display:flex;gap:8px;margin-bottom:1rem">
@@ -543,41 +543,41 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
         </div>
         <button class="bg" onclick="mostrarFormCaixa(null)">+ Novo</button>
       </div>
-      <div class="sb"><span>🔍</span><input type="text" id="busca-cx" placeholder="Buscar por descrição, cliente, projeto…" oninput="renderExtrato()"></div>
+      <div class="sb"><span>ðŸ”</span><input type="text" id="busca-cx" placeholder="Buscar por descriÃ§Ã£o, cliente, projetoâ€¦" oninput="renderExtrato()"></div>
       <div class="card"><div class="cb" id="extrato-body"></div></div>
     </div>
   </div>
   <div id="cx-form" class="view">
     <div class="ctr">
-      <div class="fh"><button class="bbk" onclick="voltarCaixa()">‹</button><h2 id="cx-tit">Nova transação</h2></div>
+      <div class="fh"><button class="bbk" onclick="voltarCaixa()">â€¹</button><h2 id="cx-tit">Nova transaÃ§Ã£o</h2></div>
       <div class="card"><div class="cb">
         <div class="tt2">
-          <button class="tb venda active" id="tb-v" onclick="setTipoCaixa('venda')">📈 Venda</button>
-          <button class="tb despesa" id="tb-d" onclick="setTipoCaixa('despesa')">📉 Despesa</button>
+          <button class="tb venda active" id="tb-v" onclick="setTipoCaixa('venda')">ðŸ“ˆ Venda</button>
+          <button class="tb despesa" id="tb-d" onclick="setTipoCaixa('despesa')">ðŸ“‰ Despesa</button>
         </div>
         <div class="fr">
           <div class="fg"><label>Valor (R$) *</label><input type="number" id="c-val" placeholder="0,00" min="0" step="0.01"></div>
           <div class="fg"><label>Data *</label><input type="date" id="c-dt"></div>
         </div>
-        <div class="fr s"><div class="fg"><label>Descrição</label><input type="text" id="c-desc" placeholder="Ex: Bolsa Flora — cliente Ana"></div></div>
+        <div class="fr s"><div class="fg"><label>DescriÃ§Ã£o</label><input type="text" id="c-desc" placeholder="Ex: Bolsa Flora â€” cliente Ana"></div></div>
         <div id="cv">
           <div class="fr">
-            <div class="fg"><label>Projeto vinculado</label><select id="c-proj" onchange="autoFillCusto(this.value)"><option value="">— Nenhum —</option></select></div>
+            <div class="fg"><label>Projeto vinculado</label><select id="c-proj" onchange="autoFillCusto(this.value)"><option value="">â€” Nenhum â€”</option></select></div>
             <div class="fg"><label>Plataforma</label><select id="c-plat"><option>WhatsApp / Direto</option><option>Elo7</option><option>Shopee</option><option>Instagram</option><option>Mercado Livre</option><option>Feira</option><option>Outro</option></select></div>
           </div>
           <div class="fr">
-            <div class="fg"><label>Pagamento</label><select id="c-pag"><option>Pix</option><option>Dinheiro</option><option>Cartão de crédito</option><option>Cartão de débito</option><option>Transferência</option></select></div>
-            <div class="fg"><label>Status</label><select id="c-sta"><option value="pago">Pago ✓</option><option value="pendente">Pendente ⏳</option></select></div>
+            <div class="fg"><label>Pagamento</label><select id="c-pag"><option>Pix</option><option>Dinheiro</option><option>CartÃ£o de crÃ©dito</option><option>CartÃ£o de dÃ©bito</option><option>TransferÃªncia</option></select></div>
+            <div class="fg"><label>Status</label><select id="c-sta"><option value="pago">Pago âœ“</option><option value="pendente">Pendente â³</option></select></div>
           </div>
           <div class="fr">
-            <div class="fg"><label>Custo da peça (R$)</label><input type="number" id="c-cst" placeholder="0,00" min="0" step="0.01"></div>
-            <div class="fg"><label>Cliente (opcional)</label><input type="text" id="c-cli" placeholder="Ana, @perfil…"></div>
+            <div class="fg"><label>Custo da peÃ§a (R$)</label><input type="number" id="c-cst" placeholder="0,00" min="0" step="0.01"></div>
+            <div class="fg"><label>Cliente (opcional)</label><input type="text" id="c-cli" placeholder="Ana, @perfilâ€¦"></div>
           </div>
         </div>
         <div id="cd" style="display:none">
           <div class="fr">
-            <div class="fg"><label>Categoria</label><select id="c-cat"><option>Materiais (fios, aviamentos)</option><option>Cursos e capacitação</option><option>Ferramentas</option><option>Embalagens</option><option>Taxas de plataforma</option><option>Marketing</option><option>Frete</option><option>Outros</option></select></div>
-            <div class="fg"><label>Pagamento</label><select id="c-pagd"><option>Pix</option><option>Dinheiro</option><option>Cartão de crédito</option><option>Boleto</option></select></div>
+            <div class="fg"><label>Categoria</label><select id="c-cat"><option>Materiais (fios, aviamentos)</option><option>Cursos e capacitaÃ§Ã£o</option><option>Ferramentas</option><option>Embalagens</option><option>Taxas de plataforma</option><option>Marketing</option><option>Frete</option><option>Outros</option></select></div>
+            <div class="fg"><label>Pagamento</label><select id="c-pagd"><option>Pix</option><option>Dinheiro</option><option>CartÃ£o de crÃ©dito</option><option>Boleto</option></select></div>
           </div>
         </div>
         <div class="fr s" style="margin-top:4px"><div class="fg"><label>Obs</label><textarea id="c-obs" rows="2"></textarea></div></div>
@@ -588,29 +588,29 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
   </div>
 </div>
 
-<!-- ═══ ESTOQUE ═══ -->
+<!-- â•â•â• ESTOQUE â•â•â• -->
 <div id="view-estoque" class="view">
   <div id="est-lista" class="view active">
     <div class="ctr">
       <div class="d4" style="margin-bottom:1rem">
         <div class="dc az"><div class="dl">Materiais</div><div class="dv az" id="e-totm">0</div><div class="ds">cadastrados</div></div>
-        <div class="dc vm"><div class="dl">Atenção</div><div class="dv vm" id="e-low">0</div><div class="ds">baixo/zerado</div></div>
-        <div class="dc pu"><div class="dl">Prontos</div><div class="dv pu" id="e-pron">0</div><div class="ds">disponíveis</div></div>
+        <div class="dc vm"><div class="dl">AtenÃ§Ã£o</div><div class="dv vm" id="e-low">0</div><div class="ds">baixo/zerado</div></div>
+        <div class="dc pu"><div class="dl">Prontos</div><div class="dv pu" id="e-pron">0</div><div class="ds">disponÃ­veis</div></div>
         <div class="dc do"><div class="dl">Valor estoque</div><div class="dv do" id="e-val">R$ 0</div><div class="ds">em materiais</div></div>
       </div>
       <div style="display:flex;gap:8px;margin-bottom:1rem">
-        <div class="sb" style="flex:1;margin:0"><span>🔍</span><input type="text" id="busca-est" placeholder="Buscar material ou produto…" oninput="renderEst()"></div>
-        <button class="bg" style="white-space:nowrap" onclick="document.getElementById('cupom-file').click()">📷 Cupom</button>
-        <button class="bg" style="white-space:nowrap;background:linear-gradient(135deg,var(--rose),var(--rose-m))" onclick="produzirPeca('')">🧵 Produzir</button>
+        <div class="sb" style="flex:1;margin:0"><span>ðŸ”</span><input type="text" id="busca-est" placeholder="Buscar material ou produtoâ€¦" oninput="renderEst()"></div>
+        <button class="bg" style="white-space:nowrap" onclick="document.getElementById('cupom-file').click()">ðŸ“· Cupom</button>
+        <button class="bg" style="white-space:nowrap;background:linear-gradient(135deg,var(--rose),var(--rose-m))" onclick="produzirPeca('')">ðŸ§µ Produzir</button>
         <input type="file" id="cupom-file" accept="image/*,application/pdf" style="display:none" onchange="importarCupom(this.files[0])">
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <span class="est-sec" style="padding:0">🧵 Materiais</span>
+        <span class="est-sec" style="padding:0">ðŸ§µ Materiais</span>
         <button class="bg" onclick="mostrarFormEst(null,'material')" style="padding:6px 12px;font-size:12px">+ Material</button>
       </div>
       <div id="lista-mats"></div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin:16px 0 8px">
-        <span class="est-sec" style="padding:0">🛍 Produtos prontos</span>
+        <span class="est-sec" style="padding:0">ðŸ› Produtos prontos</span>
         <button class="bg" onclick="mostrarFormEst(null,'produto')" style="padding:6px 12px;font-size:12px">+ Produto</button>
       </div>
       <div id="lista-prods"></div>
@@ -619,54 +619,54 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
   </div>
   <div id="est-form" class="view">
     <div class="ctr">
-      <div class="fh"><button class="bbk" onclick="voltarEst()">‹</button><h2 id="est-tit">Novo item</h2></div>
+      <div class="fh"><button class="bbk" onclick="voltarEst()">â€¹</button><h2 id="est-tit">Novo item</h2></div>
       <div class="card" id="est-fm">
-        <div class="ch"><h2>🧵 Material</h2></div>
+        <div class="ch"><h2>ðŸ§µ Material</h2></div>
         <div class="cb">
           <div class="fr s"><div class="fg"><label>Nome *</label><input type="text" id="em-n" placeholder="Ex: Fio de malha 5mm azul"></div></div>
           <div class="fr">
-            <div class="fg"><label>Categoria</label><select id="em-cat"><option>Fio de malha</option><option>Fio náutico</option><option>Tela Tegape</option><option>Aviamentos / ferragens</option><option>Forro</option><option>Zíper / fechos</option><option>Etiquetas</option><option>Embalagem</option><option>Outros</option></select></div>
-            <div class="fg"><label>Unidade</label><select id="em-u"><option>g</option><option>m</option><option>cm</option><option>un</option><option>kit</option><option>rolo</option><option>pç</option></select></div>
+            <div class="fg"><label>Categoria</label><select id="em-cat"><option>Fio de malha</option><option>Fio nÃ¡utico</option><option>Tela Tegape</option><option>Aviamentos / ferragens</option><option>Forro</option><option>ZÃ­per / fechos</option><option>Etiquetas</option><option>Embalagem</option><option>Outros</option></select></div>
+            <div class="fg"><label>Unidade</label><select id="em-u"><option>g</option><option>m</option><option>cm</option><option>un</option><option>kit</option><option>rolo</option><option>pÃ§</option></select></div>
           </div>
           <div class="fr t">
             <div class="fg"><label>Qtd atual</label><input type="number" id="em-q" placeholder="0" min="0" step="0.1"></div>
-            <div class="fg"><label>Qtd mínima</label><input type="number" id="em-qm" placeholder="0" min="0" step="0.1"></div>
+            <div class="fg"><label>Qtd mÃ­nima</label><input type="number" id="em-qm" placeholder="0" min="0" step="0.1"></div>
             <div class="fg"><label>Custo/und (R$)</label><input type="number" id="em-c" placeholder="0,00" min="0" step="0.01"></div>
           </div>
           <div class="fr">
-            <div class="fg"><label>Fornecedor</label><input type="text" id="em-f" placeholder="Tegape, AliExpress…"></div>
-            <div class="fg"><label>Última compra</label><input type="date" id="em-uc"></div>
+            <div class="fg"><label>Fornecedor</label><input type="text" id="em-f" placeholder="Tegape, AliExpressâ€¦"></div>
+            <div class="fg"><label>Ãšltima compra</label><input type="date" id="em-uc"></div>
           </div>
-          <div class="fr s"><div class="fg"><label>Obs</label><textarea id="em-obs" rows="2" placeholder="Cor, gramatura, link…"></textarea></div></div>
+          <div class="fr s"><div class="fg"><label>Obs</label><textarea id="em-obs" rows="2" placeholder="Cor, gramatura, linkâ€¦"></textarea></div></div>
         </div>
       </div>
       <div class="card" id="est-fp" style="display:none">
-        <div class="ch"><h2>🛍 Produto pronto</h2></div>
+        <div class="ch"><h2>ðŸ› Produto pronto</h2></div>
         <div class="cb">
           <div class="fr s"><div class="fg"><label>Nome *</label><input type="text" id="ep-n" placeholder="Ex: Bolsa Flora coral"></div></div>
           <div class="fr">
-            <div class="fg"><label>Modelo / coleção</label><input type="text" id="ep-col" placeholder="Flora, Jolie, Mini Bag Lis…"></div>
-            <div class="fg"><label>Status</label><select id="ep-s"><option value="em-producao">Em produção</option><option value="disponivel">Disponível ✓</option><option value="reservado">Reservado</option><option value="vendido">Vendido</option></select></div>
+            <div class="fg"><label>Modelo / coleÃ§Ã£o</label><input type="text" id="ep-col" placeholder="Flora, Jolie, Mini Bag Lisâ€¦"></div>
+            <div class="fg"><label>Status</label><select id="ep-s"><option value="em-producao">Em produÃ§Ã£o</option><option value="disponivel">DisponÃ­vel âœ“</option><option value="reservado">Reservado</option><option value="vendido">Vendido</option></select></div>
           </div>
           <div class="fr t">
             <div class="fg"><label>Custo prod. (R$)</label><input type="number" id="ep-c" placeholder="0,00" min="0" step="0.01"></div>
-            <div class="fg"><label>Preço venda (R$)</label><input type="number" id="ep-p" placeholder="0,00" min="0" step="0.01"></div>
+            <div class="fg"><label>PreÃ§o venda (R$)</label><input type="number" id="ep-p" placeholder="0,00" min="0" step="0.01"></div>
             <div class="fg"><label>Qtd</label><input type="number" id="ep-q" placeholder="1" min="1" value="1"></div>
           </div>
           <div class="fr">
             <div class="fg"><label>Plataforma</label><select id="ep-plat"><option>WhatsApp / Direto</option><option>Elo7</option><option>Shopee</option><option>Instagram</option><option>Mercado Livre</option><option>Feira</option></select></div>
-            <div class="fg"><label>Vincular projeto</label><select id="ep-proj"><option value="">— Nenhum —</option></select></div>
+            <div class="fg"><label>Vincular projeto</label><select id="ep-proj"><option value="">â€” Nenhum â€”</option></select></div>
           </div>
           <div class="fg" style="margin-bottom:10px"><label>Foto do produto</label>
             <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
               <img id="ep-foto-prev" style="display:none;width:74px;height:74px;object-fit:cover;border-radius:10px;border:1px solid var(--bdr)">
-              <button class="ba" style="margin:0" onclick="document.getElementById('ep-foto-file').click()">📷 Foto / galeria</button>
-              <button class="ba" style="margin:0;background:var(--purple-l);color:var(--purple);border-color:#c8b8e8" id="ep-ia-btn" onclick="melhorarFoto('ep')" disabled>✨ Premium (IA)</button>
+              <button class="ba" style="margin:0" onclick="document.getElementById('ep-foto-file').click()">ðŸ“· Foto / galeria</button>
+              <button class="ba" style="margin:0;background:var(--purple-l);color:var(--purple);border-color:#c8b8e8" id="ep-ia-btn" onclick="melhorarFoto('ep')" disabled>âœ¨ Premium (IA)</button>
               <input type="file" id="ep-foto-file" accept="image/*" style="display:none" onchange="setFoto('ep',this.files[0])">
             </div>
           </div>
-          <div class="fr s"><div class="fg"><label>ou URL da foto</label><input type="url" id="ep-ft" placeholder="https://…"></div></div>
-          <label style="display:flex;gap:8px;font-size:13px;margin:4px 0 10px;align-items:center;cursor:pointer"><input type="checkbox" id="ep-loja"> 🛍 Publicar na vitrine da loja</label>
+          <div class="fr s"><div class="fg"><label>ou URL da foto</label><input type="url" id="ep-ft" placeholder="https://â€¦"></div></div>
+          <label style="display:flex;gap:8px;font-size:13px;margin:4px 0 10px;align-items:center;cursor:pointer"><input type="checkbox" id="ep-loja"> ðŸ› Publicar na vitrine da loja</label>
           <div class="fr s"><div class="fg"><label>Obs</label><textarea id="ep-o" rows="2"></textarea></div></div>
         </div>
       </div>
@@ -676,24 +676,24 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
   </div>
   <div id="est-import" class="view">
     <div class="ctr">
-      <div class="fh"><button class="bbk" onclick="voltarEst()">‹</button><h2>📷 Importar cupom de compra</h2></div>
+      <div class="fh"><button class="bbk" onclick="voltarEst()">â€¹</button><h2>ðŸ“· Importar cupom de compra</h2></div>
       <div class="card"><div class="cb" id="imp-status" style="display:none"></div></div>
       <div class="card" id="imp-rev" style="display:none">
-        <div class="ch"><h2>🧾 Itens encontrados — confira antes de salvar</h2></div>
+        <div class="ch"><h2>ðŸ§¾ Itens encontrados â€” confira antes de salvar</h2></div>
         <div class="cb">
-          <p style="font-size:12px;color:#aaa;margin-bottom:10px">A leitura automática pode errar números e nomes — revise cada item. Desmarque o que não for material.</p>
+          <p style="font-size:12px;color:#aaa;margin-bottom:10px">A leitura automÃ¡tica pode errar nÃºmeros e nomes â€” revise cada item. Desmarque o que nÃ£o for material.</p>
           <div id="imp-itens"></div>
           <button class="bas" onclick="impAddLinha()">+ adicionar item manualmente</button>
           <div class="fr" style="margin-top:14px">
             <div class="fg"><label>Fornecedor</label><input type="text" id="imp-forn" placeholder="Loja do cupom"></div>
             <div class="fg"><label>Data da compra</label><input type="date" id="imp-data"></div>
           </div>
-          <label style="display:flex;gap:8px;font-size:13px;margin-top:10px;align-items:center;cursor:pointer"><input type="checkbox" id="imp-desp" checked> Lançar o total como <strong>despesa no caixa</strong></label>
+          <label style="display:flex;gap:8px;font-size:13px;margin-top:10px;align-items:center;cursor:pointer"><input type="checkbox" id="imp-desp" checked> LanÃ§ar o total como <strong>despesa no caixa</strong></label>
           <button class="bsv" onclick="impSalvar()">Adicionar ao estoque</button>
         </div>
       </div>
       <div class="card" id="imp-raw-card" style="display:none">
-        <div class="ch"><h2>📄 Texto lido do cupom</h2><button class="bsr" onclick="const t=document.getElementById('imp-raw');t.style.display=t.style.display==='none'?'block':'none'">↕ mostrar</button></div>
+        <div class="ch"><h2>ðŸ“„ Texto lido do cupom</h2><button class="bsr" onclick="const t=document.getElementById('imp-raw');t.style.display=t.style.display==='none'?'block':'none'">â†• mostrar</button></div>
         <div class="cb"><textarea id="imp-raw" rows="9" readonly style="display:none;width:100%;border:1px solid var(--bdr);border-radius:8px;padding:9px;font-size:12px;font-family:monospace;background:#FDFAF7"></textarea></div>
       </div>
       <div style="height:2rem"></div>
@@ -701,95 +701,95 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
   </div>
   <div id="est-prod" class="view">
     <div class="ctr">
-      <div class="fh"><button class="bbk" onclick="voltarEst()">‹</button><h2>🧵 Produzir peça</h2></div>
-      <div class="card"><div class="ch"><h2>📓 Projeto / receita</h2></div><div class="cb">
-        <select id="pr-proj" style="width:100%;border:1px solid var(--bdr);border-radius:8px;padding:9px 11px;font-size:14px;background:#FDFAF7" onchange="prodCarregar(this.value)"><option value="">— Escolha o projeto —</option></select>
-        <p style="font-size:12px;color:#aaa;margin-top:8px">Puxa a receita planejada do caderno — ajuste para o que você usou de verdade.</p>
+      <div class="fh"><button class="bbk" onclick="voltarEst()">â€¹</button><h2>ðŸ§µ Produzir peÃ§a</h2></div>
+      <div class="card"><div class="ch"><h2>ðŸ““ Projeto / receita</h2></div><div class="cb">
+        <select id="pr-proj" style="width:100%;border:1px solid var(--bdr);border-radius:8px;padding:9px 11px;font-size:14px;background:#FDFAF7" onchange="prodCarregar(this.value)"><option value="">â€” Escolha o projeto â€”</option></select>
+        <p style="font-size:12px;color:#aaa;margin-top:8px">Puxa a receita planejada do caderno â€” ajuste para o que vocÃª usou de verdade.</p>
       </div></div>
       <div id="pr-body" style="display:none">
-        <div class="card"><div class="ch"><h2>🧮 Materiais usados (real)</h2></div><div class="cb">
+        <div class="card"><div class="ch"><h2>ðŸ§® Materiais usados (real)</h2></div><div class="cb">
           <div id="pr-mats"></div>
           <button class="bas" onclick="prodAddLinha()">+ material avulso</button>
           <div class="mat-total-row"><span>Planejado: <strong id="pr-plan">R$ 0,00</strong></span><span>Real: <strong id="pr-real" style="color:var(--rose)">R$ 0,00</strong></span></div>
           <div id="pr-dif" style="text-align:right;font-size:12px;margin-top:4px;color:#888"></div>
           <div id="pr-falta" style="display:none;font-size:12px;color:var(--orange);background:var(--orange-l);border:1px solid #e8c890;border-radius:8px;padding:8px 10px;margin-top:8px"></div>
         </div></div>
-        <div class="card"><div class="ch"><h2>🛍 Produto pronto</h2></div><div class="cb">
+        <div class="card"><div class="ch"><h2>ðŸ› Produto pronto</h2></div><div class="cb">
           <div class="fr">
             <div class="fg"><label>Nome do produto</label><input type="text" id="pr-nome"></div>
-            <div class="fg"><label>Preço de venda (R$)</label><input type="number" id="pr-preco" min="0" step="0.01"></div>
+            <div class="fg"><label>PreÃ§o de venda (R$)</label><input type="number" id="pr-preco" min="0" step="0.01"></div>
           </div>
           <div class="fr">
             <div class="fg"><label>Qtd produzida</label><input type="number" id="pr-qtd" value="1" min="1"></div>
             <div class="fg"><label>Plataforma</label><select id="pr-plat" onchange="prodSugestao()"></select></div>
           </div>
-          <div class="fg" style="margin-top:4px"><label>Foto da peça pronta</label>
+          <div class="fg" style="margin-top:4px"><label>Foto da peÃ§a pronta</label>
             <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
               <img id="pr-foto-prev" style="display:none;width:74px;height:74px;object-fit:cover;border-radius:10px;border:1px solid var(--bdr)">
-              <button class="ba" style="margin:0" onclick="document.getElementById('pr-foto-file').click()">📷 Foto / galeria</button>
-              <button class="ba" style="margin:0;background:var(--purple-l);color:var(--purple);border-color:#c8b8e8" id="pr-ia-btn" onclick="melhorarFoto('pr')" disabled>✨ Premium (IA)</button>
+              <button class="ba" style="margin:0" onclick="document.getElementById('pr-foto-file').click()">ðŸ“· Foto / galeria</button>
+              <button class="ba" style="margin:0;background:var(--purple-l);color:var(--purple);border-color:#c8b8e8" id="pr-ia-btn" onclick="melhorarFoto('pr')" disabled>âœ¨ Premium (IA)</button>
               <input type="file" id="pr-foto-file" accept="image/*" style="display:none" onchange="setFoto('pr',this.files[0])">
             </div>
           </div>
           <div style="background:var(--gold-l);border:1px solid #e8d08a;border-radius:10px;padding:10px 12px;margin-top:10px">
-            <div style="font-size:11px;font-weight:700;color:var(--gold-d);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">💰 Sugestão de preço — custo real + taxa da plataforma</div>
+            <div style="font-size:11px;font-weight:700;color:var(--gold-d);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">ðŸ’° SugestÃ£o de preÃ§o â€” custo real + taxa da plataforma</div>
             <div class="fr">
-              <div class="fg"><label>Mão de obra (R$)</label><input type="number" id="pr-mdo" value="0" min="0" step="1" oninput="prodSugestao()"><div id="pr-mdo-hint" style="font-size:10px;color:var(--gold-d);margin-top:2px;display:none"></div></div>
+              <div class="fg"><label>MÃ£o de obra (R$)</label><input type="number" id="pr-mdo" value="0" min="0" step="1" oninput="prodSugestao()"><div id="pr-mdo-hint" style="font-size:10px;color:var(--gold-d);margin-top:2px;display:none"></div></div>
               <div class="fg"><label>Margem de lucro</label><div class="rr"><input type="range" id="pr-mg" min="10" max="80" value="40" step="5" oninput="prodSugestao()"><span class="rv" id="pr-mgv">40%</span></div></div>
             </div>
             <div id="pr-sug" style="display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;margin-top:4px;flex-wrap:wrap"></div>
           </div>
           <label style="display:flex;gap:8px;font-size:13px;margin-top:10px;align-items:center;cursor:pointer"><input type="checkbox" id="pr-baixa" checked> Dar baixa dos materiais no estoque</label>
-          <label style="display:flex;gap:8px;font-size:13px;margin-top:6px;align-items:center;cursor:pointer"><input type="checkbox" id="pr-loja" checked> 🛍 Publicar na vitrine da loja ao concluir</label>
+          <label style="display:flex;gap:8px;font-size:13px;margin-top:6px;align-items:center;cursor:pointer"><input type="checkbox" id="pr-loja" checked> ðŸ› Publicar na vitrine da loja ao concluir</label>
         </div></div>
-        <button class="bsv" onclick="prodConcluir()">✓ Concluir produção</button>
+        <button class="bsv" onclick="prodConcluir()">âœ“ Concluir produÃ§Ã£o</button>
       </div>
       <div style="height:2rem"></div>
     </div>
   </div>
 </div>
 
-<!-- ═══ AJUSTES (CONFIGURAÇÕES) ═══ -->
+<!-- â•â•â• AJUSTES (CONFIGURAÃ‡Ã•ES) â•â•â• -->
 <div id="view-config" class="view">
 <div class="ctr">
-  <div class="card"><div class="ch"><h2>👤 Conta</h2></div><div class="cb">
-    <div style="font-size:14px;margin-bottom:12px">Conectada como <strong id="cfg-email">—</strong></div>
+  <div class="card"><div class="ch"><h2>ðŸ‘¤ Conta</h2></div><div class="cb">
+    <div style="font-size:14px;margin-bottom:12px">Conectada como <strong id="cfg-email">â€”</strong></div>
     <button class="bgr" onclick="sair()">Sair da conta</button>
     <div id="cfg-admin" style="display:none;margin-top:14px;border-top:1px solid var(--bdr);padding-top:12px">
-      <label style="font-size:12px;color:#888;display:block;margin-bottom:5px">👑 Admin — gerenciar a conta de:</label>
+      <label style="font-size:12px;color:#888;display:block;margin-bottom:5px">ðŸ‘‘ Admin â€” gerenciar a conta de:</label>
       <select id="adm-sel" style="width:100%;border:1px solid var(--bdr);border-radius:8px;padding:9px 11px;font-size:14px;background:#FDFAF7" onchange="trocarConta(this.value)"></select>
-      <p style="font-size:11px;color:#aaa;margin-top:6px">Tudo o que você ver e salvar vale para a conta selecionada.</p>
+      <p style="font-size:11px;color:#aaa;margin-top:6px">Tudo o que vocÃª ver e salvar vale para a conta selecionada.</p>
     </div>
   </div></div>
-  <div class="card"><div class="ch"><h2>🏪 Taxas de plataformas</h2><button class="ba" style="margin:0;padding:5px 12px;font-size:12px" onclick="addTaxa()">+ Plataforma</button></div>
+  <div class="card"><div class="ch"><h2>ðŸª Taxas de plataformas</h2><button class="ba" style="margin:0;padding:5px 12px;font-size:12px" onclick="addTaxa()">+ Plataforma</button></div>
     <div class="cb"><p style="font-size:12px;color:#aaa;margin-bottom:10px">Usadas na calculadora, no caixa e no DRE.</p><div id="cfg-taxas"></div></div></div>
-  <div class="card"><div class="ch"><h2>🎯 Fases do plano</h2><button class="ba" style="margin:0;padding:5px 12px;font-size:12px" onclick="addFase()">+ Fase</button></div>
-    <div class="cb"><p style="font-size:12px;color:#aaa;margin-bottom:10px">A fase ativa é definida pela data de início. Metas aparecem no painel.</p><div id="cfg-fases"></div></div></div>
-  <div class="card"><div class="ch"><h2>👜 Modelos do catálogo</h2><button class="ba" style="margin:0;padding:5px 12px;font-size:12px" onclick="addModelo()">+ Modelo</button></div>
+  <div class="card"><div class="ch"><h2>ðŸŽ¯ Fases do plano</h2><button class="ba" style="margin:0;padding:5px 12px;font-size:12px" onclick="addFase()">+ Fase</button></div>
+    <div class="cb"><p style="font-size:12px;color:#aaa;margin-bottom:10px">A fase ativa Ã© definida pela data de inÃ­cio. Metas aparecem no painel.</p><div id="cfg-fases"></div></div></div>
+  <div class="card"><div class="ch"><h2>ðŸ‘œ Modelos do catÃ¡logo</h2><button class="ba" style="margin:0;padding:5px 12px;font-size:12px" onclick="addModelo()">+ Modelo</button></div>
     <div class="cb" id="cfg-modelos"></div></div>
-  <div class="card"><div class="ch"><h2>🛍 Loja (vitrine pública)</h2></div><div class="cb">
-    <div class="fg"><label>WhatsApp da loja (só números, com DDD — ex.: 51999998888)</label><input type="tel" id="cfg-whats" placeholder="51999998888" oninput="CFG.whats=this.value"></div>
-    <p style="font-size:12px;color:#888;margin-top:8px">Produtos marcados com 🛍 aparecem automaticamente na sua loja pública. O botão de compra abre o seu WhatsApp com a mensagem pronta.</p>
+  <div class="card"><div class="ch"><h2>ðŸ› Loja (vitrine pÃºblica)</h2></div><div class="cb">
+    <div class="fg"><label>WhatsApp da loja (sÃ³ nÃºmeros, com DDD â€” ex.: 51999998888)</label><input type="tel" id="cfg-whats" placeholder="51999998888" oninput="CFG.whats=this.value"></div>
+    <p style="font-size:12px;color:#888;margin-top:8px">Produtos marcados com ðŸ› aparecem automaticamente na sua loja pÃºblica. O botÃ£o de compra abre o seu WhatsApp com a mensagem pronta.</p>
     <div style="background:var(--gold-l);border:1px solid #e8d08a;border-radius:10px;padding:10px 12px;margin-top:10px">
-      <div style="font-size:11px;font-weight:700;color:var(--gold-d);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">🔗 Link da loja</div>
+      <div style="font-size:11px;font-weight:700;color:var(--gold-d);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">ðŸ”— Link da loja</div>
       <div id="loja-url" style="font-size:13px;font-weight:600;color:var(--rose);word-break:break-all;margin-bottom:10px"></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button class="bg" onclick="copiarLinkLoja()">📋 Copiar link</button>
-        <button class="bgn" onclick="compartilharLoja()">📤 Compartilhar</button>
-        <a class="bsr" href="loja.html" target="_blank" style="text-decoration:none;display:inline-flex;align-items:center">👁 Ver a loja</a>
+        <button class="bg" onclick="copiarLinkLoja()">ðŸ“‹ Copiar link</button>
+        <button class="bgn" onclick="compartilharLoja()">ðŸ“¤ Compartilhar</button>
+        <a class="bsr" href="loja.html" target="_blank" style="text-decoration:none;display:inline-flex;align-items:center">ðŸ‘ Ver a loja</a>
       </div>
     </div>
   </div></div>
-  <div class="card"><div class="ch"><h2>✨ IA de imagens (Gemini)</h2></div><div class="cb">
+  <div class="card"><div class="ch"><h2>âœ¨ IA de imagens (Gemini)</h2></div><div class="cb">
     <div class="fg"><label>Chave da API do Google AI Studio</label><input type="password" id="cfg-gkey" placeholder="AIza..." oninput="CFG.gkey=this.value"></div>
-    <p style="font-size:12px;color:#888;margin-top:8px">Usada no botão <b>✨ Premium (IA)</b> das fotos: transforma a foto da peça em foto de catálogo (fundo neutro, luz de estúdio) <b>sem alterar o produto</b>. Crie a chave grátis em <b>aistudio.google.com/apikey</b>.</p>
+    <p style="font-size:12px;color:#888;margin-top:8px">Usada no botÃ£o <b>âœ¨ Premium (IA)</b> das fotos: transforma a foto da peÃ§a em foto de catÃ¡logo (fundo neutro, luz de estÃºdio) <b>sem alterar o produto</b>. Crie a chave grÃ¡tis em <b>aistudio.google.com/apikey</b>.</p>
   </div></div>
-  <button class="bsv" onclick="salvarConfig()">Salvar configurações</button>
-  <div class="card" style="margin-top:1rem"><div class="ch"><h2>💾 Backup dos dados</h2></div><div class="cb">
+  <button class="bsv" onclick="salvarConfig()">Salvar configuraÃ§Ãµes</button>
+  <div class="card" style="margin-top:1rem"><div class="ch"><h2>ðŸ’¾ Backup dos dados</h2></div><div class="cb">
     <p style="font-size:13px;color:#888;margin-bottom:10px">Exporte todos os seus dados em um arquivo JSON ou restaure de um backup anterior.</p>
     <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <button class="bg" onclick="exportarJSON()">⬇ Exportar dados</button>
-      <button class="bgr" onclick="document.getElementById('imp-file').click()">⬆ Importar backup</button>
+      <button class="bg" onclick="exportarJSON()">â¬‡ Exportar dados</button>
+      <button class="bgr" onclick="document.getElementById('imp-file').click()">â¬† Importar backup</button>
       <input type="file" id="imp-file" accept=".json,application/json" style="display:none" onchange="importarJSON(this.files[0])">
     </div>
   </div></div>
@@ -801,13 +801,13 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
-// ══ FIREBASE ══
+// â•â• FIREBASE â•â•
 firebase.initializeApp({apiKey:"AIzaSyDPVjyPmwBCtnJJlXyekrW6c4hwkPxQI5g",authDomain:"bolsas-lisandra.firebaseapp.com",projectId:"bolsas-lisandra",storageBucket:"bolsas-lisandra.firebasestorage.app",messagingSenderId:"745351180534",appId:"1:745351180534:web:7c0217504fe87f7153bcd7"});
 const db=firebase.firestore();
 db.enablePersistence({synchronizeTabs:true}).catch(()=>{}); // offline: leitura local + fila de escrita
 const auth=firebase.auth();
 
-// Coleções do usuário logado (preenchidas após o login):
+// ColeÃ§Ãµes do usuÃ¡rio logado (preenchidas apÃ³s o login):
 let COL=null,_uid=null,_unsubs=[];
 let _P=[],_H=[],_T=[],_E=[];
 let _loaded=0;
@@ -815,15 +815,15 @@ function sync(ok){document.getElementById('sd').className='sd'+(ok?'':' off');do
 function chk(){if(++_loaded>=4)document.getElementById('lov').style.display='none';}
 setTimeout(()=>{document.getElementById('lov').style.display='none';},8000);
 
-// ── CONFIG DO USUÁRIO (taxas, fases, modelos) ──
+// â”€â”€ CONFIG DO USUÃRIO (taxas, fases, modelos) â”€â”€
 const CFG_PADRAO={
   taxas:[{nome:'WhatsApp / Direto',pct:0},{nome:'Elo7',pct:12},{nome:'Shopee',pct:16},{nome:'Instagram',pct:10},{nome:'Mercado Livre',pct:15},{nome:'Feira',pct:0}],
   fases:[
-    {nome:'Aprendizado',emoji:'📚',inicio:'2026-06-01',meta_v:0,meta_r:0,desc:'Técnica, portfólio, fotografia'},
-    {nome:'Primeiras Vendas',emoji:'🌱',inicio:'2026-09-01',meta_v:10,meta_r:3000,desc:'Validar, feedback, 10 vendas'},
-    {nome:'Crescimento',emoji:'🚀',inicio:'2026-12-01',meta_v:40,meta_r:15000,desc:'Marca, ticket alto, recorrência'}
+    {nome:'Aprendizado',emoji:'ðŸ“š',inicio:'2026-06-01',meta_v:0,meta_r:0,desc:'TÃ©cnica, portfÃ³lio, fotografia'},
+    {nome:'Primeiras Vendas',emoji:'ðŸŒ±',inicio:'2026-09-01',meta_v:10,meta_r:3000,desc:'Validar, feedback, 10 vendas'},
+    {nome:'Crescimento',emoji:'ðŸš€',inicio:'2026-12-01',meta_v:40,meta_r:15000,desc:'Marca, ticket alto, recorrÃªncia'}
   ],
-  modelos:[{nome:'Flora',desc:'Crochê floral'},{nome:'Jolie',desc:'Elegante dia a dia'},{nome:'Mini Bag Lis',desc:'Compacta premium'},{nome:'Duquesa',desc:'Sofisticada noite'},{nome:'Bali',desc:'Macramê boho'}],
+  modelos:[{nome:'Flora',desc:'CrochÃª floral'},{nome:'Jolie',desc:'Elegante dia a dia'},{nome:'Mini Bag Lis',desc:'Compacta premium'},{nome:'Duquesa',desc:'Sofisticada noite'},{nome:'Bali',desc:'MacramÃª boho'}],
   whats:'',gkey:''
 };
 let CFG=JSON.parse(JSON.stringify(CFG_PADRAO));
@@ -842,7 +842,7 @@ async function carregarConfig(){
 }
 function aplicarConfig(){renderPlatOptions();renderConfig();}
 
-// ── AUTENTICAÇÃO ──
+// â”€â”€ AUTENTICAÃ‡ÃƒO â”€â”€
 // captura o resultado do login por redirecionamento (celular) e mostra erro se houver
 auth.getRedirectResult().catch(e=>{
   const c=e.code||'';
@@ -865,13 +865,13 @@ auth.onAuthStateChanged(async u=>{
   base.set({email:(u.email||'').toLowerCase(),nome:u.displayName||'',ultimoAcesso:firebase.firestore.FieldValue.serverTimestamp()},{merge:true}).catch(()=>{});
   const ce=document.getElementById('cfg-email');if(ce)ce.textContent=u.email||'(sem e-mail)';
   const ab=document.getElementById('adm-view');if(ab)ab.style.display='none';
-  try{await migrarSeNecessario();}catch(e){console.warn('migração:',e);}
+  try{await migrarSeNecessario();}catch(e){console.warn('migraÃ§Ã£o:',e);}
   await carregarConfig();
   await initVitrineCache();
   startListeners();
   carregarContasAdmin();
 });
-// ── ADMIN (troca de conta) ──
+// â”€â”€ ADMIN (troca de conta) â”€â”€
 const ADMIN_EMAILS=['alessandro.flores16@gmail.com'];
 function isAdminUser(){return ADMIN_EMAILS.includes((auth.currentUser?.email||'').toLowerCase());}
 function setColFor(uid){
@@ -884,7 +884,7 @@ async function carregarContasAdmin(){
   try{
     const s=await db.collection('users').get();
     const sel=document.getElementById('adm-sel');if(!sel)return;
-    sel.innerHTML=s.docs.map(d=>`<option value="${d.id}" ${d.id===_uid?'selected':''}>${(d.data().email||d.id)}${d.id===auth.currentUser.uid?' (você)':''}</option>`).join('');
+    sel.innerHTML=s.docs.map(d=>`<option value="${d.id}" ${d.id===_uid?'selected':''}>${(d.data().email||d.id)}${d.id===auth.currentUser.uid?' (vocÃª)':''}</option>`).join('');
     document.getElementById('cfg-admin').style.display='block';
   }catch(e){console.warn('admin:',e);}
 }
@@ -896,7 +896,7 @@ async function trocarConta(uid){
   const b=document.getElementById('adm-view');
   if(b){
     b.style.display=propria?'none':'inline-block';
-    if(!propria)db.collection('users').doc(uid).get().then(d=>{b.textContent='👁 '+(d.data()?.email||uid);}).catch(()=>{b.textContent='👁 outra conta';});
+    if(!propria)db.collection('users').doc(uid).get().then(d=>{b.textContent='ðŸ‘ '+(d.data()?.email||uid);}).catch(()=>{b.textContent='ðŸ‘ outra conta';});
   }
   document.getElementById('lov').style.display='flex';
   CFG=JSON.parse(JSON.stringify(CFG_PADRAO));
@@ -904,9 +904,9 @@ async function trocarConta(uid){
   await carregarConfig();
   await initVitrineCache();
   startListeners();
-  toast(propria?'✓ De volta à sua conta':'👁 Gerenciando outra conta');
+  toast(propria?'âœ“ De volta Ã  sua conta':'ðŸ‘ Gerenciando outra conta');
 }
-// ══ VITRINE (loja pública) ══
+// â•â• VITRINE (loja pÃºblica) â•â•
 let _vitCache={};
 async function initVitrineCache(){
   _vitCache={};
@@ -929,7 +929,7 @@ function sincronizarVitrine(){
 async function publicarProd(id){
   const p=_E.find(x=>x._id===id);if(!p)return;
   if(!p.naLoja&&!(CFG.whats||'').replace(/\D/g,'')){toast('Antes, informe o WhatsApp da loja em Ajustes.');aba('config');return;}
-  try{await COL.est.doc(id).update({naLoja:!p.naLoja});toast(p.naLoja?'Removido da loja.':'✓ Publicado na loja!');}catch(e){toast('❌ Erro.');}
+  try{await COL.est.doc(id).update({naLoja:!p.naLoja});toast(p.naLoja?'Removido da loja.':'âœ“ Publicado na loja!');}catch(e){toast('âŒ Erro.');}
 }
 function startListeners(){
   _unsubs.forEach(f=>f());_unsubs=[];_loaded=0;
@@ -939,16 +939,16 @@ function startListeners(){
   _unsubs.push(COL.trans.orderBy('created_at','desc').onSnapshot(s=>{_T=s.docs.map(d=>({...d.data(),_id:d.id}));renderDash();renderPlano();renderExtrato();renderFase();chk();sync(true);},()=>{sync(false);chk();}));
   _unsubs.push(COL.est.orderBy('nome').onSnapshot(s=>{_E=s.docs.map(d=>({...d.data(),_id:d.id}));renderEst();renderDash();renderPlano();renderDRE();renderPendencias();renderGrafico();try{sincronizarVitrine();}catch(e){}chk();sync(true);},()=>{sync(false);chk();}));
 }
-// Migra os dados da versão antiga (coleções na raiz) para a conta do usuário — roda 1x.
+// Migra os dados da versÃ£o antiga (coleÃ§Ãµes na raiz) para a conta do usuÃ¡rio â€” roda 1x.
 async function migrarSeNecessario(){
   const [temP,temT]=await Promise.all([COL.proj.limit(1).get(),COL.trans.limit(1).get()]);
   if(!temP.empty||!temT.empty)return;
   let roots;
   try{roots=await Promise.all([db.collection('projetos').get(),db.collection('historico').get(),db.collection('transacoes').get(),db.collection('estoque').get()]);}
-  catch(e){return;} // regras já podem ter bloqueado a raiz — ok
+  catch(e){return;} // regras jÃ¡ podem ter bloqueado a raiz â€” ok
   const total=roots.reduce((s,r)=>s+r.size,0);
   if(!total)return;
-  if(!confirm(`Encontrei ${total} registros da versão anterior do app. Importar para a sua conta?`))return;
+  if(!confirm(`Encontrei ${total} registros da versÃ£o anterior do app. Importar para a sua conta?`))return;
   const dests=['projetos','historico','transacoes','estoque'];
   const base=db.collection('users').doc(_uid);
   let batch=db.batch(),n=0;
@@ -959,7 +959,7 @@ async function migrarSeNecessario(){
     }
   }
   if(n)await batch.commit();
-  toast('✓ '+total+' registros importados para a sua conta!');
+  toast('âœ“ '+total+' registros importados para a sua conta!');
 }
 function lmsg(m,ok){const el=document.getElementById('login-msg');if(el){el.textContent=m;el.style.display=m?'block':'none';el.style.background=ok?'var(--green-l)':'var(--red-l)';el.style.color=ok?'var(--green)':'var(--red)';}}
 async function resetSenha(){
@@ -968,20 +968,20 @@ async function resetSenha(){
   if(!em){lmsg('Digite o e-mail no campo acima primeiro.');return;}
   try{
     await auth.sendPasswordResetEmail(em);
-    lmsg('✉ Enviamos um link para '+em+'. Abra o e-mail, defina a sua senha e volte aqui para entrar.',true);
+    lmsg('âœ‰ Enviamos um link para '+em+'. Abra o e-mail, defina a sua senha e volte aqui para entrar.',true);
   }catch(e){lmsg(erroAuth(e));}
 }
 function erroAuth(e){
   const c=e.code||'';
-  if(c.includes('invalid-email'))return 'E-mail inválido.';
-  if(c.includes('user-not-found'))return 'Conta não encontrada — toque em "Criar conta nova".';
+  if(c.includes('invalid-email'))return 'E-mail invÃ¡lido.';
+  if(c.includes('user-not-found'))return 'Conta nÃ£o encontrada â€” toque em "Criar conta nova".';
   if(c.includes('wrong-password')||c.includes('invalid-credential'))return 'E-mail ou senha incorretos.';
-  if(c.includes('email-already-in-use'))return 'Este e-mail já tem conta — use "Entrar".';
-  if(c.includes('weak-password'))return 'Senha muito curta (mínimo 6 caracteres).';
+  if(c.includes('email-already-in-use'))return 'Este e-mail jÃ¡ tem conta â€” use "Entrar".';
+  if(c.includes('weak-password'))return 'Senha muito curta (mÃ­nimo 6 caracteres).';
   if(c.includes('too-many-requests'))return 'Muitas tentativas. Aguarde um pouco.';
-  if(c.includes('network'))return 'Sem conexão. Verifique a internet.';
+  if(c.includes('network'))return 'Sem conexÃ£o. Verifique a internet.';
   if(c.includes('popup'))return 'Login com Google cancelado.';
-  if(c.includes('operation-not-allowed'))return 'Método de login não habilitado no Firebase (veja COMO_ATIVAR.md).';
+  if(c.includes('operation-not-allowed'))return 'MÃ©todo de login nÃ£o habilitado no Firebase (veja COMO_ATIVAR.md).';
   return 'Erro: '+(e.message||c);
 }
 async function loginEmail(criar){
@@ -998,7 +998,7 @@ async function loginGoogle(){
   const prov=new firebase.auth.GoogleAuthProvider();
   try{await auth.signInWithPopup(prov);}
   catch(e){
-    // celular costuma bloquear popup — cai para o fluxo de redirecionamento
+    // celular costuma bloquear popup â€” cai para o fluxo de redirecionamento
     if((e.code||'').includes('popup')){
       try{await auth.signInWithRedirect(prov);}catch(e2){lmsg(erroAuth(e2));}
     }else lmsg(erroAuth(e));
@@ -1006,12 +1006,12 @@ async function loginGoogle(){
 }
 async function sair(){if(confirm('Sair da conta?'))await auth.signOut();}
 
-// ══ UTILS ══
-const MN=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+// â•â• UTILS â•â•
+const MN=['Janeiro','Fevereiro','MarÃ§o','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 const MNA=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 function fmt(v){return 'R$ '+(v||0).toFixed(2).replace('.',',').replace(/\B(?=(\d{3})+(?!\d))/g,'.');}
 function fmtK(v){return Math.abs(v)>=1000?'R$'+(v/1000).toFixed(1).replace('.',',')+'k':fmt(v);}
-// Taxa por plataforma — lê a tabela configurável (Ajustes). Aceita nomes parciais (ex.: "Instagram Shop").
+// Taxa por plataforma â€” lÃª a tabela configurÃ¡vel (Ajustes). Aceita nomes parciais (ex.: "Instagram Shop").
 function taxaPlat(plat){
   if(!plat)return 0;
   const p=String(plat).toLowerCase().trim();
@@ -1019,7 +1019,7 @@ function taxaPlat(plat){
     ||CFG.taxas.find(x=>{const n=(x.nome||'').toLowerCase();return n&&(p.includes(n)||n.includes(p));});
   return t?(parseFloat(t.pct)||0)/100:0;
 }
-// Reconstrói os selects de plataforma a partir da tabela de taxas
+// ReconstrÃ³i os selects de plataforma a partir da tabela de taxas
 function renderPlatOptions(){
   const cal=document.getElementById('plat');
   if(cal){
@@ -1040,9 +1040,9 @@ function lucroLiq(t){const v=t.valor||0;const c=t.custoPeca||0;const taxa=v*(tax
 function fmtLucro(t){const l=lucroLiq(t);return `<span style="color:${l>=0?'var(--green)':'var(--red)'}">liq: ${fmt(l)}</span>`;}
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 function ar(el){el.style.height='auto';el.style.height=el.scrollHeight+'px';}
-function sLabel(s){return s==='concluido'?'✓ Concluído':s==='em-andamento'?'⟳ Em andamento':'✎ Rascunho';}
+function sLabel(s){return s==='concluido'?'âœ“ ConcluÃ­do':s==='em-andamento'?'âŸ³ Em andamento':'âœŽ Rascunho';}
 
-// ══ ABAS ══
+// â•â• ABAS â•â•
 function aba(a){
   ['dash','caderno','calc','estoque','caixa','config'].forEach((x,i)=>{
     document.querySelectorAll('.tab')[i]?.classList.toggle('active',x===a);
@@ -1055,18 +1055,18 @@ function aba(a){
   window.scrollTo(0,0);
 }
 
-// ══ DROPDOWNS ══
+// â•â• DROPDOWNS â•â•
 function renderDropdowns(){
   ['vp','c-proj','ep-proj'].forEach(id=>{
     const s=document.getElementById(id);if(!s)return;
     const v=s.value;
-    s.innerHTML='<option value="">— Nenhum —</option>'+_P.map(p=>`<option value="${p.id||p._id}">${p.nome}</option>`).join('');
+    s.innerHTML='<option value="">â€” Nenhum â€”</option>'+_P.map(p=>`<option value="${p.id||p._id}">${p.nome}</option>`).join('');
     s.value=v;
   });
 }
 
-// ══ DASHBOARD ══
-// Fase ativa: a última cuja data de início já passou (fases configuráveis em Ajustes)
+// â•â• DASHBOARD â•â•
+// Fase ativa: a Ãºltima cuja data de inÃ­cio jÃ¡ passou (fases configurÃ¡veis em Ajustes)
 function faseAtualIdx(){
   const fases=CFG.fases||[];const hoje=new Date().toISOString().slice(0,10);
   let idx=0;fases.forEach((f,i)=>{if((f.inicio||'')<=hoje)idx=i;});return idx;
@@ -1078,7 +1078,7 @@ function fasePeriodo(i){
   const prox=fases[i+1];
   if(!prox||!prox.inicio)return ini+' +';
   const df=new Date(new Date(prox.inicio+'T12:00:00').getTime()-86400000);
-  return ini+'–'+MNA[df.getMonth()]+' '+df.getFullYear();
+  return ini+'â€“'+MNA[df.getMonth()]+' '+df.getFullYear();
 }
 function renderFase(){
   const el=document.getElementById('fase-banner');if(!el)return;
@@ -1092,17 +1092,17 @@ function renderFase(){
   const d0=fases[0].inicio?new Date(fases[0].inicio+'T12:00:00'):null;
   el.innerHTML=`<div class="fb2">
     <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-      <span style="font-size:11px;opacity:.7;font-weight:600;text-transform:uppercase">${f.emoji||'🎯'} Fase ${i+1} — ${f.nome}</span>
+      <span style="font-size:11px;opacity:.7;font-weight:600;text-transform:uppercase">${f.emoji||'ðŸŽ¯'} Fase ${i+1} â€” ${f.nome}</span>
       <span style="font-size:11px;opacity:.7">${d0?'Desde '+MNA[d0.getMonth()]+'/'+d0.getFullYear():''}</span>
     </div>
-    <h3>${f.meta_v>0?`Meta: ${f.meta_v} vendas · ${fmt(f.meta_r)}`:f.desc}</h3>
+    <h3>${f.meta_v>0?`Meta: ${f.meta_v} vendas Â· ${fmt(f.meta_r)}`:f.desc}</h3>
     ${f.meta_v>0?`<p style="margin-bottom:12px">${f.desc||''}</p>`:''}
     <div class="pb"><div class="pf" style="width:${prog}%"></div></div>
     <div class="pl"><span>${progLabel}</span><span>${prog}%</span></div>
     ${f.meta_r>0?`<div class="mr2"><span>Receita acumulada:</span><span class="mv2">${fmt(totalR)}</span></div>`:''}
   </div>`;
 }
-// ── DRE ──
+// â”€â”€ DRE â”€â”€
 function renderDRE(){
   const hoje=new Date(),m=_mc,y=_ac;
   const el=document.getElementById('dre-mes-lbl');
@@ -1122,15 +1122,15 @@ function renderDRE(){
   const row=(label,val,bold,cor,indent)=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f5f0ea;font-size:${bold?'14':'13'}px;font-weight:${bold?'700':'400'};${indent?'padding-left:12px;color:#888':''}"><span>${label}</span><span style="color:${cor||'var(--gray)'}">${fmt(val)}</span></div>`;
   body.innerHTML=
     row('(+) Receita bruta de vendas',recBruta,true,'var(--green)')+
-    row('(−) Custo das peças',-custosPecas,false,'var(--red)',true)+
-    row('(−) Taxas de plataforma',-taxasPlat,false,'var(--red)',true)+
+    row('(âˆ’) Custo das peÃ§as',-custosPecas,false,'var(--red)',true)+
+    row('(âˆ’) Taxas de plataforma',-taxasPlat,false,'var(--red)',true)+
     `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:2px solid var(--bdr);font-size:13px;font-weight:600"><span style="padding-left:12px">= Lucro bruto</span><span style="color:${lucBruto>=0?'var(--green)':'var(--red)'}">${fmt(lucBruto)}</span></div>`+
-    row('(−) Despesas operacionais',-despTotal,false,'var(--red)',true)+
-    `<div style="display:flex;justify-content:space-between;padding:8px 0;background:${lucLiq>=0?'var(--green-l)':'var(--red-l)'};border-radius:8px;padding:10px 12px;margin-top:6px"><span style="font-weight:700;font-size:15px">= Lucro líquido</span><span style="font-weight:700;font-size:15px;color:${lucLiq>=0?'var(--green)':'var(--red)'}">${fmt(lucLiq)}</span></div>`+
-    `<div style="text-align:right;font-size:12px;color:#aaa;margin-top:4px">Margem líquida: <strong style="color:${margem>=0?'var(--green)':'var(--red)'}">${margem.toFixed(1)}%</strong></div>`;
+    row('(âˆ’) Despesas operacionais',-despTotal,false,'var(--red)',true)+
+    `<div style="display:flex;justify-content:space-between;padding:8px 0;background:${lucLiq>=0?'var(--green-l)':'var(--red-l)'};border-radius:8px;padding:10px 12px;margin-top:6px"><span style="font-weight:700;font-size:15px">= Lucro lÃ­quido</span><span style="font-weight:700;font-size:15px;color:${lucLiq>=0?'var(--green)':'var(--red)'}">${fmt(lucLiq)}</span></div>`+
+    `<div style="text-align:right;font-size:12px;color:#aaa;margin-top:4px">Margem lÃ­quida: <strong style="color:${margem>=0?'var(--green)':'var(--red)'}">${margem.toFixed(1)}%</strong></div>`;
 }
 
-// ── PENDÊNCIAS ──
+// â”€â”€ PENDÃŠNCIAS â”€â”€
 function renderPendencias(){
   const pends=_T.filter(t=>t.tipo==='venda'&&t.status==='pendente').sort((a,b)=>a.dataIso>b.dataIso?1:-1);
   const cnt=document.getElementById('pend-count');
@@ -1144,19 +1144,19 @@ function renderPendencias(){
     <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f5f0ea">
       <div>
         <div style="font-size:13px;font-weight:600">${t.descricao||'Venda'}</div>
-        <div style="font-size:11px;color:#aaa">${t.data||t.dataIso||''}${t.cliente?' · '+t.cliente:''} · ${t.plataforma||''}</div>
+        <div style="font-size:11px;color:#aaa">${t.data||t.dataIso||''}${t.cliente?' Â· '+t.cliente:''} Â· ${t.plataforma||''}</div>
       </div>
       <div style="display:flex;align-items:center;gap:8px">
         <span style="font-size:14px;font-weight:700;color:var(--green)">${fmt(t.valor)}</span>
-        <button onclick="marcarPago('${t._id}')" style="background:var(--green);color:white;border:none;border-radius:7px;padding:5px 10px;font-size:12px;cursor:pointer;font-weight:600">✓ Pago</button>
+        <button onclick="marcarPago('${t._id}')" style="background:var(--green);color:white;border:none;border-radius:7px;padding:5px 10px;font-size:12px;cursor:pointer;font-weight:600">âœ“ Pago</button>
       </div>
     </div>`).join('');
 }
 async function marcarPago(id){
-  try{await COL.trans.doc(id).update({status:'pago'});toast('✓ Marcado como pago!');}catch(e){toast('❌ Erro.');}
+  try{await COL.trans.doc(id).update({status:'pago'});toast('âœ“ Marcado como pago!');}catch(e){toast('âŒ Erro.');}
 }
 
-// ── GRÁFICO ──
+// â”€â”€ GRÃFICO â”€â”€
 function renderGrafico(){
   const body=document.getElementById('graf-body');if(!body)return;
   const hoje=new Date(),m=hoje.getMonth(),y=hoje.getFullYear();
@@ -1188,7 +1188,7 @@ function renderGrafico(){
   </div>
   <div style="display:flex;gap:12px;justify-content:center;margin-top:6px">
     <div style="display:flex;align-items:center;gap:4px;font-size:11px;color:#888"><div style="width:10px;height:10px;background:var(--green);opacity:.7;border-radius:2px"></div>Receita</div>
-    <div style="display:flex;align-items:center;gap:4px;font-size:11px;color:#888"><div style="width:10px;height:10px;background:var(--gold);border-radius:2px"></div>Lucro líq.</div>
+    <div style="display:flex;align-items:center;gap:4px;font-size:11px;color:#888"><div style="width:10px;height:10px;background:var(--gold);border-radius:2px"></div>Lucro lÃ­q.</div>
   </div>`;
 }
 
@@ -1196,7 +1196,7 @@ let _planoOpen=false;
 function togglePlano(){_planoOpen=!_planoOpen;const el=document.getElementById('plano-detalhe');if(el)el.style.display=_planoOpen?'block':'none';}
 
 function renderPlano(){
-  // tudo configurável em Ajustes
+  // tudo configurÃ¡vel em Ajustes
   const FASES_PLAN=(CFG.fases||[]).map((f,i)=>({...f,n:i+1,periodo:fasePeriodo(i)}));
   const MODELOS=CFG.modelos||[];
   const PLATS=(CFG.taxas||[]).map(t=>({nome:t.nome,taxa:t.pct}));
@@ -1220,20 +1220,20 @@ function renderPlano(){
         <div style="font-size:16px;margin-bottom:2px">${f.emoji}</div>
         <div style="font-size:11px;font-weight:700">${f.nome}</div>
         <div style="font-size:10px;opacity:.75;margin-top:2px">${f.periodo}</div>
-        ${ativa?`<div style="font-size:10px;margin-top:4px;font-weight:600;opacity:.9">${progPct}% ✓</div>`:''}
-        ${concluida?`<div style="font-size:10px;margin-top:4px">✅ Concluída</div>`:''}
+        ${ativa?`<div style="font-size:10px;margin-top:4px;font-weight:600;opacity:.9">${progPct}% âœ“</div>`:''}
+        ${concluida?`<div style="font-size:10px;margin-top:4px">âœ… ConcluÃ­da</div>`:''}
       </div>`;
-    }).join('<div style="display:flex;align-items:center;color:#ccc;font-size:18px;flex-shrink:0">›</div>');
+    }).join('<div style="display:flex;align-items:center;color:#ccc;font-size:18px;flex-shrink:0">â€º</div>');
   }
 
-  // métricas plano vs real
+  // mÃ©tricas plano vs real
   const fAtiva=FASES_PLAN.find(f=>f.n===faseAtual);
   const pm=document.getElementById('plano-metas');
   if(pm){
     const items=[
-      {label:'Vendas realizadas',real:totalV,meta:fAtiva?.meta_v||'—',cor:'var(--green)'},
-      {label:'Receita acumulada',real:'R$'+fmtK(totalR),meta:fAtiva?.meta_r?'R$'+fmtK(fAtiva.meta_r):'—',cor:'var(--blue)'},
-      {label:'Projetos criados',real:_P.length,meta:'∞',cor:'var(--purple)'},
+      {label:'Vendas realizadas',real:totalV,meta:fAtiva?.meta_v||'â€”',cor:'var(--green)'},
+      {label:'Receita acumulada',real:'R$'+fmtK(totalR),meta:fAtiva?.meta_r?'R$'+fmtK(fAtiva.meta_r):'â€”',cor:'var(--blue)'},
+      {label:'Projetos criados',real:_P.length,meta:'âˆž',cor:'var(--purple)'},
     ];
     pm.innerHTML=items.map(i=>`<div style="background:#FFFDF9;border:1px solid var(--bdr);border-radius:10px;padding:10px;text-align:center">
       <div style="font-size:10px;color:#999;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">${i.label}</div>
@@ -1242,7 +1242,7 @@ function renderPlano(){
     </div>`).join('');
   }
 
-  // modelos do catálogo
+  // modelos do catÃ¡logo
   const pm2=document.getElementById('plano-modelos');
   if(pm2){
     pm2.innerHTML=MODELOS.map(m=>{
@@ -1251,7 +1251,7 @@ function renderPlano(){
       const cor=vendas>0?'var(--green)':temProj?'var(--gold)':'#ccc';
       const bg=vendas>0?'var(--green-l)':temProj?'var(--gold-l)':'#f5f5f5';
       return `<div style="background:${bg};border-radius:20px;padding:5px 12px;font-size:12px;color:${cor};font-weight:600;border:1px solid ${cor}20">
-        ${vendas>0?'✅':temProj?'📐':'○'} ${m.nome}${vendas>0?' ('+vendas+'x)':''}
+        ${vendas>0?'âœ…':temProj?'ðŸ“':'â—‹'} ${m.nome}${vendas>0?' ('+vendas+'x)':''}
       </div>`;
     }).join('');
   }
@@ -1266,7 +1266,7 @@ function renderPlano(){
         <span style="font-weight:600">${p.nome}</span>
         <div style="display:flex;gap:8px;align-items:center">
           <span style="font-size:11px;background:var(--rose-l);color:var(--rose);padding:2px 7px;border-radius:10px">taxa ${p.taxa}%</span>
-          <span style="font-size:13px;font-weight:700;color:${real>0?'var(--green)':'#ccc'}">${real>0?real+'x':'—'}</span>
+          <span style="font-size:13px;font-weight:700;color:${real>0?'var(--green)':'#ccc'}">${real>0?real+'x':'â€”'}</span>
         </div>
       </div>`;
     }).join('');
@@ -1291,11 +1291,11 @@ function renderDash(){
   const drs=document.getElementById('dk-rec-s');if(drs)drs.textContent=vp.length+' venda'+(vp.length!==1?'s pagas':' paga');
   const drs2=document.getElementById('d-rec-s');if(drs2)drs2.textContent=vp.length+' venda'+(vp.length!==1?'s pagas':' paga');
   ['dk-desp','d-desp'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=fmtK(desp);});
-  const dds=document.getElementById('dk-desp-s');if(dds)dds.textContent=dep.length+' lançamentos';
-  const dds2=document.getElementById('d-desp-s');if(dds2)dds2.textContent=dep.length+' lançamentos';
+  const dds=document.getElementById('dk-desp-s');if(dds)dds.textContent=dep.length+' lanÃ§amentos';
+  const dds2=document.getElementById('d-desp-s');if(dds2)dds2.textContent=dep.length+' lanÃ§amentos';
   ['dk-lucro','d-luc'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=fmtK(lucro);});
-  const dls=document.getElementById('dk-lucro-s');if(dls)dls.textContent=lucro>=0?'✓ positivo':'⚠ negativo';
-  const dls2=document.getElementById('d-luc-s');if(dls2)dls2.textContent=lucro>=0?'✓ positivo':'⚠ negativo';
+  const dls=document.getElementById('dk-lucro-s');if(dls)dls.textContent=lucro>=0?'âœ“ positivo':'âš  negativo';
+  const dls2=document.getElementById('d-luc-s');if(dls2)dls2.textContent=lucro>=0?'âœ“ positivo':'âš  negativo';
   ['dk-saldo','d-sal'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=fmtK(saldo);});
   const dkt=document.getElementById('dk-ticket');if(dkt)dkt.textContent=fmtK(ticket);
   const dpr=document.getElementById('dk-prontos');if(dpr)dpr.textContent=prontos;
@@ -1316,7 +1316,7 @@ function renderDash(){
   const totPl=Object.values(platV).reduce((s,v)=>s+v,0)||1;
   const tpList=Object.entries(platV).sort((a,b)=>b[1]-a[1]).slice(0,4);
   ['dk-top-plat'].forEach(id=>{const el=document.getElementById(id);if(!el)return;el.innerHTML=tpList.length?tpList.map(([k,v])=>`<div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>${k}</span><span style="font-weight:600">${fmtK(v)}</span></div><div style="height:5px;background:#f0f0f0;border-radius:3px"><div style="width:${Math.round(v/totPl*100)}%;height:100%;background:var(--rose);border-radius:3px"></div></div></div>`).join(''):'<p style="color:#bbb;font-size:12px;text-align:center;padding:.5rem">Sem dados</p>';});
-  // histórico mensal (últimos 6 meses)
+  // histÃ³rico mensal (Ãºltimos 6 meses)
   const hm=document.getElementById('dk-hist-mensal');
   if(hm){
     const rows=[];
@@ -1338,29 +1338,29 @@ function renderDash(){
     const catList=Object.entries(catV).sort((a,b)=>b[1]-a[1]);
     dcat.innerHTML=catList.length?catList.map(([k,v])=>`<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px"><span>${k}</span><span style="font-weight:600">${fmtK(v)}</span></div><div style="height:6px;background:#f0f0f0;border-radius:3px"><div style="width:${Math.round(v/totCat*100)}%;height:100%;background:var(--red);border-radius:3px"></div></div></div>`).join(''):'<p style="color:#bbb;font-size:13px;text-align:center;padding:1rem">Sem despesas cadastradas.</p>';
   }
-  // alerta de reposição de materiais
+  // alerta de reposiÃ§Ã£o de materiais
   const rc=document.getElementById('repo-card'),rb=document.getElementById('repo-body'),rcnt=document.getElementById('repo-count');
   if(rc&&rb){
     const low=_E.filter(e=>e.tipo==='material'&&(e.qty||0)<=(e.qtyMin||0)).sort((a,b)=>(a.qty||0)-(b.qty||0));
     rc.style.display=low.length?'block':'none';
     if(rcnt)rcnt.textContent=low.length?low.length+(low.length>1?' itens':' item'):'';
     rb.innerHTML=low.slice(0,6).map(mm=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f5f0ea">
-      <div><strong style="font-size:13px">${mm.nome}</strong>${mm.fornecedor?` <span style="font-size:11px;color:#aaa">· ${mm.fornecedor}</span>`:''}</div>
-      <span style="font-size:13px;font-weight:600;color:${(mm.qty||0)===0?'var(--red)':'var(--orange)'}">${mm.qty||0} ${mm.und||''} <small style="color:#aaa;font-weight:400">/ mín ${mm.qtyMin||0}</small></span>
-    </div>`).join('')+(low.length?`<button class="ba" onclick="aba('estoque')" style="margin-top:10px">📦 Ver estoque</button>`:'');
+      <div><strong style="font-size:13px">${mm.nome}</strong>${mm.fornecedor?` <span style="font-size:11px;color:#aaa">Â· ${mm.fornecedor}</span>`:''}</div>
+      <span style="font-size:13px;font-weight:600;color:${(mm.qty||0)===0?'var(--red)':'var(--orange)'}">${mm.qty||0} ${mm.und||''} <small style="color:#aaa;font-weight:400">/ mÃ­n ${mm.qtyMin||0}</small></span>
+    </div>`).join('')+(low.length?`<button class="ba" onclick="aba('estoque')" style="margin-top:10px">ðŸ“¦ Ver estoque</button>`:'');
   }
 }
 
-// ══ CALCULADORA ══
-let matC=[{nome:'Fio de malha',q:200,u:'g',p:0.08},{nome:'Aviamentos (alça, fecho)',q:1,u:'kit',p:35},{nome:'Forro',q:0.3,u:'m',p:20}];
+// â•â• CALCULADORA â•â•
+let matC=[{nome:'Fio de malha',q:200,u:'g',p:0.08},{nome:'Aviamentos (alÃ§a, fecho)',q:1,u:'kit',p:35},{nome:'Forro',q:0.3,u:'m',p:20}];
 function renderMatC(){
   document.getElementById('mat-body').innerHTML=matC.map((m,i)=>`<tr>
     <td class="tn"><input type="text" value="${m.nome}" oninput="matC[${i}].nome=this.value"></td>
     <td class="tq"><input type="number" value="${m.q}" min="0" step="0.1" oninput="matC[${i}].q=this.value;calc()"></td>
-    <td class="tu"><select onchange="matC[${i}].u=this.value">${['g','m','un','kit','pç'].map(u=>`<option ${m.u===u?'selected':''}>${u}</option>`).join('')}</select></td>
+    <td class="tu"><select onchange="matC[${i}].u=this.value">${['g','m','un','kit','pÃ§'].map(u=>`<option ${m.u===u?'selected':''}>${u}</option>`).join('')}</select></td>
     <td class="tp"><input type="number" value="${m.p}" min="0" step="0.01" oninput="matC[${i}].p=this.value;calc()"></td>
     <td class="tt" id="mt${i}">${fmt((parseFloat(m.q)||0)*(parseFloat(m.p)||0))}</td>
-    <td class="td"><button class="bd" onclick="delMat(${i})">✕</button></td>
+    <td class="td"><button class="bd" onclick="delMat(${i})">âœ•</button></td>
   </tr>`).join('');
   calc();
 }
@@ -1372,7 +1372,7 @@ function importarDoProjeto(){
   if(sel.style.display!=='none'){sel.style.display='none';return;}
   const projs=_P.filter(p=>p.materiais&&p.materiais.length>0);
   if(!projs.length){toast('Nenhum projeto com materiais cadastrados ainda.');return;}
-  dd.innerHTML='<option value="">— Escolha um projeto —</option>'+projs.map(p=>`<option value="${p.id||p._id}">${p.nome}${p.custoMateriais?` — custo R$${(p.custoMateriais).toFixed(2)}`:''}</option>`).join('');
+  dd.innerHTML='<option value="">â€” Escolha um projeto â€”</option>'+projs.map(p=>`<option value="${p.id||p._id}">${p.nome}${p.custoMateriais?` â€” custo R$${(p.custoMateriais).toFixed(2)}`:''}</option>`).join('');
   sel.style.display='block';
   document.getElementById('proj-import-preview').textContent='';
 }
@@ -1383,10 +1383,10 @@ function confirmarImportProjeto(id){
   const preview=document.getElementById('proj-import-preview');
   let lines=p.materiais.filter(m=>m.nome).map(m=>{
     const tot=(parseFloat(m.qtd)||0)*(parseFloat(m.custoUnit)||0);
-    return `${m.nome} × ${m.qtd||0}${m.und||''} = ${fmt(tot)}`;
+    return `${m.nome} Ã— ${m.qtd||0}${m.und||''} = ${fmt(tot)}`;
   });
   const total=p.custoMateriais||p.materiais.reduce((s,m)=>s+(parseFloat(m.qtd)||0)*(parseFloat(m.custoUnit)||0),0);
-  preview.innerHTML=lines.map(l=>`<div>• ${l}</div>`).join('')+`<div style="margin-top:6px;font-weight:600;border-top:1px solid #c8b8e8;padding-top:4px">Total: ${fmt(total)}</div><button onclick="aplicarImportProjeto('${id}')" style="margin-top:8px;width:100%;background:var(--purple);color:white;border:none;border-radius:8px;padding:9px;font-size:13px;cursor:pointer;font-weight:600">✓ Importar estes materiais</button>`;
+  preview.innerHTML=lines.map(l=>`<div>â€¢ ${l}</div>`).join('')+`<div style="margin-top:6px;font-weight:600;border-top:1px solid #c8b8e8;padding-top:4px">Total: ${fmt(total)}</div><button onclick="aplicarImportProjeto('${id}')" style="margin-top:8px;width:100%;background:var(--purple);color:white;border:none;border-radius:8px;padding:9px;font-size:13px;cursor:pointer;font-weight:600">âœ“ Importar estes materiais</button>`;
 }
 function aplicarImportProjeto(id){
   const p=_P.find(x=>(x.id||x._id)===id);
@@ -1394,13 +1394,13 @@ function aplicarImportProjeto(id){
   matC=p.materiais.filter(m=>m.nome).map(m=>({nome:m.nome,q:parseFloat(m.qtd)||1,u:m.und||'un',p:parseFloat(m.custoUnit)||0}));
   renderMatC();calc();
   document.getElementById('proj-import-sel').style.display='none';
-  toast('✓ Materiais importados do projeto "'+p.nome+'"');
+  toast('âœ“ Materiais importados do projeto "'+p.nome+'"');
 }
 function importarEstoque(){
   const ms=_E.filter(e=>e.tipo==='material');
   if(!ms.length){toast('Nenhum material no estoque.');return;}
   const s=ms.map((m,i)=>`${i+1}) ${m.nome} (${m.qty||0} ${m.und||''})`).join('\n');
-  const n=prompt('Importar do estoque:\n'+s+'\n\nDigite o número:');
+  const n=prompt('Importar do estoque:\n'+s+'\n\nDigite o nÃºmero:');
   if(!n)return;const m=ms[parseInt(n)-1];if(!m)return;
   matC.push({nome:m.nome,q:1,u:m.und||'un',p:m.custo||0});renderMatC();
 }
@@ -1436,28 +1436,28 @@ async function salvarCalc(){
   const vhN=parseFloat(document.getElementById('vh').value)||0;
   try{
     await COL.hist.add({nome,projetoId:pId,projetoNome:pNome,preco:document.getElementById('r-sug').textContent,custo:document.getElementById('r-ct').textContent,lucro:document.getElementById('r-luc').textContent,precoNum:pNum,horasNum:hN,vhNum:vhN,mdoNum:Math.round(hN*vhN*100)/100,data:new Date().toLocaleDateString('pt-BR'),created_at:firebase.firestore.FieldValue.serverTimestamp()});
-    document.getElementById('nm-pc').value='';document.getElementById('vp').value='';toast('✓ Cálculo salvo!');
-  }catch(e){toast('❌ Erro.');}
+    document.getElementById('nm-pc').value='';document.getElementById('vp').value='';toast('âœ“ CÃ¡lculo salvo!');
+  }catch(e){toast('âŒ Erro.');}
 }
 function renderHist(){
   const body=document.getElementById('hist-body');if(!body)return;
-  if(!_H.length){body.innerHTML='<p style="color:#bbb;font-size:13px;text-align:center;padding:1rem 0">Nenhum cálculo salvo.</p>';return;}
+  if(!_H.length){body.innerHTML='<p style="color:#bbb;font-size:13px;text-align:center;padding:1rem 0">Nenhum cÃ¡lculo salvo.</p>';return;}
   body.innerHTML=_H.map(h=>`<div class="hi">
-    <div><div class="hn">${h.nome}</div>${h.projetoNome?`<div class="hpj">📓 ${h.projetoNome}</div>`:''}<div class="hd">${h.data||''} · custo ${h.custo} · lucro ${h.lucro}</div></div>
-    <div style="display:flex;align-items:center;gap:10px"><span class="hp">${h.preco}</span><button class="bhd" onclick="delHist('${h._id}')">✕</button></div>
+    <div><div class="hn">${h.nome}</div>${h.projetoNome?`<div class="hpj">ðŸ““ ${h.projetoNome}</div>`:''}<div class="hd">${h.data||''} Â· custo ${h.custo} Â· lucro ${h.lucro}</div></div>
+    <div style="display:flex;align-items:center;gap:10px"><span class="hp">${h.preco}</span><button class="bhd" onclick="delHist('${h._id}')">âœ•</button></div>
   </div>`).join('');
 }
-async function delHist(id){try{await COL.hist.doc(id).delete();}catch(e){toast('❌ Erro.');}}
-async function limparHist(){if(!confirm('Limpar histórico?'))return;const b=db.batch();_H.forEach(h=>b.delete(COL.hist.doc(h._id)));await b.commit();}
+async function delHist(id){try{await COL.hist.doc(id).delete();}catch(e){toast('âŒ Erro.');}}
+async function limparHist(){if(!confirm('Limpar histÃ³rico?'))return;const b=db.batch();_H.forEach(h=>b.delete(COL.hist.doc(h._id)));await b.commit();}
 
-// ══ CADERNO ══
+// â•â• CADERNO â•â•
 let _eid=null,_mf=[],_sf=[],_ff=[],_lf=[];
 function renderLF(){
   const el=document.getElementById('links-f');if(!el)return;
   el.innerHTML=_lf.map((l,i)=>`<div style="display:grid;grid-template-columns:1fr 1.4fr 30px;gap:8px;margin-bottom:8px;align-items:center">
     <input type="text" value="${(l.nome||'').replace(/"/g,'&quot;')}" placeholder="Fornecedor (ex.: Tegape)" style="border:1px solid var(--bdr);border-radius:8px;padding:8px 10px;font-size:13px;background:#FDFAF7;width:100%" oninput="_lf[${i}].nome=this.value">
-    <input type="url" value="${(l.url||'').replace(/"/g,'&quot;')}" placeholder="https://… ou wa.me/55…" style="border:1px solid var(--bdr);border-radius:8px;padding:8px 10px;font-size:13px;background:#FDFAF7;width:100%" oninput="_lf[${i}].url=this.value">
-    <button class="bds" onclick="_lf.splice(${i},1);renderLF()">✕</button>
+    <input type="url" value="${(l.url||'').replace(/"/g,'&quot;')}" placeholder="https://â€¦ ou wa.me/55â€¦" style="border:1px solid var(--bdr);border-radius:8px;padding:8px 10px;font-size:13px;background:#FDFAF7;width:100%" oninput="_lf[${i}].url=this.value">
+    <button class="bds" onclick="_lf.splice(${i},1);renderLF()">âœ•</button>
   </div>`).join('')||'<p style="font-size:12px;color:#bbb;text-align:center;padding:.3rem">Nenhum link ainda.</p>';
 }
 function addLink(){_lf.push({nome:'',url:''});renderLF();}
@@ -1467,17 +1467,17 @@ function renderLista(){
   const busca=(document.getElementById('busca')?.value||'').toLowerCase();
   const pl=_P.filter(p=>!busca||[p.nome,p.tipo,p.tecnica,p.colecao].some(x=>(x||'').toLowerCase().includes(busca)));
   const el=document.getElementById('lista-proj');if(!el)return;
-  if(!pl.length){el.innerHTML=`<div class="es"><div class="ic">📓</div><p>Nenhum projeto ainda.</p></div>`;return;}
+  if(!pl.length){el.innerHTML=`<div class="es"><div class="ic">ðŸ““</div><p>Nenhum projeto ainda.</p></div>`;return;}
   el.innerHTML=pl.map(p=>{
     const pv=_H.filter(h=>h.projetoId===(p.id||p._id));const up=pv[0];
     return `<div class="pc" onclick="verProj('${p.id||p._id}')">
       <div class="pci">
-        <div class="pi"><h3>${p.nome}</h3><div class="meta">${p.data||''} ${p.tecnica?'· '+p.tecnica:''} ${p.colecao?'· 🎨 '+p.colecao:''}</div>
-          <div class="tags">${p.tipo?`<span class="tag tt1">${p.tipo}</span>`:''}<span class="tag ts-${p.status||'rascunho'}">${sLabel(p.status)}</span>${up?`<span class="tag tg">💰 ${up.preco}</span>`:''}</div>
+        <div class="pi"><h3>${p.nome}</h3><div class="meta">${p.data||''} ${p.tecnica?'Â· '+p.tecnica:''} ${p.colecao?'Â· ðŸŽ¨ '+p.colecao:''}</div>
+          <div class="tags">${p.tipo?`<span class="tag tt1">${p.tipo}</span>`:''}<span class="tag ts-${p.status||'rascunho'}">${sLabel(p.status)}</span>${up?`<span class="tag tg">ðŸ’° ${up.preco}</span>`:''}</div>
         </div>
         <div class="pca" onclick="event.stopPropagation()">
-          <button class="bi" onclick="mostrarForm('${p.id||p._id}')">✏️</button>
-          <button class="bi" onclick="delProj('${p.id||p._id}')">🗑️</button>
+          <button class="bi" onclick="mostrarForm('${p.id||p._id}')">âœï¸</button>
+          <button class="bi" onclick="delProj('${p.id||p._id}')">ðŸ—‘ï¸</button>
         </div>
       </div>
     </div>`;
@@ -1496,10 +1496,10 @@ function renderMF(){
   const rows=_mf.map((m,i)=>`<div class="mr">
     <input type="text" value="${m.nome||''}" placeholder="Material" oninput="_mf[${i}].nome=this.value">
     <input type="number" value="${m.qtd||''}" placeholder="0" min="0" step="0.1" oninput="_mf[${i}].qtd=parseFloat(this.value)||0;calcTotalMF()">
-    <select onchange="_mf[${i}].und=this.value">${['un','g','m','kit','pç','rolo'].map(u=>`<option ${(m.und||'un')===u?'selected':''}>${u}</option>`).join('')}</select>
+    <select onchange="_mf[${i}].und=this.value">${['un','g','m','kit','pÃ§','rolo'].map(u=>`<option ${(m.und||'un')===u?'selected':''}>${u}</option>`).join('')}</select>
     <input type="number" value="${m.custoUnit||0}" placeholder="0,00" min="0" step="0.01" oninput="_mf[${i}].custoUnit=parseFloat(this.value)||0;calcTotalMF()">
     <span class="mc" id="mft${i}">${fmt((m.qtd||0)*(m.custoUnit||0))}</span>
-    <button class="bds" onclick="delMatF(${i})">✕</button>
+    <button class="bds" onclick="delMatF(${i})">âœ•</button>
   </div>`).join('');
   document.getElementById('mats-f').innerHTML=rows;
   calcTotalMF();
@@ -1514,10 +1514,10 @@ function addMatF(){_mf.push({nome:'',qtd:0,und:'un',custoUnit:0,obs:''});renderM
 function addMatFromEstF(){
   const mats=_E.filter(e=>e.tipo==='material');
   if(!mats.length){toast('Nenhum material no estoque ainda.');return;}
-  const opts=mats.map(m=>`<option value="${m._id}">${m.nome} (${m.und||'un'} — R$${(m.custo||0).toFixed(2)})</option>`).join('');
+  const opts=mats.map(m=>`<option value="${m._id}">${m.nome} (${m.und||'un'} â€” R$${(m.custo||0).toFixed(2)})</option>`).join('');
   const sel=document.createElement('select');
   sel.style.cssText='width:100%;border:1px solid var(--bdr);border-radius:8px;padding:9px 11px;font-size:14px;background:#FDFAF7;margin-top:8px';
-  sel.innerHTML='<option value="">Selecione um material…</option>'+opts;
+  sel.innerHTML='<option value="">Selecione um materialâ€¦</option>'+opts;
   sel.onchange=function(){
     const m=_E.find(e=>e._id===this.value);
     if(m){_mf.push({nome:m.nome,qtd:1,und:m.und||'un',custoUnit:m.custo||0,estoqueId:m._id,obs:''});renderMF();}
@@ -1527,20 +1527,20 @@ function addMatFromEstF(){
   sel.focus();
 }
 function delMatF(i){_mf.splice(i,1);renderMF();}
-function renderSF(){const el=document.getElementById('receita-f');if(!_sf.length){el.innerHTML='<p style="font-size:13px;color:#bbb;text-align:center;padding:.5rem">Adicione seções…</p>';return;}el.innerHTML=_sf.map((s,si)=>`<div class="ps"><div class="psh"><input type="text" value="${s.titulo||'Nova seção'}" oninput="_sf[${si}].titulo=this.value"><button class="bds" onclick="delSec(${si})">✕ seção</button></div><div class="psp">${s.passos.map((p,pi)=>`<div class="pai"><div class="pan">${pi+1}</div><textarea rows="1" placeholder="Descreva o passo…" oninput="_sf[${si}].passos[${pi}]=this.value;ar(this)">${p}</textarea><button class="bds" onclick="delPasso(${si},${pi})">✕</button></div>`).join('')}<button class="bas" onclick="addPasso(${si})">+ passo</button></div></div>`).join('');}
-function addSec(){_sf.push({titulo:'Nova seção',passos:['']});renderSF();}
+function renderSF(){const el=document.getElementById('receita-f');if(!_sf.length){el.innerHTML='<p style="font-size:13px;color:#bbb;text-align:center;padding:.5rem">Adicione seÃ§Ãµesâ€¦</p>';return;}el.innerHTML=_sf.map((s,si)=>`<div class="ps"><div class="psh"><input type="text" value="${s.titulo||'Nova seÃ§Ã£o'}" oninput="_sf[${si}].titulo=this.value"><button class="bds" onclick="delSec(${si})">âœ• seÃ§Ã£o</button></div><div class="psp">${s.passos.map((p,pi)=>`<div class="pai"><div class="pan">${pi+1}</div><textarea rows="1" placeholder="Descreva o passoâ€¦" oninput="_sf[${si}].passos[${pi}]=this.value;ar(this)">${p}</textarea><button class="bds" onclick="delPasso(${si},${pi})">âœ•</button></div>`).join('')}<button class="bas" onclick="addPasso(${si})">+ passo</button></div></div>`).join('');}
+function addSec(){_sf.push({titulo:'Nova seÃ§Ã£o',passos:['']});renderSF();}
 function delSec(si){_sf.splice(si,1);renderSF();}
 function addPasso(si){_sf[si].passos.push('');renderSF();}
 function delPasso(si,pi){_sf[si].passos.splice(pi,1);renderSF();}
 function renderFF(){document.getElementById('fotos-f').innerHTML=_ff.map((f,i)=>{
   const isData=(f.url||'').startsWith('data:');
-  return `<div class="fr2">${isData?`<img src="${f.url}" style="width:64px;height:64px;object-fit:cover;border-radius:8px;border:1px solid var(--bdr);flex-shrink:0">`:''}<div style="flex:1">${isData?'':`<input type="url" class="fu" value="${f.url||''}" placeholder="URL da foto" oninput="_ff[${i}].url=this.value">`}<textarea rows="1" ${isData?'':'style="margin-top:5px"'} placeholder="Descrição" oninput="_ff[${i}].desc=this.value;ar(this)">${f.desc||''}</textarea></div><button class="bds" onclick="delFot(${i})" style="align-self:flex-start;margin-top:2px">✕</button></div>`;
+  return `<div class="fr2">${isData?`<img src="${f.url}" style="width:64px;height:64px;object-fit:cover;border-radius:8px;border:1px solid var(--bdr);flex-shrink:0">`:''}<div style="flex:1">${isData?'':`<input type="url" class="fu" value="${f.url||''}" placeholder="URL da foto" oninput="_ff[${i}].url=this.value">`}<textarea rows="1" ${isData?'':'style="margin-top:5px"'} placeholder="DescriÃ§Ã£o" oninput="_ff[${i}].desc=this.value;ar(this)">${f.desc||''}</textarea></div><button class="bds" onclick="delFot(${i})" style="align-self:flex-start;margin-top:2px">âœ•</button></div>`;
 }).join('');}
 function addFot(){_ff.push({url:'',desc:''});renderFF();}
 function delFot(i){_ff.splice(i,1);renderFF();}
 async function salvarProj(){
   const nome=document.getElementById('f-n').value.trim();if(!nome){alert('Preencha o nome.');document.getElementById('f-n').focus();return;}
-  // _mf já é atualizado em tempo real pelos oninput/onchange de renderMF
+  // _mf jÃ¡ Ã© atualizado em tempo real pelos oninput/onchange de renderMF
   document.querySelectorAll('#receita-f .ps').forEach((sec,si)=>{if(_sf[si]){_sf[si].titulo=sec.querySelector('.psh input').value;sec.querySelectorAll('.pai textarea').forEach((ta,pi)=>{if(_sf[si].passos[pi]!==undefined)_sf[si].passos[pi]=ta.value;});}});
   document.querySelectorAll('#fotos-f .fr2').forEach((row,i)=>{if(_ff[i]){const fu=row.querySelector('.fu');if(fu)_ff[i].url=fu.value;_ff[i].desc=row.querySelector('textarea')?.value||'';}});
   const dIso=document.getElementById('f-d').value;
@@ -1549,42 +1549,42 @@ async function salvarProj(){
   const custoMateriais=matsValidos.reduce((s,m)=>s+(parseFloat(m.qtd)||0)*(parseFloat(m.custoUnit)||0),0);
   const _trab=_eid?(_P.find(x=>(x.id||x._id)===_eid)?.trabalho||null):null;
   const _tmpProj={materiais:matsValidos,secoes:_sf,fotos:_ff};
-  if(JSON.stringify(_tmpProj).length>880000){alert('Este projeto está com fotos demais (limite ~900KB por projeto). Remova alguma foto e salve de novo.');return;}
+  if(JSON.stringify(_tmpProj).length>880000){alert('Este projeto estÃ¡ com fotos demais (limite ~900KB por projeto). Remova alguma foto e salve de novo.');return;}
   const proj={id,nome,tipo:document.getElementById('f-t').value,status:document.getElementById('f-s').value,dataIso:dIso,data:dIso?new Date(dIso+'T12:00:00').toLocaleDateString('pt-BR'):'',tecnica:document.getElementById('f-tc').value,colecao:document.getElementById('f-col').value,descricao:document.getElementById('f-desc').value,obs:document.getElementById('f-obs').value,tempo:document.getElementById('f-tmp').value,materiais:matsValidos,custoMateriais,secoes:_sf.filter(s=>s.titulo||s.passos.some(p=>p)),fotos:_ff.filter(f=>f.url||f.desc),links:_lf.filter(l=>(l.nome||'').trim()||(l.url||'').trim()),...(_trab?{trabalho:_trab}:{}),created_at:_eid?(_P.find(x=>(x.id||x._id)===_eid)?.created_at||firebase.firestore.FieldValue.serverTimestamp()):firebase.firestore.FieldValue.serverTimestamp(),updated_at:firebase.firestore.FieldValue.serverTimestamp()};
-  try{await COL.proj.doc(id).set(proj);_eid=null;voltarLista();toast('✓ Projeto salvo!');}catch(e){toast('❌ Erro: '+e.message);}
+  try{await COL.proj.doc(id).set(proj);_eid=null;voltarLista();toast('âœ“ Projeto salvo!');}catch(e){toast('âŒ Erro: '+e.message);}
 }
 function verProj(id){
   const p=_P.find(x=>(x.id||x._id)===id);if(!p)return;
   const pv=_H.filter(h=>h.projetoId===id);
   document.getElementById('det-ctr').innerHTML=`<div style="padding-top:.5rem">
     <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px">
-      <button class="bbk" onclick="sv('lista')">‹</button>
-      <button class="bg" onclick="mostrarForm('${id}')">✏️ Editar</button>
-      <button class="bgn" onclick="calcProj('${id}','${(p.nome||'').replace(/'/g,"\\'")}')">💰 Calcular</button>
-      <button class="bg" onclick="produzirPeca('${id}')">🧵 Produzir</button>
-      <button class="bgr" onclick="conferirMateriais('${id}')">🛒 Conferir</button>
-      <button class="bg" style="background:linear-gradient(135deg,var(--green),#1d4a30)" onclick="abrirAtelie('${id}')">▶ Trabalhar</button>
+      <button class="bbk" onclick="sv('lista')">â€¹</button>
+      <button class="bg" onclick="mostrarForm('${id}')">âœï¸ Editar</button>
+      <button class="bgn" onclick="calcProj('${id}','${(p.nome||'').replace(/'/g,"\\'")}')">ðŸ’° Calcular</button>
+      <button class="bg" onclick="produzirPeca('${id}')">ðŸ§µ Produzir</button>
+      <button class="bgr" onclick="conferirMateriais('${id}')">ðŸ›’ Conferir</button>
+      <button class="bg" style="background:linear-gradient(135deg,var(--green),#1d4a30)" onclick="abrirAtelie('${id}')">â–¶ Trabalhar</button>
     </div>
     <h2 style="font-size:20px;font-weight:700;margin-bottom:6px">${p.nome}</h2>
-    <div style="font-size:13px;color:#888;margin-bottom:8px">${p.tipo||''} ${p.data?'· '+p.data:''} ${p.tecnica?'· '+p.tecnica:''} ${p.colecao?'· 🎨 '+p.colecao:''}</div>
+    <div style="font-size:13px;color:#888;margin-bottom:8px">${p.tipo||''} ${p.data?'Â· '+p.data:''} ${p.tecnica?'Â· '+p.tecnica:''} ${p.colecao?'Â· ðŸŽ¨ '+p.colecao:''}</div>
     <span class="tag ts-${p.status||'rascunho'}">${sLabel(p.status)}</span>
     ${p.descricao?`<div class="ov" style="background:var(--rose-l);border-color:var(--rose);margin-top:12px">${p.descricao}</div>`:''}
-    ${pv.length?`<div class="st">💰 Preços calculados</div>${pv.map(h=>`<div class="pv2"><div><div class="pvn">${h.nome}</div><div class="pvm">${h.data||''} · custo ${h.custo} · lucro ${h.lucro}</div></div><div class="pvp">${h.preco}</div></div>`).join('')}`:''}
-    ${p.materiais?.length?`<div class="st">🧵 Materiais${p.custoMateriais?` <span style="float:right;font-size:12px;color:var(--rose);font-weight:600">custo: ${fmt(p.custoMateriais)}</span>`:''}
-</div><div class="mv">${p.materiais.map(m=>{const tot=(parseFloat(m.qtd)||0)*(parseFloat(m.custoUnit)||0);return`<div class="mvr"><span><strong>${m.nome}</strong>${m.und?' ('+m.und+')':''}</span><span style="color:#888;font-size:12px">${m.qtd?m.qtd+(m.und?' '+m.und:''):''}${m.custoUnit?' · R$/'+m.und+': '+fmt(m.custoUnit):''}${tot>0?' = <strong style="color:var(--rose)">'+fmt(tot)+'</strong>':''}</span></div>`;}).join('')}</div>`:''}
-    ${p.secoes?.length?`<div class="st">🪡 Receita</div>${p.secoes.map(s=>`<div class="psv"><h4>${s.titulo}</h4>${s.passos.filter(x=>x).map((pa,pi)=>`<div class="pav"><div class="pan">${pi+1}</div><div>${pa}</div></div>`).join('')}</div>`).join('')}`:''}
-    ${p.links?.length?`<div class="st">🔗 Fornecedores</div><div class="mv">${p.links.map(l=>`<div class="mvr"><span><strong>${l.nome||'Link'}</strong></span><span>${l.url?`<a href="${l.url.startsWith('http')||l.url.startsWith('wa.me')?l.url:'https://'+l.url}" target="_blank" style="color:var(--rose);font-weight:600;font-size:13px">abrir ↗</a>`:''}</span></div>`).join('')}</div>`:''}
-    ${p.fotos?.length?`<div class="st">📸 Fotos</div><div class="fg2">${p.fotos.map(f=>`<div class="fc">${f.url?`<img src="${f.url}" onerror="this.style.display='none'">`:`<div class="fp">👜</div>`}${f.desc?`<div class="fl">${f.desc}</div>`:''}</div>`).join('')}</div>`:''}
-    ${p.obs?`<div class="st">💡 Observações</div><div class="ov">${p.obs}</div>`:''}
-    ${p.tempo?`<div style="margin-top:12px;font-size:13px;color:#888">⏱ Tempo: <strong>${p.tempo}</strong></div>`:''}
+    ${pv.length?`<div class="st">ðŸ’° PreÃ§os calculados</div>${pv.map(h=>`<div class="pv2"><div><div class="pvn">${h.nome}</div><div class="pvm">${h.data||''} Â· custo ${h.custo} Â· lucro ${h.lucro}</div></div><div class="pvp">${h.preco}</div></div>`).join('')}`:''}
+    ${p.materiais?.length?`<div class="st">ðŸ§µ Materiais${p.custoMateriais?` <span style="float:right;font-size:12px;color:var(--rose);font-weight:600">custo: ${fmt(p.custoMateriais)}</span>`:''}
+</div><div class="mv">${p.materiais.map(m=>{const tot=(parseFloat(m.qtd)||0)*(parseFloat(m.custoUnit)||0);return`<div class="mvr"><span><strong>${m.nome}</strong>${m.und?' ('+m.und+')':''}</span><span style="color:#888;font-size:12px">${m.qtd?m.qtd+(m.und?' '+m.und:''):''}${m.custoUnit?' Â· R$/'+m.und+': '+fmt(m.custoUnit):''}${tot>0?' = <strong style="color:var(--rose)">'+fmt(tot)+'</strong>':''}</span></div>`;}).join('')}</div>`:''}
+    ${p.secoes?.length?`<div class="st">ðŸª¡ Receita</div>${p.secoes.map(s=>`<div class="psv"><h4>${s.titulo}</h4>${s.passos.filter(x=>x).map((pa,pi)=>`<div class="pav"><div class="pan">${pi+1}</div><div>${pa}</div></div>`).join('')}</div>`).join('')}`:''}
+    ${p.links?.length?`<div class="st">ðŸ”— Fornecedores</div><div class="mv">${p.links.map(l=>`<div class="mvr"><span><strong>${l.nome||'Link'}</strong></span><span>${l.url?`<a href="${l.url.startsWith('http')||l.url.startsWith('wa.me')?l.url:'https://'+l.url}" target="_blank" style="color:var(--rose);font-weight:600;font-size:13px">abrir â†—</a>`:''}</span></div>`).join('')}</div>`:''}
+    ${p.fotos?.length?`<div class="st">ðŸ“¸ Fotos</div><div class="fg2">${p.fotos.map(f=>`<div class="fc">${f.url?`<img src="${f.url}" onerror="this.style.display='none'">`:`<div class="fp">ðŸ‘œ</div>`}${f.desc?`<div class="fl">${f.desc}</div>`:''}</div>`).join('')}</div>`:''}
+    ${p.obs?`<div class="st">ðŸ’¡ ObservaÃ§Ãµes</div><div class="ov">${p.obs}</div>`:''}
+    ${p.tempo?`<div style="margin-top:12px;font-size:13px;color:#888">â± Tempo: <strong>${p.tempo}</strong></div>`:''}
     <div style="height:2rem"></div>
   </div>`;
   sv('det');
 }
-function calcProj(id,nome){document.getElementById('nm-pc').value=nome;document.getElementById('vp').value=id;aba('calc');toast('💰 Calculadora pronta!');}
-async function delProj(id){const p=_P.find(x=>(x.id||x._id)===id);if(!p||!confirm(`Excluir "${p.nome}"?`))return;try{await COL.proj.doc(id).delete();}catch(e){toast('❌ Erro.');}}
+function calcProj(id,nome){document.getElementById('nm-pc').value=nome;document.getElementById('vp').value=id;aba('calc');toast('ðŸ’° Calculadora pronta!');}
+async function delProj(id){const p=_P.find(x=>(x.id||x._id)===id);if(!p||!confirm(`Excluir "${p.nome}"?`))return;try{await COL.proj.doc(id).delete();}catch(e){toast('âŒ Erro.');}}
 
-// ══ CAIXA ══
+// â•â• CAIXA â•â•
 let _mc=new Date().getMonth(),_ac=new Date().getFullYear(),_fil='todos',_tipoCx='venda',_editCx=null,_vendaProdId=null;
 function mudarMes(d){_mc+=d;if(_mc>11){_mc=0;_ac++;}if(_mc<0){_mc=11;_ac--;}document.getElementById('mes-lbl').textContent=MN[_mc]+' '+_ac;renderDash();renderDRE();renderExtrato();}
 function setFil(f){_fil=f;['t','v','d'].forEach(x=>document.getElementById('fb-'+x).classList.toggle('active',x===f[0]));renderExtrato();}
@@ -1595,24 +1595,24 @@ function renderExtrato(){
     .filter(t=>_fil==='todos'||t.tipo===_fil)
     .filter(t=>!q||[t.descricao,t.cliente,t.projetoNome,t.categoria,t.plataforma,t.obs].some(x=>(x||'').toLowerCase().includes(q)));
   const body=document.getElementById('extrato-body');if(!body)return;
-  if(!doMes.length){body.innerHTML='<p style="color:#bbb;font-size:13px;text-align:center;padding:1.5rem 0">'+(q?'Nada encontrado para "'+q+'".':'Nenhum lançamento neste mês.')+'</p>';return;}
+  if(!doMes.length){body.innerHTML='<p style="color:#bbb;font-size:13px;text-align:center;padding:1.5rem 0">'+(q?'Nada encontrado para "'+q+'".':'Nenhum lanÃ§amento neste mÃªs.')+'</p>';return;}
   body.innerHTML=doMes.map(t=>`<div class="ei">
-    <div class="el"><div class="eic ${t.tipo}">${t.tipo==='venda'?'💰':'💸'}</div>
+    <div class="el"><div class="eic ${t.tipo}">${t.tipo==='venda'?'ðŸ’°':'ðŸ’¸'}</div>
       <div class="en"><h4>${t.descricao||(t.tipo==='venda'?'Venda':'Despesa')}</h4>
-        <div class="em">${t.data||''} ${t.projetoNome?'· 📓 '+t.projetoNome:''} ${t.categoria?'· '+t.categoria:''} ${t.plataforma?'· '+t.plataforma:''} ${t.cliente?'· 👤 '+t.cliente:''}</div>
+        <div class="em">${t.data||''} ${t.projetoNome?'Â· ðŸ““ '+t.projetoNome:''} ${t.categoria?'Â· '+t.categoria:''} ${t.plataforma?'Â· '+t.plataforma:''} ${t.cliente?'Â· ðŸ‘¤ '+t.cliente:''}</div>
       </div>
     </div>
     <div class="er">
       <div class="ev ${t.tipo}">${t.tipo==='venda'?'+':'-'}${fmt(t.valor||0)}</div>
       ${t.tipo==='venda'?`<span class="es2 ${t.status||'pago'}">${t.status==='pendente'?'Pendente':'Pago'}</span>`:''}
-      ${t.tipo==='venda'?`<div style="font-size:11px;margin-top:2px">${fmtLucro(t)}${taxaPlat(t.plataforma)>0?` <span style="color:#bbb">· taxa ${(taxaPlat(t.plataforma)*100).toFixed(0)}% (${fmt((t.valor||0)*taxaPlat(t.plataforma))})</span>`:''}</div>`:''}
-      <div style="margin-top:4px"><button class="bhd" onclick="delTrans('${t._id}')">✕</button></div>
+      ${t.tipo==='venda'?`<div style="font-size:11px;margin-top:2px">${fmtLucro(t)}${taxaPlat(t.plataforma)>0?` <span style="color:#bbb">Â· taxa ${(taxaPlat(t.plataforma)*100).toFixed(0)}% (${fmt((t.valor||0)*taxaPlat(t.plataforma))})</span>`:''}</div>`:''}
+      <div style="margin-top:4px"><button class="bhd" onclick="delTrans('${t._id}')">âœ•</button></div>
     </div>
   </div>`).join('');
 }
 function mostrarFormCaixa(id){
   _editCx=id;_vendaProdId=null;
-  document.getElementById('cx-tit').textContent=id?'Editar':'Nova transação';
+  document.getElementById('cx-tit').textContent=id?'Editar':'Nova transaÃ§Ã£o';
   document.getElementById('c-dt').value=new Date().toISOString().split('T')[0];
   ['c-val','c-desc','c-obs','c-cst','c-cli'].forEach(i=>{const el=document.getElementById(i);if(el)el.value='';});
   document.getElementById('c-sta').value='pago';
@@ -1645,7 +1645,7 @@ async function salvarTrans(){
   const t={tipo:_tipoCx,valor:val,dataIso:dIso,data:dIso?new Date(dIso+'T12:00:00').toLocaleDateString('pt-BR'):'',descricao:document.getElementById('c-desc').value,obs:document.getElementById('c-obs').value,projetoId:pId,projetoNome:pNome,...(_tipoCx==='venda'?{plataforma:document.getElementById('c-plat').value,formaPagamento:document.getElementById('c-pag').value,status:document.getElementById('c-sta').value,custoPeca:parseFloat(document.getElementById('c-cst').value)||0,cliente:document.getElementById('c-cli').value}:{categoria:document.getElementById('c-cat').value,formaPagamento:document.getElementById('c-pagd').value,status:'pago'}),created_at:_editCx?(_T.find(x=>x._id===_editCx)?.created_at||firebase.firestore.FieldValue.serverTimestamp()):firebase.firestore.FieldValue.serverTimestamp()};
   try{
     if(_editCx)await COL.trans.doc(_editCx).set(t);else await COL.trans.add(t);
-    // baixa automática do produto pronto vendido
+    // baixa automÃ¡tica do produto pronto vendido
     if(_tipoCx==='venda'&&_vendaProdId&&!_editCx){
       const pr=_E.find(x=>x._id===_vendaProdId);
       if(pr){
@@ -1654,12 +1654,12 @@ async function salvarTrans(){
       }
       _vendaProdId=null;
     }
-    voltarCaixa();toast('✓ Salvo!');
-  }catch(e){toast('❌ Erro: '+e.message);}
+    voltarCaixa();toast('âœ“ Salvo!');
+  }catch(e){toast('âŒ Erro: '+e.message);}
 }
-async function delTrans(id){if(!confirm('Excluir?'))return;try{await COL.trans.doc(id).delete();}catch(e){toast('❌ Erro.');}}
+async function delTrans(id){if(!confirm('Excluir?'))return;try{await COL.trans.doc(id).delete();}catch(e){toast('âŒ Erro.');}}
 
-// ══ ESTOQUE ══
+// â•â• ESTOQUE â•â•
 let _etipo='material',_editEst=null;
 function svEst(v){['lista','form','import','prod'].forEach(x=>{const el=document.getElementById('est-'+x);if(!el)return;el.classList.toggle('active',x===v);el.classList.toggle('view',true);});window.scrollTo(0,0);}
 function voltarEst(){svEst('lista');_editEst=null;}
@@ -1689,14 +1689,14 @@ async function salvarEst(){
     const selP=document.getElementById('ep-proj');
     item={tipo:'produto',nome,colecao:document.getElementById('ep-col').value,status:document.getElementById('ep-s').value,custo:parseFloat(document.getElementById('ep-c').value)||0,preco:parseFloat(document.getElementById('ep-p').value)||0,qty:parseInt(document.getElementById('ep-q').value)||1,plataforma:document.getElementById('ep-plat').value,projetoId:selP.value||null,projetoNome:selP.value?(selP.options[selP.selectedIndex]?.text||null):null,foto:_fotos.ep||document.getElementById('ep-ft').value,obs:document.getElementById('ep-o').value,naLoja:document.getElementById('ep-loja')?.checked||false,created_at:_editEst?(_E.find(x=>x._id===_editEst)?.created_at||firebase.firestore.FieldValue.serverTimestamp()):firebase.firestore.FieldValue.serverTimestamp()};
   }
-  try{if(_editEst)await COL.est.doc(_editEst).update(item);else await COL.est.add(item);voltarEst();toast('✓ Salvo!');}catch(e){toast('❌ Erro: '+e.message);}
+  try{if(_editEst)await COL.est.doc(_editEst).update(item);else await COL.est.add(item);voltarEst();toast('âœ“ Salvo!');}catch(e){toast('âŒ Erro: '+e.message);}
 }
-async function delEst(id){if(!confirm('Excluir?'))return;try{await COL.est.doc(id).delete();}catch(e){toast('❌ Erro.');}}
-async function ajustarQ(id,d){const item=_E.find(x=>x._id===id);if(!item)return;try{await COL.est.doc(id).update({qty:Math.max(0,(item.qty||0)+d)});}catch(e){toast('❌ Erro.');}}
+async function delEst(id){if(!confirm('Excluir?'))return;try{await COL.est.doc(id).delete();}catch(e){toast('âŒ Erro.');}}
+async function ajustarQ(id,d){const item=_E.find(x=>x._id===id);if(!item)return;try{await COL.est.doc(id).update({qty:Math.max(0,(item.qty||0)+d)});}catch(e){toast('âŒ Erro.');}}
 function venderProd(id){
   const p=_E.find(x=>x._id===id);if(!p)return;
   aba('caixa');
-  setTimeout(()=>{mostrarFormCaixa(null);setTipoCaixa('venda');document.getElementById('c-desc').value=p.nome||'';document.getElementById('c-val').value=p.preco||'';document.getElementById('c-cst').value=p.custo||'';if(p.projetoId)document.getElementById('c-proj').value=p.projetoId;if(p.plataforma)document.getElementById('c-plat').value=p.plataforma;_vendaProdId=id;toast('Produto carregado — ao salvar, dou baixa no estoque!');},200);
+  setTimeout(()=>{mostrarFormCaixa(null);setTipoCaixa('venda');document.getElementById('c-desc').value=p.nome||'';document.getElementById('c-val').value=p.preco||'';document.getElementById('c-cst').value=p.custo||'';if(p.projetoId)document.getElementById('c-proj').value=p.projetoId;if(p.plataforma)document.getElementById('c-plat').value=p.plataforma;_vendaProdId=id;toast('Produto carregado â€” ao salvar, dou baixa no estoque!');},200);
 }
 function renderEst(){
   const q=(document.getElementById('busca-est')?.value||'').toLowerCase().trim();
@@ -1705,27 +1705,27 @@ function renderEst(){
   const prods=_E.filter(e=>e.tipo==='produto'&&okQ(e));
   const elM=document.getElementById('lista-mats');
   if(!elM)return;
-  if(!mats.length){elM.innerHTML='<p style="color:#bbb;font-size:13px;text-align:center;padding:1.5rem 0">Nenhum material cadastrado.<br><small>Sugestão: fio de malha, tela Tegape, aviamentos, forro…</small></p>';}
+  if(!mats.length){elM.innerHTML='<p style="color:#bbb;font-size:13px;text-align:center;padding:1.5rem 0">Nenhum material cadastrado.<br><small>SugestÃ£o: fio de malha, tela Tegape, aviamentos, forroâ€¦</small></p>';}
   else elM.innerHTML=mats.map(m=>{
     const q=m.qty||0,qm=m.qtyMin||0;
     const nv=q===0?'out':q<=qm?'low':'ok';
     const al=q===0?'Zerado':q<=qm?'Estoque baixo':'Ok';
     const val=(m.custo||0)*q;
     return `<div class="ec"><div class="eci">
-      <div class="eii"><h4>${m.nome}</h4><div class="eim">${m.categoria||''} ${m.fornecedor?'· '+m.fornecedor:''}</div>
+      <div class="eii"><h4>${m.nome}</h4><div class="eim">${m.categoria||''} ${m.fornecedor?'Â· '+m.fornecedor:''}</div>
         <div style="display:flex;gap:6px;align-items:center;margin-top:4px">
           <span class="ea ${nv}">${al}</span>
-          <span style="font-size:11px;color:#aaa">mín: ${qm} ${m.und||''}</span>
+          <span style="font-size:11px;color:#aaa">mÃ­n: ${qm} ${m.und||''}</span>
           ${val>0?`<span style="font-size:11px;color:var(--gold)">${fmt(val)}</span>`:''}
         </div>
       </div>
       <div class="er2">
         <div class="eq ${nv}">${q} <small style="font-size:12px">${m.und||''}</small></div>
         <div style="display:flex;gap:4px;margin-top:6px;justify-content:flex-end">
-          <button style="background:none;border:1px solid var(--bdr);border-radius:5px;width:28px;height:28px;cursor:pointer;font-size:16px" onclick="ajustarQ('${m._id}',-1)">−</button>
+          <button style="background:none;border:1px solid var(--bdr);border-radius:5px;width:28px;height:28px;cursor:pointer;font-size:16px" onclick="ajustarQ('${m._id}',-1)">âˆ’</button>
           <button style="background:var(--rose-l);border:1px solid #dbb8c8;border-radius:5px;width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--rose)" onclick="ajustarQ('${m._id}',1)">+</button>
-          <button class="bi" style="padding:4px 8px" onclick="mostrarFormEst('${m._id}','material')">✏️</button>
-          <button class="bi" style="padding:4px 8px" onclick="delEst('${m._id}')">🗑️</button>
+          <button class="bi" style="padding:4px 8px" onclick="mostrarFormEst('${m._id}','material')">âœï¸</button>
+          <button class="bi" style="padding:4px 8px" onclick="delEst('${m._id}')">ðŸ—‘ï¸</button>
         </div>
       </div>
     </div></div>`;
@@ -1735,16 +1735,16 @@ function renderEst(){
   if(!prods.length){elP.innerHTML='<p style="color:#bbb;font-size:13px;text-align:center;padding:1rem 0">Nenhum produto cadastrado.</p>';}
   else elP.innerHTML=prods.map(p=>{
     const scls=`tag ts-${p.status==='disponivel'?'concluido':p.status==='em-producao'?'em-andamento':'rascunho'}`;
-    const sl2=p.status==='disponivel'?'✓ Disponível':p.status==='reservado'?'⏳ Reservado':p.status==='vendido'?'Vendido':'🔧 Em produção';
+    const sl2=p.status==='disponivel'?'âœ“ DisponÃ­vel':p.status==='reservado'?'â³ Reservado':p.status==='vendido'?'Vendido':'ðŸ”§ Em produÃ§Ã£o';
     const lc=(p.preco||0)-(p.custo||0);
     return `<div class="pp">
       <div class="pph">
         <div><h4>${p.nome}${p.colecao?` <span style="font-size:11px;color:var(--gold)">${p.colecao}</span>`:''}</h4>
           <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">
             <span class="tag ${scls}">${sl2}</span>
-            ${p.qty>1?`<span class="tag" style="background:#f0f0f0;color:#666">${p.qty}×</span>`:''}
+            ${p.qty>1?`<span class="tag" style="background:#f0f0f0;color:#666">${p.qty}Ã—</span>`:''}
             ${p.plataforma?`<span class="tag tt1">${p.plataforma}</span>`:''}
-            ${p.naLoja?'<span class="tag" style="background:var(--gold-l);color:var(--gold-d)">🛍 na loja</span>':''}
+            ${p.naLoja?'<span class="tag" style="background:var(--gold-l);color:var(--gold-d)">ðŸ› na loja</span>':''}
           </div>
         </div>
         <div style="text-align:right"><div class="ppv">${fmt(p.preco||0)}</div>${lc>0?`<div style="font-size:11px;color:var(--green)">lucro: ${fmt(lc)}</div>`:''}</div>
@@ -1752,22 +1752,22 @@ function renderEst(){
       ${p.foto?`<img src="${p.foto}" style="width:100%;max-height:160px;object-fit:cover;border-radius:8px;margin-bottom:8px" onerror="this.style.display='none'">`:''}
       ${p.obs?`<div style="font-size:12px;color:#888;margin-top:4px">${p.obs}</div>`:''}
       <div style="display:flex;gap:6px;margin-top:10px">
-        <button class="bsr" onclick="mostrarFormEst('${p._id}','produto')">✏️ Editar</button>
-        <button class="bsr" onclick="venderProd('${p._id}')">💰 Registrar venda</button>
-        <button class="bsr" onclick="publicarProd('${p._id}')">${p.naLoja?'🚫 Tirar da loja':'🛍 Publicar'}</button>
-        <button style="background:none;border:1px solid var(--bdr);border-radius:6px;padding:5px 10px;font-size:12px;cursor:pointer;color:#999" onclick="delEst('${p._id}')">🗑️</button>
+        <button class="bsr" onclick="mostrarFormEst('${p._id}','produto')">âœï¸ Editar</button>
+        <button class="bsr" onclick="venderProd('${p._id}')">ðŸ’° Registrar venda</button>
+        <button class="bsr" onclick="publicarProd('${p._id}')">${p.naLoja?'ðŸš« Tirar da loja':'ðŸ› Publicar'}</button>
+        <button style="background:none;border:1px solid var(--bdr);border-radius:6px;padding:5px 10px;font-size:12px;cursor:pointer;color:#999" onclick="delEst('${p._id}')">ðŸ—‘ï¸</button>
       </div>
     </div>`;
   }).join('');
 }
 
-// ══ IMPORTAR CUPOM (OCR no navegador — Tesseract.js / pdf.js) ══
+// â•â• IMPORTAR CUPOM (OCR no navegador â€” Tesseract.js / pdf.js) â•â•
 let _impItens=[];
 function carregarScript(src){
   return new Promise((res,rej)=>{
     if(document.querySelector(`script[src="${src}"]`))return res();
     const s=document.createElement('script');s.src=src;s.onload=res;
-    s.onerror=()=>rej(new Error('Sem conexão para baixar o leitor — tente de novo online.'));
+    s.onerror=()=>rej(new Error('Sem conexÃ£o para baixar o leitor â€” tente de novo online.'));
     document.head.appendChild(s);
   });
 }
@@ -1780,8 +1780,8 @@ function impStatus(m,erro){
 }
 async function ocrImagem(src){
   await carregarScript('https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/5.1.0/tesseract.min.js');
-  impStatus('Lendo o cupom (OCR)… a primeira vez baixa o leitor e pode levar ~30s');
-  const worker=await Tesseract.createWorker('por',1,{logger:m=>{if(m.status==='recognizing text')impStatus('Lendo o cupom… '+Math.round((m.progress||0)*100)+'%');}});
+  impStatus('Lendo o cupom (OCR)â€¦ a primeira vez baixa o leitor e pode levar ~30s');
+  const worker=await Tesseract.createWorker('por',1,{logger:m=>{if(m.status==='recognizing text')impStatus('Lendo o cupomâ€¦ '+Math.round((m.progress||0)*100)+'%');}});
   const {data}=await worker.recognize(src);
   await worker.terminate();
   return data.text||'';
@@ -1800,7 +1800,7 @@ async function lerPDF(file){
     texto+=ys.map(y=>rows[y].sort((a,b)=>a.transform[4]-b.transform[4]).map(i=>i.str).join(' ')).join('\n')+'\n';
   }
   if(texto.replace(/\s/g,'').length>=40)return texto; // PDF com camada de texto (NFC-e/DANFE)
-  // PDF escaneado → renderiza e passa no OCR
+  // PDF escaneado â†’ renderiza e passa no OCR
   let ocr='';
   for(let p=1;p<=Math.min(pdf.numPages,3);p++){
     const pg=await pdf.getPage(p);
@@ -1818,7 +1818,7 @@ function numBr(s){
 }
 function normUnd(u){
   u=(u||'un').toLowerCase().replace(/\./g,'');
-  const map={un:'un',kg:'g',g:'g',gr:'g',m:'m',mt:'m',cm:'cm',pc:'pç',['pç']:'pç',pct:'un',cx:'un',rl:'rolo',kit:'kit',l:'un',lt:'un',ml:'un'};
+  const map={un:'un',kg:'g',g:'g',gr:'g',m:'m',mt:'m',cm:'cm',pc:'pÃ§',['pÃ§']:'pÃ§',pct:'un',cx:'un',rl:'rolo',kit:'kit',l:'un',lt:'un',ml:'un'};
   return map[u]||'un';
 }
 function chutarDestino(nome){
@@ -1833,8 +1833,8 @@ function chutarDestino(nome){
 }
 function parseCupom(texto){
   const linhas=texto.split('\n').map(l=>l.replace(/\s{2,}/g,' ').trim()).filter(Boolean);
-  const ign=/TOTAL|SUBTOTAL|CPF|CNPJ|TROCO|DINHEIRO|CART[AÃ]O|D[EÉ]BITO|CR[EÉ]DITO|PIX\b|IMPOSTO|TRIBUT|VALOR PAGO|FORMA|PAGAMENTO|CUPOM|EXTRATO|CONSUMIDOR|ENDERE|DOCUMENTO|AUXILIAR|NFC|SAT\b|QTD|DESCRI|C[OÓ]DIGO|PROTOCOLO|AUTORIZA|CHAVE|R\$\s*$/i;
-  const reA=/^(?:\d{1,4}\s+)?(?:\d{6,14}\s+)?(.{3,60}?)\s+(\d+(?:[.,]\d+)?)\s*(UN|KG|GR|G|MT|M|CM|LT|L|ML|PCT|P[CÇ]|CX|RL|KIT)\b\.?\s*[xX*]?\s*(\d{1,4}[.,]\d{2})/i;
+  const ign=/TOTAL|SUBTOTAL|CPF|CNPJ|TROCO|DINHEIRO|CART[AÃƒ]O|D[EÃ‰]BITO|CR[EÃ‰]DITO|PIX\b|IMPOSTO|TRIBUT|VALOR PAGO|FORMA|PAGAMENTO|CUPOM|EXTRATO|CONSUMIDOR|ENDERE|DOCUMENTO|AUXILIAR|NFC|SAT\b|QTD|DESCRI|C[OÃ“]DIGO|PROTOCOLO|AUTORIZA|CHAVE|R\$\s*$/i;
+  const reA=/^(?:\d{1,4}\s+)?(?:\d{6,14}\s+)?(.{3,60}?)\s+(\d+(?:[.,]\d+)?)\s*(UN|KG|GR|G|MT|M|CM|LT|L|ML|PCT|P[CÃ‡]|CX|RL|KIT)\b\.?\s*[xX*]?\s*(\d{1,4}[.,]\d{2})/i;
   const reB=/^(?:\d{1,4}\s+)?(?:\d{6,14}\s+)?(.{4,60}?)\s+(\d{1,4}[.,]\d{2})$/;
   const itens=[];
   for(const l of linhas){
@@ -1842,12 +1842,12 @@ function parseCupom(texto){
     let m=l.match(reA);
     if(m){itens.push({sel:true,nome:m[1].trim(),qtd:numBr(m[2])||1,und:normUnd(m[3]),custo:numBr(m[4]),destino:'novo'});continue;}
     m=l.match(reB);
-    if(m&&/[a-zA-ZÀ-ú]{3}/.test(m[1]))itens.push({sel:true,nome:m[1].trim(),qtd:1,und:'un',custo:numBr(m[2]),destino:'novo'});
+    if(m&&/[a-zA-ZÃ€-Ãº]{3}/.test(m[1]))itens.push({sel:true,nome:m[1].trim(),qtd:1,und:'un',custo:numBr(m[2]),destino:'novo'});
   }
   itens.forEach(i=>i.destino=chutarDestino(i.nome));
   const dm=texto.match(/(\d{2})\/(\d{2})\/(\d{4})/);
   const dataIso=dm?`${dm[3]}-${dm[2]}-${dm[1]}`:'';
-  const fornecedor=(linhas.find(l=>/[A-Za-zÀ-ú]{4,}/.test(l)&&!/cupom|nota|fiscal|nfc|extrato|sat/i.test(l))||'').slice(0,40);
+  const fornecedor=(linhas.find(l=>/[A-Za-zÃ€-Ãº]{4,}/.test(l)&&!/cupom|nota|fiscal|nfc|extrato|sat/i.test(l))||'').slice(0,40);
   return {itens,dataIso,fornecedor};
 }
 async function importarCupom(file){
@@ -1855,12 +1855,12 @@ async function importarCupom(file){
   aba('estoque');svEst('import');
   document.getElementById('imp-rev').style.display='none';
   document.getElementById('imp-raw-card').style.display='none';
-  impStatus('Preparando…');
+  impStatus('Preparandoâ€¦');
   try{
     let texto='';
-    if(file.type==='application/pdf'||/\.pdf$/i.test(file.name)){impStatus('Lendo o PDF…');texto=await lerPDF(file);}
+    if(file.type==='application/pdf'||/\.pdf$/i.test(file.name)){impStatus('Lendo o PDFâ€¦');texto=await lerPDF(file);}
     else texto=await ocrImagem(file);
-    if(!texto.trim())throw new Error('Não consegui ler nada. Tente uma foto mais nítida, bem iluminada e sem dobras.');
+    if(!texto.trim())throw new Error('NÃ£o consegui ler nada. Tente uma foto mais nÃ­tida, bem iluminada e sem dobras.');
     const r=parseCupom(texto);
     _impItens=r.itens.length?r.itens:[{sel:true,nome:'',qtd:1,und:'un',custo:0,destino:'novo'}];
     document.getElementById('imp-forn').value=r.fornecedor||'';
@@ -1870,8 +1870,8 @@ async function importarCupom(file){
     document.getElementById('imp-status').style.display='none';
     document.getElementById('imp-rev').style.display='block';
     renderImpItens();
-    if(!r.itens.length)toast('Não identifiquei itens — veja o "texto lido" e adicione manualmente.');
-  }catch(e){impStatus('❌ '+e.message,true);}
+    if(!r.itens.length)toast('NÃ£o identifiquei itens â€” veja o "texto lido" e adicione manualmente.');
+  }catch(e){impStatus('âŒ '+e.message,true);}
   const fi=document.getElementById('cupom-file');if(fi)fi.value='';
 }
 function renderImpItens(){
@@ -1879,19 +1879,19 @@ function renderImpItens(){
   const mats=_E.filter(e=>e.tipo==='material');
   el.innerHTML=`<div class="mr-hdr" style="grid-template-columns:24px 2fr 54px 54px 74px auto"><span></span><span>Item</span><span>Qtd</span><span>Und</span><span>R$/und</span><span></span></div>`+
   _impItens.map((it,ix)=>{
-    const opts=mats.map(m=>`<option value="${m._id}" ${it.destino===m._id?'selected':''}>↳ somar em: ${esc(m.nome)}</option>`).join('');
+    const opts=mats.map(m=>`<option value="${m._id}" ${it.destino===m._id?'selected':''}>â†³ somar em: ${esc(m.nome)}</option>`).join('');
     return `<div class="mr" style="grid-template-columns:24px 2fr 54px 54px 74px auto;margin-bottom:10px;align-items:start">
       <input type="checkbox" style="margin-top:9px" ${it.sel?'checked':''} onchange="_impItens[${ix}].sel=this.checked">
       <div>
         <input type="text" value="${esc(it.nome)}" placeholder="Nome do material" oninput="_impItens[${ix}].nome=this.value">
         <select style="width:100%;margin-top:4px;border:1px solid var(--bdr);border-radius:6px;padding:4px 6px;font-size:11px;background:#FDFAF7" onchange="_impItens[${ix}].destino=this.value">
-          <option value="novo" ${it.destino==='novo'?'selected':''}>➕ criar novo material</option>${opts}
+          <option value="novo" ${it.destino==='novo'?'selected':''}>âž• criar novo material</option>${opts}
         </select>
       </div>
       <input type="number" value="${it.qtd}" min="0" step="0.1" oninput="_impItens[${ix}].qtd=this.value">
       <input type="text" value="${esc(it.und)}" oninput="_impItens[${ix}].und=this.value">
       <input type="number" value="${it.custo}" min="0" step="0.01" oninput="_impItens[${ix}].custo=this.value">
-      <button class="bds" onclick="_impItens.splice(${ix},1);renderImpItens()">✕</button>
+      <button class="bds" onclick="_impItens.splice(${ix},1);renderImpItens()">âœ•</button>
     </div>`;
   }).join('');
 }
@@ -1915,18 +1915,18 @@ async function impSalvar(){
     }
   });
   if(document.getElementById('imp-desp').checked&&total>0){
-    batch.set(base.collection('transacoes').doc(),{tipo:'despesa',valor:Math.round(total*100)/100,dataIso,data:new Date(dataIso+'T12:00:00').toLocaleDateString('pt-BR'),descricao:'Compra de materiais'+(forn?' — '+forn:''),obs:'Importado de cupom',categoria:'Materiais (fios, aviamentos)',formaPagamento:'Pix',status:'pago',projetoId:null,projetoNome:null,created_at:firebase.firestore.FieldValue.serverTimestamp()});
+    batch.set(base.collection('transacoes').doc(),{tipo:'despesa',valor:Math.round(total*100)/100,dataIso,data:new Date(dataIso+'T12:00:00').toLocaleDateString('pt-BR'),descricao:'Compra de materiais'+(forn?' â€” '+forn:''),obs:'Importado de cupom',categoria:'Materiais (fios, aviamentos)',formaPagamento:'Pix',status:'pago',projetoId:null,projetoNome:null,created_at:firebase.firestore.FieldValue.serverTimestamp()});
   }
-  try{await batch.commit();toast('✓ '+sel.length+' item(ns) adicionados ao estoque!');voltarEst();}
-  catch(e){toast('❌ Erro: '+e.message);}
+  try{await batch.commit();toast('âœ“ '+sel.length+' item(ns) adicionados ao estoque!');voltarEst();}
+  catch(e){toast('âŒ Erro: '+e.message);}
 }
 
-// ══ PRODUÇÃO (baixa de estoque + custo real) ══
+// â•â• PRODUÃ‡ÃƒO (baixa de estoque + custo real) â•â•
 let _prodMats=[],_prodProjId=null;
 function produzirPeca(projId){
   aba('estoque');svEst('prod');
   const sel=document.getElementById('pr-proj');
-  sel.innerHTML='<option value="">— Escolha o projeto —</option>'+_P.map(p=>`<option value="${p.id||p._id}" ${projId===(p.id||p._id)?'selected':''}>${p.nome}</option>`).join('');
+  sel.innerHTML='<option value="">â€” Escolha o projeto â€”</option>'+_P.map(p=>`<option value="${p.id||p._id}" ${projId===(p.id||p._id)?'selected':''}>${p.nome}</option>`).join('');
   const plat=document.getElementById('pr-plat');
   if(plat)plat.innerHTML=CFG.taxas.map(t=>`<option>${t.nome}</option>`).join('');
   if(projId)prodCarregar(projId);
@@ -1951,7 +1951,7 @@ function prodCarregar(id){
   document.getElementById('pr-nome').value=p.nome||'';
   const h=_H.find(x=>x.projetoId===id&&x.precoNum);
   document.getElementById('pr-preco').value=h?h.precoNum:'';
-  // mão de obra sugerida: 1º do cálculo salvo (horas × R$/h); senão estima pelo "tempo" do projeto
+  // mÃ£o de obra sugerida: 1Âº do cÃ¡lculo salvo (horas Ã— R$/h); senÃ£o estima pelo "tempo" do projeto
   const mdoEl=document.getElementById('pr-mdo'),hint=document.getElementById('pr-mdo-hint');
   if(mdoEl){
     let mdo=0,fonte='';
@@ -1959,17 +1959,17 @@ function prodCarregar(id){
     if(p.trabalho&&(p.trabalho.segundos||0)>60){
       const hs=Math.round((p.trabalho.segundos/3600)*10)/10;
       mdo=hs*vhPad;
-      fonte=`do cronômetro do Modo Ateliê: ${hs}h reais × ${fmt(vhPad)}/h`;
+      fonte=`do cronÃ´metro do Modo AteliÃª: ${hs}h reais Ã— ${fmt(vhPad)}/h`;
     }else if(h&&typeof h.mdoNum==='number'&&h.mdoNum>0){
       mdo=h.mdoNum;
-      fonte='do cálculo salvo'+(h.horasNum?` (${h.horasNum}h × ${fmt(h.vhNum||0)}/h)`:'');
+      fonte='do cÃ¡lculo salvo'+(h.horasNum?` (${h.horasNum}h Ã— ${fmt(h.vhNum||0)}/h)`:'');
     }else{
       const tm=(p.tempo||'').match(/(\d+(?:[.,]\d+)?)\s*h/i);
       if(tm){
         const hs=parseFloat(tm[1].replace(',','.'));
         const vhPad=parseFloat(document.getElementById('vh')?.value)||25;
         mdo=hs*vhPad;
-        fonte=`estimado pelo tempo do projeto: ${hs}h × ${fmt(vhPad)}/h`;
+        fonte=`estimado pelo tempo do projeto: ${hs}h Ã— ${fmt(vhPad)}/h`;
       }
     }
     mdoEl.value=mdo?Math.round(mdo*100)/100:0;
@@ -1985,13 +1985,13 @@ function renderProdMats(){
   el.innerHTML=`<div class="mr-hdr" style="grid-template-columns:2fr 56px 64px 44px 80px auto"><span>Material</span><span>Plan.</span><span>Real</span><span>Und</span><span>R$/und</span><span></span></div>`+
   _prodMats.map((m,i)=>`<div class="mr" style="grid-template-columns:2fr 56px 64px 44px 80px auto;margin-bottom:8px;align-items:start">
     <div><input type="text" value="${esc(m.nome)}" placeholder="Material" oninput="_prodMats[${i}].nome=this.value">
-      ${m.estId?`<div style="font-size:10px;margin-top:2px;color:${(m.estQty||0)<(m.real||0)?'var(--red)':'var(--green)'}">📦 em estoque: ${m.estQty} ${esc(m.und)}</div>`:`<div style="font-size:10px;color:#bbb;margin-top:2px">sem vínculo com o estoque</div>`}
+      ${m.estId?`<div style="font-size:10px;margin-top:2px;color:${(m.estQty||0)<(m.real||0)?'var(--red)':'var(--green)'}">ðŸ“¦ em estoque: ${m.estQty} ${esc(m.und)}</div>`:`<div style="font-size:10px;color:#bbb;margin-top:2px">sem vÃ­nculo com o estoque</div>`}
     </div>
     <span style="font-size:12px;color:#aaa;margin-top:9px">${m.plan||0}</span>
     <input type="number" value="${m.real}" min="0" step="0.1" oninput="_prodMats[${i}].real=parseFloat(this.value)||0;prodTotais()">
     <span style="font-size:12px;color:#aaa;margin-top:9px">${esc(m.und)}</span>
     <input type="number" value="${m.custo}" min="0" step="0.01" oninput="_prodMats[${i}].custo=parseFloat(this.value)||0;prodTotais()">
-    <button class="bds" onclick="_prodMats.splice(${i},1);renderProdMats()">✕</button>
+    <button class="bds" onclick="_prodMats.splice(${i},1);renderProdMats()">âœ•</button>
   </div>`).join('');
   prodTotais();
 }
@@ -2001,17 +2001,17 @@ function prodTotais(){
   const ep=document.getElementById('pr-plan'),er=document.getElementById('pr-real'),ed=document.getElementById('pr-dif');
   if(ep)ep.textContent=fmt(plan);
   if(er)er.textContent=fmt(real);
-  if(ed){const d=real-plan;ed.textContent=d===0?'Igual ao planejado':(d>0?'▲ ':'▼ ')+fmt(Math.abs(d))+(d>0?' acima do planejado — vale ajustar a receita?':' abaixo do planejado');ed.style.color=d>0?'var(--red)':d<0?'var(--green)':'#888';}
+  if(ed){const d=real-plan;ed.textContent=d===0?'Igual ao planejado':(d>0?'â–² ':'â–¼ ')+fmt(Math.abs(d))+(d>0?' acima do planejado â€” vale ajustar a receita?':' abaixo do planejado');ed.style.color=d>0?'var(--red)':d<0?'var(--green)':'#888';}
   const pf=document.getElementById('pr-falta');
   if(pf){
     const faltam=_prodMats.filter(m=>m.estId&&(m.estQty||0)<(m.real||0)).length;
     pf.style.display=faltam?'block':'none';
-    if(faltam)pf.innerHTML=`⚠ ${faltam} material(is) sem estoque suficiente — <button onclick="conferirMateriais(_prodProjId)" style="background:none;border:none;color:var(--rose);font-weight:700;cursor:pointer;text-decoration:underline;font-size:12px;padding:0">ver lista de compras 🛒</button>`;
+    if(faltam)pf.innerHTML=`âš  ${faltam} material(is) sem estoque suficiente â€” <button onclick="conferirMateriais(_prodProjId)" style="background:none;border:none;color:var(--rose);font-weight:700;cursor:pointer;text-decoration:underline;font-size:12px;padding:0">ver lista de compras ðŸ›’</button>`;
   }
   prodSugestao();
   return real;
 }
-// ══ MODO ATELIÊ (receita tela cheia + carreiras + cronômetro) ══
+// â•â• MODO ATELIÃŠ (receita tela cheia + carreiras + cronÃ´metro) â•â•
 let _at={id:null,sec:0,car:0,feitos:{},run:false,iv:null};
 let _atSaveT=null;
 function fmtTempo(s){const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return h+':'+String(m).padStart(2,'0')+':'+String(x).padStart(2,'0');}
@@ -2023,15 +2023,15 @@ function abrirAtelie(projId){
   document.getElementById('at-nome').textContent=p.nome||'';
   document.getElementById('at-car').textContent=_at.car;
   document.getElementById('at-timer').textContent=fmtTempo(_at.sec);
-  document.getElementById('at-play').textContent='▶';
+  document.getElementById('at-play').textContent='â–¶';
   const el=document.getElementById('at-receita');
   const secoes=p.secoes||[];
-  el.innerHTML=secoes.length?secoes.map((s,si)=>`<div class="at-sec">${esc(s.titulo||'Seção '+(si+1))}</div>`+
+  el.innerHTML=secoes.length?secoes.map((s,si)=>`<div class="at-sec">${esc(s.titulo||'SeÃ§Ã£o '+(si+1))}</div>`+
     (s.passos||[]).filter(x=>x).map((pa,pi)=>{
       const k=si+'_'+pi,ok=!!_at.feitos[k];
       return `<div class="at-passo${ok?' ok':''}" id="atp-${k}" onclick="togglePasso('${k}')"><div class="pan" style="flex-shrink:0">${pi+1}</div><div>${esc(pa)}</div></div>`;
     }).join('')).join('')
-  :'<p style="text-align:center;color:#aaa;padding:2rem 0;font-size:14px">Este projeto ainda não tem receita de pontos.<br>O contador e o cronômetro funcionam mesmo assim!</p>';
+  :'<p style="text-align:center;color:#aaa;padding:2rem 0;font-size:14px">Este projeto ainda nÃ£o tem receita de pontos.<br>O contador e o cronÃ´metro funcionam mesmo assim!</p>';
   document.getElementById('atelie-ov').style.display='flex';
 }
 function togglePasso(k){
@@ -2048,7 +2048,7 @@ function mudarCarreira(d){
 function toggleTimer(){
   if(_at.run){pararTimer();salvarAtelie();}
   else{
-    _at.run=true;document.getElementById('at-play').textContent='⏸';
+    _at.run=true;document.getElementById('at-play').textContent='â¸';
     _at.iv=setInterval(()=>{
       _at.sec++;
       document.getElementById('at-timer').textContent=fmtTempo(_at.sec);
@@ -2059,7 +2059,7 @@ function toggleTimer(){
 function pararTimer(){
   if(_at.iv){clearInterval(_at.iv);_at.iv=null;}
   _at.run=false;
-  const b=document.getElementById('at-play');if(b)b.textContent='▶';
+  const b=document.getElementById('at-play');if(b)b.textContent='â–¶';
 }
 function salvarAtelie(){
   if(!_at.id||!COL)return;
@@ -2071,14 +2071,14 @@ function salvarAtelie(){
 function fecharAtelie(){
   pararTimer();salvarAtelie();
   document.getElementById('atelie-ov').style.display='none';
-  toast('✓ Progresso salvo — '+fmtTempo(_at.sec)+' nesta peça');
+  toast('âœ“ Progresso salvo â€” '+fmtTempo(_at.sec)+' nesta peÃ§a');
 }
 
-// ══ CONFERIR MATERIAIS / LISTA DE COMPRAS ══
+// â•â• CONFERIR MATERIAIS / LISTA DE COMPRAS â•â•
 function conferirMateriais(projId){
   const p=_P.find(x=>(x.id||x._id)===projId);
   const mats=(p?.materiais||[]).filter(m=>m.nome);
-  if(!mats.length){toast('Este projeto não tem materiais cadastrados.');return;}
+  if(!mats.length){toast('Este projeto nÃ£o tem materiais cadastrados.');return;}
   const itens=mats.map(m=>{
     const e=_matEst(m);
     const need=parseFloat(m.qtd)||0;
@@ -2097,21 +2097,21 @@ function conferirMateriais(projId){
   ov.style.cssText='position:fixed;inset:0;background:rgba(30,21,16,.85);z-index:9500;display:flex;align-items:center;justify-content:center;padding:16px';
   ov.innerHTML=`<div style="background:#FFFDF9;border-radius:16px;padding:16px;max-width:560px;width:100%;max-height:92vh;overflow:auto">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-      <div style="font-size:15px;font-weight:700;color:var(--rose)">🛒 Materiais — ${esc(p.nome||'')}</div>
-      <button class="bds" id="cm-x" style="font-size:18px">✕</button>
+      <div style="font-size:15px;font-weight:700;color:var(--rose)">ðŸ›’ Materiais â€” ${esc(p.nome||'')}</div>
+      <button class="bds" id="cm-x" style="font-size:18px">âœ•</button>
     </div>
     ${faltantes.length?'<p style="font-size:11px;color:#999;margin-bottom:6px">Marque o que entra no pedido:</p>':''}
     ${itens.map(i=>{
       const ok=i.falta<=0,parcial=i.tem!==null&&i.tem>0&&i.falta>0,semv=i.tem===null;
-      const selo=ok?'<span style="background:var(--green-l);color:var(--green);border-radius:10px;padding:2px 8px;font-size:11px;font-weight:600">✓ tem</span>':parcial?'<span style="background:var(--orange-l);color:var(--orange);border-radius:10px;padding:2px 8px;font-size:11px;font-weight:600">⚠ parcial</span>':'<span style="background:var(--red-l);color:var(--red);border-radius:10px;padding:2px 8px;font-size:11px;font-weight:600">✕ '+(semv?'sem cadastro':'falta')+'</span>';
+      const selo=ok?'<span style="background:var(--green-l);color:var(--green);border-radius:10px;padding:2px 8px;font-size:11px;font-weight:600">âœ“ tem</span>':parcial?'<span style="background:var(--orange-l);color:var(--orange);border-radius:10px;padding:2px 8px;font-size:11px;font-weight:600">âš  parcial</span>':'<span style="background:var(--red-l);color:var(--red);border-radius:10px;padding:2px 8px;font-size:11px;font-weight:600">âœ• '+(semv?'sem cadastro':'falta')+'</span>';
       const lk=i.falta>0?linkDe(i):null;
       const fi=faltantes.indexOf(i);
       return `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid #f5f0ea">
         ${fi>=0?`<input type="checkbox" class="cm-ck" data-f="${fi}" checked style="width:20px;height:20px;accent-color:var(--rose);flex-shrink:0;cursor:pointer">`:'<span style="width:20px;flex-shrink:0"></span>'}
         <div style="flex:1"><div style="font-size:13px;font-weight:600">${esc(i.nome)}</div>
-          <div style="font-size:11px;color:#999">precisa ${i.need} ${esc(i.und)}${i.tem!==null?' · em estoque '+i.tem:''}${i.falta>0?' · <b style="color:var(--red)">comprar '+i.falta+'</b>':''}</div>
+          <div style="font-size:11px;color:#999">precisa ${i.need} ${esc(i.und)}${i.tem!==null?' Â· em estoque '+i.tem:''}${i.falta>0?' Â· <b style="color:var(--red)">comprar '+i.falta+'</b>':''}</div>
         </div>
-        <div style="display:flex;align-items:center;gap:6px">${selo}${lk&&lk.url?`<a href="${lk.url.startsWith('http')?lk.url:'https://'+lk.url}" target="_blank" class="bsr" style="text-decoration:none">🔗 ${esc(lk.nome||'comprar')}</a>`:''}</div>
+        <div style="display:flex;align-items:center;gap:6px">${selo}${lk&&lk.url?`<a href="${lk.url.startsWith('http')?lk.url:'https://'+lk.url}" target="_blank" class="bsr" style="text-decoration:none">ðŸ”— ${esc(lk.nome||'comprar')}</a>`:''}</div>
       </div>`;
     }).join('')}
     ${faltantes.length?`
@@ -2119,17 +2119,17 @@ function conferirMateriais(projId){
         <span id="cm-n"></span><span>compra estimada: <b id="cm-t" style="color:var(--rose)"></b></span>
       </div>
       <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
-        <a class="bgn" id="cm-wa" style="text-decoration:none;display:inline-flex;align-items:center" href="#" target="_blank">📤 Pedir por WhatsApp</a>
-        <button class="bg" id="cm-copy">📋 Copiar lista</button>
+        <a class="bgn" id="cm-wa" style="text-decoration:none;display:inline-flex;align-items:center" href="#" target="_blank">ðŸ“¤ Pedir por WhatsApp</a>
+        <button class="bg" id="cm-copy">ðŸ“‹ Copiar lista</button>
       </div>`
-    :'<div style="margin-top:12px;text-align:center;color:var(--green);font-weight:600;font-size:14px">✓ Tudo em estoque — pode produzir!</div>'}
-    ${links.length?`<div style="margin-top:12px;font-size:11px;color:#999">Fornecedores do projeto: ${links.map(l=>l.url?`<a href="${l.url.startsWith('http')?l.url:'https://'+l.url}" target="_blank" style="color:var(--rose)">${esc(l.nome||'link')}</a>`:esc(l.nome||'')).join(' · ')}</div>`:''}
+    :'<div style="margin-top:12px;text-align:center;color:var(--green);font-weight:600;font-size:14px">âœ“ Tudo em estoque â€” pode produzir!</div>'}
+    ${links.length?`<div style="margin-top:12px;font-size:11px;color:#999">Fornecedores do projeto: ${links.map(l=>l.url?`<a href="${l.url.startsWith('http')?l.url:'https://'+l.url}" target="_blank" style="color:var(--rose)">${esc(l.nome||'link')}</a>`:esc(l.nome||'')).join(' Â· ')}</div>`:''}
   </div>`;
   document.body.appendChild(ov);
   const montarTxt=()=>{
     const sel=[...ov.querySelectorAll('.cm-ck')].filter(c=>c.checked).map(c=>faltantes[+c.dataset.f]);
     const tot=sel.reduce((s,i)=>s+i.falta*i.custo,0);
-    const txt='Pedido de materiais — '+(p.nome||'')+':\n'+sel.map(i=>`• ${i.falta} ${i.und} — ${i.nome}`).join('\n')+(tot>0?`\n(estimado: ${fmt(tot)})`:'');
+    const txt='Pedido de materiais â€” '+(p.nome||'')+':\n'+sel.map(i=>`â€¢ ${i.falta} ${i.und} â€” ${i.nome}`).join('\n')+(tot>0?`\n(estimado: ${fmt(tot)})`:'');
     const n=ov.querySelector('#cm-n');if(n)n.innerHTML='No pedido: <b>'+sel.length+'</b> de '+faltantes.length+' item(ns)';
     const t=ov.querySelector('#cm-t');if(t)t.textContent=fmt(tot);
     const wa=ov.querySelector('#cm-wa');
@@ -2143,12 +2143,12 @@ function conferirMateriais(projId){
   if(cb)cb.onclick=async()=>{
     const {txt,sel}=montarTxt();
     if(!sel.length){toast('Marque ao menos um item.');return;}
-    try{await navigator.clipboard.writeText(txt);toast('✓ Lista copiada!');}catch(e){prompt('Copie:',txt);}
+    try{await navigator.clipboard.writeText(txt);toast('âœ“ Lista copiada!');}catch(e){prompt('Copie:',txt);}
   };
   ov.addEventListener('click',e=>{if(e.target===ov)ov.remove();});
 }
 
-// planejador de preço da produção: custo real + mão de obra + taxa da plataforma + margem
+// planejador de preÃ§o da produÃ§Ã£o: custo real + mÃ£o de obra + taxa da plataforma + margem
 function prodSugestao(){
   const el=document.getElementById('pr-sug');if(!el)return;
   const real=_prodMats.reduce((s,m)=>s+(m.real||0)*(m.custo||0),0);
@@ -2163,9 +2163,9 @@ function prodSugestao(){
   const pSug=div>0?base/div:base*2;
   const luc=pSug*(1-taxa)-base;
   window._prSugVal=Math.round(pSug*100)/100;
-  el.innerHTML=`<span>Mínimo: <strong>${fmt(pMin)}</strong> · Lucro: <strong style="color:var(--green)">${fmt(luc)}</strong>${taxa>0?` · taxa ${(taxa*100).toFixed(0)}%`:''}</span>
+  el.innerHTML=`<span>MÃ­nimo: <strong>${fmt(pMin)}</strong> Â· Lucro: <strong style="color:var(--green)">${fmt(luc)}</strong>${taxa>0?` Â· taxa ${(taxa*100).toFixed(0)}%`:''}</span>
     <span style="display:flex;align-items:center;gap:8px"><strong style="font-size:17px;color:var(--gold-d)">${fmt(pSug)}</strong>
-    <button class="bsr" onclick="document.getElementById('pr-preco').value=window._prSugVal;toast('✓ Preço aplicado!')">Usar este preço</button></span>`;
+    <button class="bsr" onclick="document.getElementById('pr-preco').value=window._prSugVal;toast('âœ“ PreÃ§o aplicado!')">Usar este preÃ§o</button></span>`;
 }
 async function prodConcluir(){
   const mats=_prodMats.filter(m=>(m.nome||'').trim());
@@ -2186,15 +2186,15 @@ async function prodConcluir(){
       baixas++;
     });
   }
-  batch.set(base.collection('estoque').doc(),{tipo:'produto',nome,colecao:p?.colecao||'',status:'disponivel',custo:Math.round(custoReal*100)/100,preco:parseFloat(document.getElementById('pr-preco').value)||0,qty:qtdProd,plataforma:document.getElementById('pr-plat').value,projetoId:_prodProjId,projetoNome:p?.nome||null,foto:_fotos.pr||'',naLoja:document.getElementById('pr-loja')?.checked||false,obs:'Produzido em '+new Date().toLocaleDateString('pt-BR')+' · custo real '+fmt(custoReal)+(qtdProd>1?' por unidade':''),created_at:firebase.firestore.FieldValue.serverTimestamp()});
+  batch.set(base.collection('estoque').doc(),{tipo:'produto',nome,colecao:p?.colecao||'',status:'disponivel',custo:Math.round(custoReal*100)/100,preco:parseFloat(document.getElementById('pr-preco').value)||0,qty:qtdProd,plataforma:document.getElementById('pr-plat').value,projetoId:_prodProjId,projetoNome:p?.nome||null,foto:_fotos.pr||'',naLoja:document.getElementById('pr-loja')?.checked||false,obs:'Produzido em '+new Date().toLocaleDateString('pt-BR')+' Â· custo real '+fmt(custoReal)+(qtdProd>1?' por unidade':''),created_at:firebase.firestore.FieldValue.serverTimestamp()});
   try{
     await batch.commit();
-    toast('✓ Produção concluída!'+(baixas?' Baixa em '+baixas+' materiais.':''));
+    toast('âœ“ ProduÃ§Ã£o concluÃ­da!'+(baixas?' Baixa em '+baixas+' materiais.':''));
     voltarEst();
-  }catch(e){toast('❌ Erro: '+e.message);}
+  }catch(e){toast('âŒ Erro: '+e.message);}
 }
 
-// ══ FOTOS (câmera/galeria → comprimida em base64) + IA PREMIUM (Gemini) ══
+// â•â• FOTOS (cÃ¢mera/galeria â†’ comprimida em base64) + IA PREMIUM (Gemini) â•â•
 const _fotos={pr:'',ep:''};
 function comprimirFoto(file,maxW,q){
   return new Promise((res,rej)=>{
@@ -2231,8 +2231,8 @@ async function setFoto(slot,file){
   try{
     _fotos[slot]=await comprimirFoto(file,900,0.72);
     atualizarFotoPrev(slot);
-    toast('✓ Foto pronta!');
-  }catch(e){toast('❌ Não consegui ler a imagem.');}
+    toast('âœ“ Foto pronta!');
+  }catch(e){toast('âŒ NÃ£o consegui ler a imagem.');}
   const fi=document.getElementById(slot+'-foto-file');if(fi)fi.value='';
 }
 function atualizarFotoPrev(slot){
@@ -2245,21 +2245,21 @@ async function addFotoArquivo(file){
   if(!file)return;
   try{
     const d=await comprimirFoto(file,640,0.62);
-    _ff.push({url:d,desc:''});renderFF();toast('✓ Foto adicionada!');
-  }catch(e){toast('❌ Não consegui ler a imagem.');}
+    _ff.push({url:d,desc:''});renderFF();toast('âœ“ Foto adicionada!');
+  }catch(e){toast('âŒ NÃ£o consegui ler a imagem.');}
   const fi=document.getElementById('pj-foto-file');if(fi)fi.value='';
 }
-const PROMPT_PREMIUM='Transforme esta foto em fotografia profissional de produto para catálogo de bolsas artesanais de luxo: fundo neutro minimalista em tom creme/areia, iluminação de estúdio suave e difusa, sombra natural delicada, produto centralizado. MUITO IMPORTANTE: preserve o produto EXATAMENTE como está na foto — não altere formato, proporções, tamanho, cores, pontos do crochê, textura, alças, ferragens ou qualquer detalhe da peça. Não adicione texto, pessoas, logotipos ou marca d\'água.';
+const PROMPT_PREMIUM='Transforme esta foto em fotografia profissional de produto para catÃ¡logo de bolsas artesanais de luxo: fundo neutro minimalista em tom creme/areia, iluminaÃ§Ã£o de estÃºdio suave e difusa, sombra natural delicada, produto centralizado. MUITO IMPORTANTE: preserve o produto EXATAMENTE como estÃ¡ na foto â€” nÃ£o altere formato, proporÃ§Ãµes, tamanho, cores, pontos do crochÃª, textura, alÃ§as, ferragens ou qualquer detalhe da peÃ§a. NÃ£o adicione texto, pessoas, logotipos ou marca d\'Ã¡gua.';
 async function melhorarFoto(slot){
   const src=_fotos[slot];
   if(!src||!src.startsWith('data:')){toast('Tire ou envie uma foto primeiro.');return;}
   const key=(CFG.gkey||'').trim();
-  if(!key){toast('Cole a sua chave do Gemini em Ajustes → IA de imagens.');aba('config');return;}
+  if(!key){toast('Cole a sua chave do Gemini em Ajustes â†’ IA de imagens.');aba('config');return;}
   const btn=document.getElementById(slot+'-ia-btn');
-  if(btn){btn.disabled=true;btn.textContent='✨ Gerando… (~15s)';}
+  if(btn){btn.disabled=true;btn.textContent='âœ¨ Gerandoâ€¦ (~15s)';}
   try{
     const m=src.match(/^data:(image\/\w+);base64,(.+)$/);
-    if(!m)throw new Error('formato de foto inválido');
+    if(!m)throw new Error('formato de foto invÃ¡lido');
     const body={contents:[{parts:[{text:PROMPT_PREMIUM},{inline_data:{mime_type:m[1],data:m[2]}}]}]};
     const r=await fetch('https://generativelanguage.googleapis.com/v1/models/gemini-3.1-flash-image:generateContent',{
       method:'POST',
@@ -2269,24 +2269,24 @@ async function melhorarFoto(slot){
     const j=await r.json();
     if(!r.ok)throw new Error(j.error?.message||('HTTP '+r.status));
     const part=(j.candidates?.[0]?.content?.parts||[]).find(p=>p.inlineData||p.inline_data);
-    if(!part)throw new Error('a IA não retornou imagem — tente outra foto.');
+    if(!part)throw new Error('a IA nÃ£o retornou imagem â€” tente outra foto.');
     const d=part.inlineData||part.inline_data;
     const nova='data:'+(d.mimeType||d.mime_type||'image/png')+';base64,'+d.data;
     mostrarComparacao(slot,src,nova);
-  }catch(e){toast('❌ IA: '+e.message);}
-  if(btn){btn.disabled=false;btn.textContent='✨ Premium (IA)';}
+  }catch(e){toast('âŒ IA: '+e.message);}
+  if(btn){btn.disabled=false;btn.textContent='âœ¨ Premium (IA)';}
 }
 function mostrarComparacao(slot,antes,depois){
   const ov=document.createElement('div');
   ov.style.cssText='position:fixed;inset:0;background:rgba(30,21,16,.85);z-index:9500;display:flex;align-items:center;justify-content:center;padding:16px';
   ov.innerHTML=`<div style="background:#FFFDF9;border-radius:16px;padding:16px;max-width:560px;width:100%;max-height:92vh;overflow:auto">
-    <div style="font-size:14px;font-weight:700;color:var(--rose);margin-bottom:10px">✨ Antes e depois — qual você prefere?</div>
+    <div style="font-size:14px;font-weight:700;color:var(--rose);margin-bottom:10px">âœ¨ Antes e depois â€” qual vocÃª prefere?</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
       <div><div style="font-size:11px;color:#888;margin-bottom:4px">Original</div><img src="${antes}" style="width:100%;border-radius:10px"></div>
-      <div><div style="font-size:11px;color:var(--gold-d);margin-bottom:4px;font-weight:600">Premium ✨</div><img src="${depois}" style="width:100%;border-radius:10px;border:2px solid var(--gold)"></div>
+      <div><div style="font-size:11px;color:var(--gold-d);margin-bottom:4px;font-weight:600">Premium âœ¨</div><img src="${depois}" style="width:100%;border-radius:10px;border:2px solid var(--gold)"></div>
     </div>
     <div style="display:flex;gap:8px;margin-top:14px">
-      <button class="bsv" style="margin:0;flex:1" id="ia-usar">✓ Usar a premium</button>
+      <button class="bsv" style="margin:0;flex:1" id="ia-usar">âœ“ Usar a premium</button>
       <button class="bgr" style="flex:1" id="ia-manter">Manter original</button>
     </div>
   </div>`;
@@ -2296,11 +2296,11 @@ function mostrarComparacao(slot,antes,depois){
     try{_fotos[slot]=await recomprimir(depois,900,0.8);}catch(e){_fotos[slot]=depois;}
     atualizarFotoPrev(slot);
     ov.remove();
-    toast('✓ Foto premium aplicada!');
+    toast('âœ“ Foto premium aplicada!');
   };
 }
 
-// ══ AJUSTES (CONFIGURAÇÕES) ══
+// â•â• AJUSTES (CONFIGURAÃ‡Ã•ES) â•â•
 const CI='border:1px solid var(--bdr);border-radius:8px;padding:8px 10px;font-size:13px;background:#FDFAF7;font-family:inherit;width:100%';
 const CL='display:block;font-size:11px;color:#888;margin-bottom:3px';
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
@@ -2309,27 +2309,27 @@ function renderConfig(){
   if(tx)tx.innerHTML=CFG.taxas.map((t,i)=>`<div style="display:grid;grid-template-columns:1fr 100px 30px;gap:8px;margin-bottom:8px;align-items:center">
     <input type="text" value="${esc(t.nome)}" placeholder="Plataforma" style="${CI}" oninput="CFG.taxas[${i}].nome=this.value">
     <div style="display:flex;align-items:center;gap:4px"><input type="number" value="${t.pct}" min="0" max="80" step="0.5" style="${CI}" oninput="CFG.taxas[${i}].pct=parseFloat(this.value)||0"><span style="font-size:12px;color:#888">%</span></div>
-    <button class="bds" onclick="CFG.taxas.splice(${i},1);renderConfig()">✕</button>
+    <button class="bds" onclick="CFG.taxas.splice(${i},1);renderConfig()">âœ•</button>
   </div>`).join('')||'<p style="font-size:13px;color:#bbb;text-align:center;padding:.5rem">Nenhuma plataforma.</p>';
   const fs=document.getElementById('cfg-fases');
   if(fs)fs.innerHTML=CFG.fases.map((f,i)=>`<div style="border:1px solid var(--bdr);border-radius:10px;padding:10px;margin-bottom:10px">
     <div style="display:grid;grid-template-columns:54px 1fr 30px;gap:8px;margin-bottom:8px;align-items:center">
-      <input type="text" value="${esc(f.emoji)}" placeholder="📚" style="${CI};text-align:center" oninput="CFG.fases[${i}].emoji=this.value">
+      <input type="text" value="${esc(f.emoji)}" placeholder="ðŸ“š" style="${CI};text-align:center" oninput="CFG.fases[${i}].emoji=this.value">
       <input type="text" value="${esc(f.nome)}" placeholder="Nome da fase" style="${CI}" oninput="CFG.fases[${i}].nome=this.value">
-      <button class="bds" onclick="CFG.fases.splice(${i},1);renderConfig()">✕</button>
+      <button class="bds" onclick="CFG.fases.splice(${i},1);renderConfig()">âœ•</button>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px">
-      <div><label style="${CL}">Início</label><input type="date" value="${f.inicio||''}" style="${CI}" oninput="CFG.fases[${i}].inicio=this.value"></div>
+      <div><label style="${CL}">InÃ­cio</label><input type="date" value="${f.inicio||''}" style="${CI}" oninput="CFG.fases[${i}].inicio=this.value"></div>
       <div><label style="${CL}">Meta vendas</label><input type="number" value="${f.meta_v||0}" min="0" style="${CI}" oninput="CFG.fases[${i}].meta_v=parseInt(this.value)||0"></div>
       <div><label style="${CL}">Meta receita R$</label><input type="number" value="${f.meta_r||0}" min="0" style="${CI}" oninput="CFG.fases[${i}].meta_r=parseFloat(this.value)||0"></div>
     </div>
-    <input type="text" value="${esc(f.desc)}" placeholder="Descrição curta" style="${CI}" oninput="CFG.fases[${i}].desc=this.value">
+    <input type="text" value="${esc(f.desc)}" placeholder="DescriÃ§Ã£o curta" style="${CI}" oninput="CFG.fases[${i}].desc=this.value">
   </div>`).join('')||'<p style="font-size:13px;color:#bbb;text-align:center;padding:.5rem">Nenhuma fase.</p>';
   const md=document.getElementById('cfg-modelos');
   if(md)md.innerHTML=CFG.modelos.map((m,i)=>`<div style="display:grid;grid-template-columns:1fr 1.4fr 30px;gap:8px;margin-bottom:8px;align-items:center">
     <input type="text" value="${esc(m.nome)}" placeholder="Nome" style="${CI}" oninput="CFG.modelos[${i}].nome=this.value">
-    <input type="text" value="${esc(m.desc)}" placeholder="Descrição" style="${CI}" oninput="CFG.modelos[${i}].desc=this.value">
-    <button class="bds" onclick="CFG.modelos.splice(${i},1);renderConfig()">✕</button>
+    <input type="text" value="${esc(m.desc)}" placeholder="DescriÃ§Ã£o" style="${CI}" oninput="CFG.modelos[${i}].desc=this.value">
+    <button class="bds" onclick="CFG.modelos.splice(${i},1);renderConfig()">âœ•</button>
   </div>`).join('')||'<p style="font-size:13px;color:#bbb;text-align:center;padding:.5rem">Nenhum modelo.</p>';
   const cw=document.getElementById('cfg-whats');if(cw)cw.value=CFG.whats||'';
   const lu=document.getElementById('loja-url');if(lu)lu.textContent=lojaURL();
@@ -2337,16 +2337,16 @@ function renderConfig(){
 }
 function lojaURL(){return location.origin+'/loja.html';}
 async function copiarLinkLoja(){
-  try{await navigator.clipboard.writeText(lojaURL());toast('✓ Link copiado! É só colar.');}
+  try{await navigator.clipboard.writeText(lojaURL());toast('âœ“ Link copiado! Ã‰ sÃ³ colar.');}
   catch(e){prompt('Copie o link:',lojaURL());}
 }
 async function compartilharLoja(){
   const u=lojaURL();
-  if(navigator.share){try{await navigator.share({title:'Studio Bolsas — peças disponíveis',text:'Olha as bolsas feitas à mão do Studio Bolsas! 👜✨',url:u});}catch(e){}}
+  if(navigator.share){try{await navigator.share({title:'Studio Bolsas â€” peÃ§as disponÃ­veis',text:'Olha as bolsas feitas Ã  mÃ£o do Studio Bolsas! ðŸ‘œâœ¨',url:u});}catch(e){}}
   else copiarLinkLoja();
 }
 function addTaxa(){CFG.taxas.push({nome:'',pct:0});renderConfig();}
-function addFase(){CFG.fases.push({nome:'',emoji:'🎯',inicio:new Date().toISOString().slice(0,10),meta_v:0,meta_r:0,desc:''});renderConfig();}
+function addFase(){CFG.fases.push({nome:'',emoji:'ðŸŽ¯',inicio:new Date().toISOString().slice(0,10),meta_v:0,meta_r:0,desc:''});renderConfig();}
 function addModelo(){CFG.modelos.push({nome:'',desc:''});renderConfig();}
 async function salvarConfig(){
   CFG.taxas=CFG.taxas.filter(t=>(t.nome||'').trim());
@@ -2356,11 +2356,11 @@ async function salvarConfig(){
     await COL.cfg.set({taxas:CFG.taxas,fases:CFG.fases,modelos:CFG.modelos,whats:(CFG.whats||'').trim(),gkey:(CFG.gkey||'').trim(),updated_at:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
     aplicarConfig();renderFase();renderPlano();renderDash();renderDRE();renderExtrato();
     try{_vitCache={};await initVitrineCache();sincronizarVitrine();}catch(e){}
-    toast('✓ Configurações salvas!');
-  }catch(e){toast('❌ Erro: '+e.message);}
+    toast('âœ“ ConfiguraÃ§Ãµes salvas!');
+  }catch(e){toast('âŒ Erro: '+e.message);}
 }
 
-// ══ BACKUP (EXPORT / IMPORT JSON) ══
+// â•â• BACKUP (EXPORT / IMPORT JSON) â•â•
 function _exDoc(d){
   const o={...d};
   ['created_at','updated_at'].forEach(k=>{
@@ -2378,15 +2378,15 @@ function exportarJSON(){
   a.href=URL.createObjectURL(blob);
   a.download='studio-bolsas-backup-'+new Date().toISOString().slice(0,10)+'.json';
   a.click();URL.revokeObjectURL(a.href);
-  toast('✓ Backup exportado!');
+  toast('âœ“ Backup exportado!');
 }
 async function importarJSON(file){
   if(!file)return;
   try{
     const data=JSON.parse(await file.text());
-    if(data.app!=='studio-bolsas'&&!confirm('O arquivo não parece um backup do Studio Bolsas. Importar mesmo assim?'))return;
+    if(data.app!=='studio-bolsas'&&!confirm('O arquivo nÃ£o parece um backup do Studio Bolsas. Importar mesmo assim?'))return;
     const n=(data.projetos?.length||0)+(data.historico?.length||0)+(data.transacoes?.length||0)+(data.estoque?.length||0);
-    if(!confirm(`Importar ${n} registros? Registros com o mesmo ID serão sobrescritos.`))return;
+    if(!confirm(`Importar ${n} registros? Registros com o mesmo ID serÃ£o sobrescritos.`))return;
     const TS=v=>typeof v==='number'?firebase.firestore.Timestamp.fromMillis(v):firebase.firestore.FieldValue.serverTimestamp();
     const base=db.collection('users').doc(_uid);
     const packs=[['projetos',data.projetos],['historico',data.historico],['transacoes',data.transacoes],['estoque',data.estoque]];
@@ -2408,26 +2408,27 @@ async function importarJSON(file){
       await COL.cfg.set({taxas:CFG.taxas,fases:CFG.fases,modelos:CFG.modelos},{merge:true});
       aplicarConfig();
     }
-    toast('✓ Backup importado!');
-  }catch(e){toast('❌ Erro ao importar: '+e.message);}
+    toast('âœ“ Backup importado!');
+  }catch(e){toast('âŒ Erro ao importar: '+e.message);}
   const fi=document.getElementById('imp-file');if(fi)fi.value='';
 }
 
-// ══ INIT ══
+// â•â• INIT â•â•
 renderMatC();
 document.getElementById('mes-lbl').textContent=MN[_mc]+' '+_ac;
 renderDropdowns();
 sync(false);
 </script>
 
-<!-- ── NAV MOBILE (elemento fixo separado, mais confiável) ── -->
+<!-- â”€â”€ NAV MOBILE (elemento fixo separado, mais confiÃ¡vel) â”€â”€ -->
 <nav id="mob-nav">
-  <button id="mn-dash" class="active" onclick="aba('dash')"><span class="ti">📊</span><span>Painel</span></button>
-  <button id="mn-caderno" onclick="aba('caderno')"><span class="ti">📓</span><span>Projetos</span></button>
-  <button id="mn-calc" onclick="aba('calc')"><span class="ti">💰</span><span>Preço</span></button>
-  <button id="mn-estoque" onclick="aba('estoque')"><span class="ti">📦</span><span>Estoque</span></button>
-  <button id="mn-caixa" onclick="aba('caixa')"><span class="ti">💵</span><span>Caixa</span></button>
-  <button id="mn-config" onclick="aba('config')"><span class="ti">⚙️</span><span>Ajustes</span></button>
+  <button id="mn-dash" class="active" onclick="aba('dash')"><span class="ti">ðŸ“Š</span><span>Painel</span></button>
+  <button id="mn-caderno" onclick="aba('caderno')"><span class="ti">ðŸ““</span><span>Projetos</span></button>
+  <button id="mn-calc" onclick="aba('calc')"><span class="ti">ðŸ’°</span><span>PreÃ§o</span></button>
+  <button id="mn-estoque" onclick="aba('estoque')"><span class="ti">ðŸ“¦</span><span>Estoque</span></button>
+  <button id="mn-caixa" onclick="aba('caixa')"><span class="ti">ðŸ’µ</span><span>Caixa</span></button>
+  <button id="mn-config" onclick="aba('config')"><span class="ti">âš™ï¸</span><span>Ajustes</span></button>
 </nav>
 </body>
 </html>
+
