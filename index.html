@@ -276,7 +276,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
   </div>
 </div>
 <header>
-  <div class="ht"><div style="display:flex;align-items:baseline;gap:8px"><h1>👜 Studio Bolsas</h1><span style="font-size:10px;font-weight:600;background:rgba(168,132,60,.35);color:#f5e6c8;border-radius:10px;padding:2px 7px;letter-spacing:.04em">v2.9</span><span id="adm-view" style="display:none;font-size:10px;font-weight:600;background:var(--gold);color:white;border-radius:10px;padding:2px 7px"></span></div><div class="sync"><div class="sd" id="sd"></div><span id="sl">…</span></div></div>
+  <div class="ht"><div style="display:flex;align-items:baseline;gap:8px"><h1>👜 Studio Bolsas</h1><span style="font-size:10px;font-weight:600;background:rgba(168,132,60,.35);color:#f5e6c8;border-radius:10px;padding:2px 7px;letter-spacing:.04em">v2.11</span><span id="adm-view" style="display:none;font-size:10px;font-weight:600;background:var(--gold);color:white;border-radius:10px;padding:2px 7px"></span></div><div class="sync"><div class="sd" id="sd"></div><span id="sl">…</span></div></div>
   <div class="tabs">
     <button class="tab active" onclick="aba('dash')"><span class="ti">📊</span><span class="tl"> Painel</span></button>
     <button class="tab" onclick="aba('caderno')"><span class="ti">📓</span><span class="tl"> Projetos</span></button>
@@ -576,7 +576,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
         </div>
         <div id="cd" style="display:none">
           <div class="fr">
-            <div class="fg"><label>Categoria</label><select id="c-cat"><option>Materiais (fios, aviamentos)</option><option>Cursos e capacitação</option><option>Ferramentas</option><option>Embalagens</option><option>Taxas de plataforma</option><option>Marketing</option><option>Frete</option><option>Outros</option></select></div>
+            <div class="fg"><label>Categoria</label><select id="c-cat"><option>Materiais (fios, aviamentos)</option><option>Frete</option><option>Cursos e capacitação</option><option>Ferramentas</option><option>Embalagens</option><option>Taxas de plataforma</option><option>Marketing</option><option>Impostos</option><option>Pró-labore</option><option>Outros</option></select></div>
             <div class="fg"><label>Pagamento</label><select id="c-pagd"><option>Pix</option><option>Dinheiro</option><option>Cartão de crédito</option><option>Boleto</option></select></div>
           </div>
         </div>
@@ -1719,12 +1719,14 @@ async function salvarEst(){
     if(_etipo==='material'&&document.getElementById('em-lancar')?.checked){
       const vp=parseFloat(document.getElementById('em-valorpago').value)||0;
       const fr=parseFloat(document.getElementById('em-frete').value)||0;
-      const desp=Math.round((vp+fr)*100)/100;
-      if(desp>0){
-        const dIso=item.ultimaCompra||new Date().toISOString().slice(0,10);
-        const tref=await COL.trans.add({tipo:'despesa',valor:desp,dataIso:dIso,data:new Date(dIso+'T12:00:00').toLocaleDateString('pt-BR'),descricao:'Compra de '+item.nome+(item.fornecedor?' — '+item.fornecedor:''),obs:'Lançado pelo estoque'+(fr?' (inclui frete '+fmt(fr)+')':''),categoria:'Materiais (fios, aviamentos)',formaPagamento:'Pix',status:'pago',projetoId:null,projetoNome:null,materialIds:[mid],created_at:firebase.firestore.FieldValue.serverTimestamp()});
+      const vpR=Math.round(vp*100)/100, frR=Math.round(fr*100)/100;
+      const dIso=item.ultimaCompra||new Date().toISOString().slice(0,10);
+      const dt=new Date(dIso+'T12:00:00').toLocaleDateString('pt-BR');
+      if(vpR>0){
+        const tref=await COL.trans.add({tipo:'despesa',valor:vpR,dataIso:dIso,data:dt,descricao:'Compra de '+item.nome+(item.fornecedor?' — '+item.fornecedor:''),obs:'Lançado pelo estoque',categoria:'Materiais (fios, aviamentos)',formaPagamento:'Pix',status:'pago',projetoId:null,projetoNome:null,materialIds:[mid],created_at:firebase.firestore.FieldValue.serverTimestamp()});
         await COL.est.doc(mid).update({transId:tref.id});
       }
+      if(frR>0)await COL.trans.add({tipo:'despesa',valor:frR,dataIso:dIso,data:dt,descricao:'Frete'+(item.fornecedor?' — '+item.fornecedor:''),obs:'Lançado pelo estoque ('+item.nome+')',categoria:'Frete',formaPagamento:'Pix',status:'pago',projetoId:null,projetoNome:null,created_at:firebase.firestore.FieldValue.serverTimestamp()});
     }
     voltarEst();toast('✓ Salvo!');
   }catch(e){toast('❌ Erro: '+e.message);}
@@ -1748,6 +1750,15 @@ async function delEst(id){
   }catch(e){toast('❌ Erro.');}
 }
 async function ajustarQ(id,d){const item=_E.find(x=>x._id===id);if(!item)return;try{await COL.est.doc(id).update({qty:Math.max(0,(item.qty||0)+d)});}catch(e){toast('❌ Erro.');}}
+async function ajustarBalanca(id){
+  const m=_E.find(x=>x._id===id);if(!m)return;
+  const u=m.und||'g';
+  const v=prompt('Pese/meça a SOBRA e informe a quantidade ATUAL de "'+(m.nome||'')+'" (em '+u+'):',m.qty||0);
+  if(v===null)return;
+  const n=parseFloat(String(v).replace(',','.'));
+  if(isNaN(n)||n<0){toast('Valor inválido.');return;}
+  try{await COL.est.doc(id).update({qty:Math.round(n*100)/100});toast('✓ Estoque ajustado para '+(Math.round(n*100)/100)+' '+u);}catch(e){toast('❌ Erro.');}
+}
 function venderProd(id){
   const p=_E.find(x=>x._id===id);if(!p)return;
   aba('caixa');
@@ -1787,6 +1798,7 @@ function renderEst(){
         <div style="display:flex;gap:4px;margin-top:6px;justify-content:flex-end">
           <button style="background:none;border:1px solid var(--bdr);border-radius:5px;width:28px;height:28px;cursor:pointer;font-size:16px" onclick="ajustarQ('${m._id}',-1)">−</button>
           <button style="background:var(--rose-l);border:1px solid #dbb8c8;border-radius:5px;width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--rose)" onclick="ajustarQ('${m._id}',1)">+</button>
+          <button class="bi" style="padding:4px 8px" title="Ajustar pela balança/medida" onclick="ajustarBalanca('${m._id}')">⚖️</button>
           <button class="bi" style="padding:4px 8px" onclick="mostrarFormEst('${m._id}','material')">✏️</button>
           <button class="bi" style="padding:4px 8px" onclick="delEst('${m._id}')">🗑️</button>
         </div>
@@ -1997,9 +2009,9 @@ async function impSalvar(){
   const batch=db.batch();
   let prod=0;
   sel.forEach(i=>{prod+=(parseFloat(i.qtd)||1)*(parseFloat(i.custo)||0);});
-  const desp=Math.round((prod+frete)*100)/100;
-  const lancar=document.getElementById('imp-desp').checked&&desp>0;
-  const tref=lancar?base.collection('transacoes').doc():null;
+  const prodR=Math.round(prod*100)/100, freteR=Math.round(frete*100)/100;
+  const lancar=document.getElementById('imp-desp').checked&&(prodR+freteR)>0;
+  const tref=(lancar&&prodR>0)?base.collection('transacoes').doc():null;
   const matIds=[];
   sel.forEach(i=>{
     const qtd=parseFloat(i.qtd)||1,custo=parseFloat(i.custo)||0;
@@ -2015,7 +2027,8 @@ async function impSalvar(){
     }
   });
   if(lancar){
-    batch.set(tref,{tipo:'despesa',valor:desp,dataIso,data:new Date(dataIso+'T12:00:00').toLocaleDateString('pt-BR'),descricao:'Compra de materiais'+(forn?' — '+forn:''),obs:'Importado de cupom'+(frete?' (inclui frete '+fmt(frete)+')':''),categoria:'Materiais (fios, aviamentos)',formaPagamento:'Pix',status:'pago',projetoId:null,projetoNome:null,materialIds:matIds,created_at:firebase.firestore.FieldValue.serverTimestamp()});
+    if(prodR>0)batch.set(tref,{tipo:'despesa',valor:prodR,dataIso,data:new Date(dataIso+'T12:00:00').toLocaleDateString('pt-BR'),descricao:'Compra de materiais'+(forn?' — '+forn:''),obs:'Importado de cupom',categoria:'Materiais (fios, aviamentos)',formaPagamento:'Pix',status:'pago',projetoId:null,projetoNome:null,materialIds:matIds,created_at:firebase.firestore.FieldValue.serverTimestamp()});
+    if(freteR>0)batch.set(base.collection('transacoes').doc(),{tipo:'despesa',valor:freteR,dataIso,data:new Date(dataIso+'T12:00:00').toLocaleDateString('pt-BR'),descricao:'Frete'+(forn?' — '+forn:''),obs:'Importado de cupom',categoria:'Frete',formaPagamento:'Pix',status:'pago',projetoId:null,projetoNome:null,created_at:firebase.firestore.FieldValue.serverTimestamp()});
   }
   try{await batch.commit();toast('✓ '+sel.length+' item(ns) adicionados ao estoque!');voltarEst();}
   catch(e){toast('❌ Erro: '+e.message);}
