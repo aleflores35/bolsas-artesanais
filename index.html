@@ -276,7 +276,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
   </div>
 </div>
 <header>
-  <div class="ht"><div style="display:flex;align-items:baseline;gap:8px"><h1>👜 Studio Bolsas</h1><span style="font-size:10px;font-weight:600;background:rgba(168,132,60,.35);color:#f5e6c8;border-radius:10px;padding:2px 7px;letter-spacing:.04em">v2.11</span><span id="adm-view" style="display:none;font-size:10px;font-weight:600;background:var(--gold);color:white;border-radius:10px;padding:2px 7px"></span></div><div class="sync"><div class="sd" id="sd"></div><span id="sl">…</span></div></div>
+  <div class="ht"><div style="display:flex;align-items:baseline;gap:8px"><h1>👜 Studio Bolsas</h1><span style="font-size:10px;font-weight:600;background:rgba(168,132,60,.35);color:#f5e6c8;border-radius:10px;padding:2px 7px;letter-spacing:.04em">v2.12</span><span id="adm-view" style="display:none;font-size:10px;font-weight:600;background:var(--gold);color:white;border-radius:10px;padding:2px 7px"></span></div><div class="sync"><div class="sd" id="sd"></div><span id="sl">…</span></div></div>
   <div class="tabs">
     <button class="tab active" onclick="aba('dash')"><span class="ti">📊</span><span class="tl"> Painel</span></button>
     <button class="tab" onclick="aba('caderno')"><span class="ti">📓</span><span class="tl"> Projetos</span></button>
@@ -635,13 +635,15 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
         <div class="cb">
           <div class="fr s"><div class="fg"><label>Nome *</label><input type="text" id="em-n" placeholder="Ex: Fio de malha 5mm azul"></div></div>
           <div class="fr">
-            <div class="fg"><label>Categoria</label><select id="em-cat"><option>Fio de malha</option><option>Fio náutico</option><option>Tela Tegape</option><option>Aviamentos / ferragens</option><option>Forro</option><option>Zíper / fechos</option><option>Etiquetas</option><option>Embalagem</option><option>Outros</option></select></div>
-            <div class="fg"><label>Unidade</label><select id="em-u"><option>g</option><option>m</option><option>cm</option><option>un</option><option>kit</option><option>rolo</option><option>pç</option></select></div>
+            <div class="fg"><label>Categoria</label><select id="em-cat" onchange="toggleCatOutros()"><option>Fio de malha</option><option>Fio náutico</option><option>Tela Tegape</option><option>Aviamentos / ferragens</option><option>Forro</option><option>Zíper / fechos</option><option>Etiquetas</option><option>Embalagem</option><option>Outros</option></select></div>
+            <div class="fg"><label>Unidade</label><select id="em-u" onchange="toggleUnd()"><option>g</option><option>m</option><option>cm</option><option>un</option><option>kit</option><option>rolo</option><option>pç</option></select></div>
           </div>
+          <div class="fr s" id="em-cat-novo-wrap" style="display:none"><div class="fg"><label>Qual é a categoria? (fica salva na lista)</label><input type="text" id="em-cat-novo" placeholder="Ex: Botões decorativos"></div></div>
+          <button type="button" class="ba" style="margin:0 0 12px;width:100%" onclick="chegadaManual()">🧮 Conta de chegada — comprei por unidade, estoco em grama</button>
           <div class="fr t">
-            <div class="fg"><label>Qtd atual</label><input type="number" id="em-q" placeholder="0" min="0" step="0.1"></div>
+            <div class="fg"><label id="lbl-em-q">Qtd atual</label><input type="number" id="em-q" placeholder="0" min="0" step="0.1"></div>
             <div class="fg"><label>Qtd mínima</label><input type="number" id="em-qm" placeholder="0" min="0" step="0.1"></div>
-            <div class="fg"><label>Custo/und (R$)</label><input type="number" id="em-c" placeholder="0,00" min="0" step="0.01"></div>
+            <div class="fg"><label id="lbl-em-c">Custo/und (R$)</label><input type="number" id="em-c" placeholder="0,00" min="0" step="0.01"></div>
           </div>
           <div class="fr">
             <div class="fg"><label>Fornecedor</label><input type="text" id="em-f" placeholder="Tegape, AliExpress…"></div>
@@ -845,6 +847,7 @@ const CFG_PADRAO={
     {nome:'Crescimento',emoji:'🚀',inicio:'2026-12-01',meta_v:40,meta_r:15000,desc:'Marca, ticket alto, recorrência'}
   ],
   modelos:[{nome:'Flora',desc:'Crochê floral'},{nome:'Jolie',desc:'Elegante dia a dia'},{nome:'Mini Bag Lis',desc:'Compacta premium'},{nome:'Duquesa',desc:'Sofisticada noite'},{nome:'Bali',desc:'Macramê boho'}],
+  categorias:['Fio de malha','Fio náutico','Tela Tegape','Aviamentos / ferragens','Forro','Zíper / fechos','Etiquetas','Embalagem'],
   whats:'',gkey:''
 };
 let CFG=JSON.parse(JSON.stringify(CFG_PADRAO));
@@ -857,6 +860,7 @@ async function carregarConfig(){
       if(Array.isArray(d.modelos))CFG.modelos=d.modelos;
       if(typeof d.whats==='string')CFG.whats=d.whats;
       if(typeof d.gkey==='string')CFG.gkey=d.gkey;
+      if(Array.isArray(d.categorias)&&d.categorias.length)CFG.categorias=d.categorias;
     }
   }catch(e){console.warn('config:',e);}
   aplicarConfig();
@@ -1700,13 +1704,18 @@ function mostrarFormEst(id,tipo){
   if(id){const item=_E.find(x=>x._id===id);if(item&&item.tipo==='material'){document.getElementById('em-n').value=item.nome||'';document.getElementById('em-cat').value=item.categoria||'Fio de malha';document.getElementById('em-u').value=item.und||'un';document.getElementById('em-q').value=item.qty||0;document.getElementById('em-qm').value=item.qtyMin||0;document.getElementById('em-c').value=item.custo||0;document.getElementById('em-f').value=item.fornecedor||'';document.getElementById('em-uc').value=item.ultimaCompra||'';document.getElementById('em-link').value=item.linkCompra||'';document.getElementById('em-obs').value=item.obs||'';}if(item&&item.tipo==='produto'){document.getElementById('ep-n').value=item.nome||'';document.getElementById('ep-col').value=item.colecao||'';document.getElementById('ep-s').value=item.status||'disponivel';document.getElementById('ep-c').value=item.custo||0;document.getElementById('ep-p').value=item.preco||0;document.getElementById('ep-q').value=item.qty||1;document.getElementById('ep-plat').value=item.plataforma||'WhatsApp / Direto';document.getElementById('ep-proj').value=item.projetoId||'';const isData=(item.foto||'').startsWith('data:');_fotos.ep=isData?item.foto:'';document.getElementById('ep-ft').value=isData?'':(item.foto||'');document.getElementById('ep-o').value=item.obs||'';const epl=document.getElementById('ep-loja');if(epl)epl.checked=!!item.naLoja;}}
   if(!id){const epl=document.getElementById('ep-loja');if(epl)epl.checked=false;_fotos.ep='';}
   atualizarFotoPrev('ep');
+  {const _cn=document.getElementById('em-cat-novo');if(_cn)_cn.value='';}
+  renderCategorias();toggleUnd();
   svEst('form');
 }
 async function salvarEst(){
   let item={};
   if(_etipo==='material'){
     const nome=document.getElementById('em-n').value.trim();if(!nome){alert('Informe o nome.');return;}
-    item={tipo:'material',nome,categoria:document.getElementById('em-cat').value,und:document.getElementById('em-u').value,qty:parseFloat(document.getElementById('em-q').value)||0,qtyMin:parseFloat(document.getElementById('em-qm').value)||0,custo:parseFloat(document.getElementById('em-c').value)||0,fornecedor:document.getElementById('em-f').value,ultimaCompra:document.getElementById('em-uc').value,linkCompra:document.getElementById('em-link').value,obs:document.getElementById('em-obs').value,created_at:_editEst?(_E.find(x=>x._id===_editEst)?.created_at||firebase.firestore.FieldValue.serverTimestamp()):firebase.firestore.FieldValue.serverTimestamp()};
+    let _cat=document.getElementById('em-cat').value;
+    const _catNovo=(document.getElementById('em-cat-novo')?.value||'').trim();
+    if(_cat==='Outros'&&_catNovo){_cat=_catNovo;if(!Array.isArray(CFG.categorias)||!CFG.categorias.length)CFG.categorias=CFG_PADRAO.categorias.slice();if(!CFG.categorias.some(c=>(c||'').toLowerCase()===_catNovo.toLowerCase())){CFG.categorias.push(_catNovo);_salvarCategorias();}}
+    item={tipo:'material',nome,categoria:_cat,und:document.getElementById('em-u').value,qty:parseFloat(document.getElementById('em-q').value)||0,qtyMin:parseFloat(document.getElementById('em-qm').value)||0,custo:parseFloat(document.getElementById('em-c').value)||0,fornecedor:document.getElementById('em-f').value,ultimaCompra:document.getElementById('em-uc').value,linkCompra:document.getElementById('em-link').value,obs:document.getElementById('em-obs').value,created_at:_editEst?(_E.find(x=>x._id===_editEst)?.created_at||firebase.firestore.FieldValue.serverTimestamp()):firebase.firestore.FieldValue.serverTimestamp()};
   }else{
     const nome=document.getElementById('ep-n').value.trim();if(!nome){alert('Informe o nome.');return;}
     const selP=document.getElementById('ep-proj');
@@ -1735,6 +1744,89 @@ function emToggleLancar(){
   const lc=document.getElementById('em-lancar');if(!lc)return;
   const row=document.getElementById('em-lancar-row');if(row)row.style.display=lc.checked?'':'none';
   if(lc.checked){const vp=document.getElementById('em-valorpago');if(vp&&!vp.value){const q=parseFloat(document.getElementById('em-q').value)||0,c=parseFloat(document.getElementById('em-c').value)||0;if(q*c>0)vp.value=Math.round(q*c*100)/100;}}
+}
+// ══ CATEGORIAS DINÂMICAS (Outros vira item da lista) ══
+function renderCategorias(){
+  const sel=document.getElementById('em-cat');if(!sel)return;
+  const cur=sel.value;
+  const base=(Array.isArray(CFG.categorias)&&CFG.categorias.length)?CFG.categorias:CFG_PADRAO.categorias;
+  sel.innerHTML=base.map(c=>`<option>${esc(c)}</option>`).join('')+'<option>Outros</option>';
+  if(cur&&[...sel.options].some(o=>o.value===cur))sel.value=cur;
+  toggleCatOutros();
+}
+function toggleCatOutros(){
+  const sel=document.getElementById('em-cat'),wrap=document.getElementById('em-cat-novo-wrap');
+  if(wrap)wrap.style.display=(sel&&sel.value==='Outros')?'block':'none';
+}
+function _salvarCategorias(){try{if(typeof COL!=='undefined'&&COL&&COL.cfg)COL.cfg.set({categorias:CFG.categorias},{merge:true});}catch(e){}}
+// ══ UNIDADE EM GRAMA: rótulos dinâmicos + conta de chegada ══
+function toggleUnd(){
+  const u=document.getElementById('em-u')?.value,g=u==='g';
+  const lq=document.getElementById('lbl-em-q'),lc=document.getElementById('lbl-em-c');
+  if(lq)lq.textContent=g?'Qtd atual (g)':'Qtd atual';
+  if(lc)lc.textContent=g?'Custo por grama (R$)':'Custo/und (R$)';
+}
+function abrirChegada(opts){
+  opts=opts||{};
+  const ov=document.createElement('div');
+  ov.style.cssText='position:fixed;inset:0;background:rgba(30,21,16,.85);z-index:9600;display:flex;align-items:center;justify-content:center;padding:16px';
+  ov.innerHTML=`<div style="background:#FFFDF9;border-radius:16px;padding:18px;max-width:420px;width:100%;max-height:92vh;overflow:auto">
+    <div style="font-size:15px;font-weight:700;color:var(--rose);margin-bottom:4px">🧮 Conta de chegada</div>
+    <p style="font-size:12px;color:#999;margin-bottom:12px">Comprei por unidade, mas estoco e gasto em grama. Preencha que o app calcula o estoque em gramas e o custo por grama.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div><label style="${CL}">Unidades compradas</label><input type="number" id="ch-un" value="${opts.unidades||1}" min="0" step="1" style="${CI}"></div>
+      <div><label style="${CL}">Gramas por unidade</label><input type="number" id="ch-g" value="${opts.gramas||''}" placeholder="500" min="0" step="1" style="${CI}"></div>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0">
+      <button type="button" class="bsr" onclick="document.getElementById('ch-g').value=1000;chCalc()">1 kg</button>
+      <button type="button" class="bsr" onclick="document.getElementById('ch-g').value=500;chCalc()">500 g</button>
+      <button type="button" class="bsr" onclick="document.getElementById('ch-g').value=250;chCalc()">250 g</button>
+      <button type="button" class="bsr" onclick="document.getElementById('ch-g').value=200;chCalc()">200 g</button>
+    </div>
+    <div><label style="${CL}">Valor total pago (R$)</label><input type="number" id="ch-v" value="${opts.valor||''}" placeholder="0,00" min="0" step="0.01" style="${CI}"></div>
+    <div id="ch-res" style="background:#FBF5E6;border:1px solid #E5D3A8;border-radius:10px;padding:10px;margin:12px 0;font-size:13px;color:#7A5E28"></div>
+    <div style="display:flex;gap:8px">
+      <button class="bsv" style="margin:0;flex:1" id="ch-ok">✓ Usar este cálculo</button>
+      <button class="bg" id="ch-cancel" style="flex:1">Cancelar</button>
+    </div>
+  </div>`;
+  document.body.appendChild(ov);
+  window.chCalc=function(){
+    const un=parseFloat(document.getElementById('ch-un').value)||0;
+    const gr=parseFloat(document.getElementById('ch-g').value)||0;
+    const v=parseFloat(document.getElementById('ch-v').value)||0;
+    const totalG=un*gr,custoG=totalG>0?v/totalG:0;
+    window._chRes={totalG,custoG};
+    document.getElementById('ch-res').innerHTML=totalG>0?`Estoque: <b>${totalG.toLocaleString('pt-BR')} g</b> &nbsp;·&nbsp; Custo: <b>${fmt(custoG)}/g</b>${custoG>0?` &nbsp;<span style="color:#999">(${fmt(custoG*1000)}/kg)</span>`:''}`:'Preencha unidades, gramas e o valor pago.';
+  };
+  ['ch-un','ch-g','ch-v'].forEach(id=>{const e=document.getElementById(id);if(e)e.addEventListener('input',window.chCalc);});
+  window.chCalc();
+  ov.querySelector('#ch-cancel').onclick=()=>ov.remove();
+  ov.addEventListener('click',e=>{if(e.target===ov)ov.remove();});
+  ov.querySelector('#ch-ok').onclick=()=>{
+    const r=window._chRes||{totalG:0};
+    if(!(r.totalG>0)){toast('Preencha unidades, gramas e valor para calcular.');return;}
+    if(typeof opts.aplicar==='function')opts.aplicar(r);
+    ov.remove();
+  };
+}
+function chegadaManual(){
+  abrirChegada({unidades:1,aplicar:r=>{
+    document.getElementById('em-u').value='g';
+    document.getElementById('em-q').value=Math.round(r.totalG*100)/100;
+    document.getElementById('em-c').value=Math.round(r.custoG*10000)/10000;
+    toggleUnd();
+    toast('✓ Estoque em grama e custo por grama preenchidos!');
+  }});
+}
+function chegadaImp(ix){
+  const it=_impItens[ix];if(!it)return;
+  const un=parseFloat(it.qtd)||1,cu=parseFloat(it.custo)||0;
+  abrirChegada({unidades:un,valor:(un*cu)||'',aplicar:r=>{
+    it.und='g';it.qtd=Math.round(r.totalG*100)/100;it.custo=Math.round(r.custoG*10000)/10000;
+    renderImpItens();
+    toast('✓ Item convertido para grama!');
+  }});
 }
 async function delEst(id){
   const item=_E.find(x=>x._id===id);
@@ -1987,7 +2079,7 @@ function renderImpItens(){
       <input type="number" value="${it.qtd}" min="0" step="0.1" oninput="_impItens[${ix}].qtd=this.value;impTotal()">
       <input type="text" value="${esc(it.und)}" oninput="_impItens[${ix}].und=this.value">
       <input type="number" value="${it.custo}" min="0" step="0.01" oninput="_impItens[${ix}].custo=this.value;impTotal()">
-      <button class="bds" onclick="_impItens.splice(${ix},1);renderImpItens()">✕</button>
+      <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end"><button class="bds" onclick="_impItens.splice(${ix},1);renderImpItens()">✕</button><button type="button" class="bsr" style="font-size:10px;padding:2px 6px;white-space:nowrap" onclick="chegadaImp(${ix})">🧮 un→g</button></div>
     </div>`;
   }).join('');
   if(document.getElementById('imp-tot'))impTotal();
@@ -2544,7 +2636,7 @@ async function salvarConfig(){
   CFG.fases=CFG.fases.filter(f=>(f.nome||'').trim()).sort((a,b)=>(a.inicio||'')<(b.inicio||'')?-1:1);
   CFG.modelos=CFG.modelos.filter(m=>(m.nome||'').trim());
   try{
-    await COL.cfg.set({taxas:CFG.taxas,fases:CFG.fases,modelos:CFG.modelos,whats:(CFG.whats||'').trim(),gkey:(CFG.gkey||'').trim(),updated_at:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
+    await COL.cfg.set({taxas:CFG.taxas,fases:CFG.fases,modelos:CFG.modelos,categorias:CFG.categorias,whats:(CFG.whats||'').trim(),gkey:(CFG.gkey||'').trim(),updated_at:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
     aplicarConfig();renderFase();renderPlano();renderDash();renderDRE();renderExtrato();
     try{_vitCache={};await initVitrineCache();sincronizarVitrine();}catch(e){}
     toast('✓ Configurações salvas!');
