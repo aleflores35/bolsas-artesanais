@@ -1620,24 +1620,29 @@ async function salvarProj(){
 }
 function verProj(id){
   const p=_P.find(x=>(x.id||x._id)===id);if(!p)return;
+  const amo=!!p.amostra;
   const pv=_H.filter(h=>h.projetoId===id);
-  document.getElementById('det-ctr').innerHTML=`<div style="padding-top:.5rem">
-    <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px">
-      <button class="bbk" onclick="sv('lista')">‹</button>
+  const botoes=amo
+    ?`<button class="bbk" onclick="sv('lista')">‹</button>
+      <button class="bg" onclick="mostrarForm('${id}')">✏️ Editar</button>
+      <button class="bg" style="background:linear-gradient(135deg,var(--green),#1d4a30)" onclick="abrirAtelie('${id}')">▶ Trabalhar</button>
+      <button class="bgn" onclick="criarProjetoDeAmostra('${id}')">🧶 Criar projeto a partir desta amostra</button>`
+    :`<button class="bbk" onclick="sv('lista')">‹</button>
       <button class="bg" onclick="mostrarForm('${id}')">✏️ Editar</button>
       <button class="bgn" onclick="calcProj('${id}','${(p.nome||'').replace(/'/g,"\\'")}')">💰 Calcular</button>
       <button class="bg" onclick="produzirPeca('${id}')">🧵 Produzir</button>
       <button class="bgr" onclick="conferirMateriais('${id}')">🛒 Conferir</button>
-      <button class="bg" style="background:linear-gradient(135deg,var(--green),#1d4a30)" onclick="abrirAtelie('${id}')">▶ Trabalhar</button>
-    </div>
+      <button class="bg" style="background:linear-gradient(135deg,var(--green),#1d4a30)" onclick="abrirAtelie('${id}')">▶ Trabalhar</button>`;
+  document.getElementById('det-ctr').innerHTML=`<div style="padding-top:.5rem">
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap">${botoes}</div>
     <h2 style="font-size:20px;font-weight:700;margin-bottom:6px">${esc(p.nome)}</h2>
     <div style="font-size:13px;color:#888;margin-bottom:8px">${esc(p.tipo||'')} ${p.data?'· '+p.data:''} ${p.tecnica?'· '+esc(p.tecnica):''} ${p.colecao?'· 🎨 '+esc(p.colecao):''}</div>
-    <span class="tag ts-${p.status||'rascunho'}">${sLabel(p.status)}</span>
+    ${amo?decisaoSelo(p.decisao):`<span class="tag ts-${p.status||'rascunho'}">${sLabel(p.status)}</span>`}
     ${p.descricao?`<div class="ov" style="background:var(--rose-l);border-color:var(--rose);margin-top:12px">${esc(p.descricao)}</div>`:''}
-    ${pv.length?`<div class="st">💰 Preços calculados</div>${pv.map(h=>`<div class="pv2"><div><div class="pvn">${esc(h.nome)}</div><div class="pvm">${h.data||''} · custo ${esc(h.custo)} · lucro ${esc(h.lucro)}</div></div><div class="pvp">${esc(h.preco)}</div></div>`).join('')}`:''}
+    ${(!amo&&pv.length)?`<div class="st">💰 Preços calculados</div>${pv.map(h=>`<div class="pv2"><div><div class="pvn">${esc(h.nome)}</div><div class="pvm">${h.data||''} · custo ${esc(h.custo)} · lucro ${esc(h.lucro)}</div></div><div class="pvp">${esc(h.preco)}</div></div>`).join('')}`:''}
     ${p.materiais?.length?`<div class="st">🧵 Materiais${p.custoMateriais?` <span style="float:right;font-size:12px;color:var(--rose);font-weight:600">custo: ${fmt(p.custoMateriais)}</span>`:''}
 </div><div class="mv">${p.materiais.map(m=>{const tot=(parseFloat(m.qtd)||0)*(parseFloat(m.custoUnit)||0);return`<div class="mvr"><span><strong>${esc(m.nome)}</strong>${m.und?' ('+esc(m.und)+')':''}</span><span style="color:#888;font-size:12px">${m.qtd?m.qtd+(m.und?' '+esc(m.und):''):''}${m.custoUnit?' · R$/'+esc(m.und)+': '+fmt(m.custoUnit):''}${tot>0?' = <strong style="color:var(--rose)">'+fmt(tot)+'</strong>':''}</span></div>`;}).join('')}</div>`:''}
-    ${p.secoes?.length?`<div class="st">🪡 Receita</div>${p.secoes.map(s=>`<div class="psv"><h4>${esc(s.titulo)}</h4>${s.passos.filter(x=>x).map((pa,pi)=>`<div class="pav"><div class="pan">${pi+1}</div><div>${esc(pa)}</div></div>`).join('')}</div>`).join('')}`:''}
+    ${p.secoes?.length?`<div class="st">${amo?'🪡 Sequência do ponto':'🪡 Receita'}</div>${p.secoes.map(s=>`<div class="psv"><h4>${esc(s.titulo)}</h4>${s.passos.filter(x=>x).map((pa,pi)=>`<div class="pav"><div class="pan">${pi+1}</div><div>${esc(pa)}</div></div>`).join('')}</div>`).join('')}`:''}
     ${p.links?.length?`<div class="st">🔗 Fornecedores</div><div class="mv">${p.links.map(l=>`<div class="mvr"><span><strong>${esc(l.nome||'Link')}</strong></span><span>${l.url?`<a href="${esc(l.url.startsWith('http')||l.url.startsWith('wa.me')?l.url:'https://'+l.url)}" target="_blank" style="color:var(--rose);font-weight:600;font-size:13px">abrir ↗</a>`:''}</span></div>`).join('')}</div>`:''}
     ${p.fotos?.length?`<div class="st">📸 Fotos</div><div class="fg2">${p.fotos.map(f=>`<div class="fc">${f.url?`<img src="${esc(f.url)}" onerror="this.style.display='none'">`:`<div class="fp">👜</div>`}${f.desc?`<div class="fl">${esc(f.desc)}</div>`:''}</div>`).join('')}</div>`:''}
     ${p.obs?`<div class="st">💡 Observações</div><div class="ov">${esc(p.obs)}</div>`:''}
@@ -1645,6 +1650,20 @@ function verProj(id){
     <div style="height:2rem"></div>
   </div>`;
   sv('det');
+}
+// Cria um projeto (peça) a partir de uma amostra: leva a sequência + materiais pro caderno
+// pra ela ajustar a quantidade e usar a calculadora existente.
+function criarProjetoDeAmostra(id){
+  const a=_P.find(x=>(x.id||x._id)===id);if(!a||!a.amostra)return;
+  mostrarForm(null,false);                 // abre form de PEÇA novo (zera _mf/_sf/_ff)
+  _mf=(a.materiais?JSON.parse(JSON.stringify(a.materiais)):[]).map(m=>({nome:m.nome||'',qtd:parseFloat(m.qtd)||0,und:m.und||'un',custoUnit:parseFloat(m.custoUnit)||0,estoqueId:m.estoqueId||null,obs:m.obs||''}));
+  _sf=a.secoes?JSON.parse(JSON.stringify(a.secoes)):[];
+  if(!_mf.length)_mf=[{nome:'',qtd:0,und:'un',custoUnit:0,obs:''}];
+  if(!_sf.length)_sf=[{titulo:'Nova seção',passos:['']}];
+  document.getElementById('f-n').value=(a.tipo||'Peça')+' — '+(a.nome||'ponto');
+  document.getElementById('f-tc').value=a.tecnica||'';
+  renderMF();renderSF();
+  toast('Ajuste a quantidade pro tamanho real e toque em Calcular 💰');
 }
 function calcProj(id,nome){document.getElementById('nm-pc').value=nome;document.getElementById('vp').value=id;aba('calc');toast('💰 Calculadora pronta!');}
 async function delProj(id){const p=_P.find(x=>(x.id||x._id)===id);if(!p||!confirm(`Excluir "${p.nome}"?`))return;try{await COL.proj.doc(id).delete();}catch(e){toast('❌ Erro.');}}
