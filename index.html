@@ -485,16 +485,17 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
     <div class="ctr">
       <div class="fh"><button class="bbk" onclick="voltarLista()">‹</button><h2 id="form-tit">Novo projeto</h2></div>
       <div class="card"><div class="ch"><h2>📌 Informações</h2></div><div class="cb">
-        <div class="fr s"><div class="fg"><label>Nome *</label><input type="text" id="f-n" placeholder="Ex: Bolsa Flora"></div></div>
+        <div class="fr s"><div class="fg"><label id="lbl-nome">Nome *</label><input type="text" id="f-n" placeholder="Ex: Bolsa Flora"></div></div>
         <div class="fr">
-          <div class="fg"><label>Tipo</label><select id="f-t"><option>Clutch</option><option>Tote</option><option>Shoulder bag</option><option>Mini bag</option><option>Crossbody</option><option>Mochila</option><option>Outro</option></select></div>
-          <div class="fg"><label>Status</label><select id="f-s"><option value="rascunho">Rascunho</option><option value="em-andamento">Em andamento</option><option value="concluido">Concluído</option></select></div>
+          <div class="fg"><label id="lbl-tipo">Tipo</label><select id="f-t"><option>Clutch</option><option>Tote</option><option>Shoulder bag</option><option>Mini bag</option><option>Crossbody</option><option>Mochila</option><option>Outro</option></select></div>
+          <div class="fg" id="fg-status"><label>Status</label><select id="f-s"><option value="rascunho">Rascunho</option><option value="em-andamento">Em andamento</option><option value="concluido">Concluído</option></select></div>
+          <div class="fg" id="fg-decisao" style="display:none"><label>Decisão</label><select id="f-decisao"><option value="testando">🧪 Testando</option><option value="aprovado">👍 Aprovado (vou usar)</option><option value="descartado">👎 Descartado</option></select></div>
         </div>
         <div class="fr">
           <div class="fg"><label>Data</label><input type="date" id="f-d"></div>
           <div class="fg"><label>Técnica</label><input type="text" id="f-tc" placeholder="Crochê, macramê…"></div>
         </div>
-        <div class="fr s"><div class="fg"><label>Coleção</label><input type="text" id="f-col" placeholder="Flora, Verão, Nordeste…"></div></div>
+        <div class="fr s" id="fr-colecao"><div class="fg"><label>Coleção</label><input type="text" id="f-col" placeholder="Flora, Verão, Nordeste…"></div></div>
         <div class="fr s"><div class="fg"><label>Descrição</label><textarea id="f-desc" rows="2" placeholder="Inspiração, cliente alvo…"></textarea></div></div>
       </div></div>
       <div class="card"><div class="ch"><h2>🧵 Materiais</h2><span id="proj-mat-total" style="font-size:13px;font-weight:600;color:var(--rose)">R$ 0,00</span></div><div class="cb">
@@ -510,7 +511,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
           <p style="font-size:12px;color:#aaa;margin-bottom:8px">Onde comprar os materiais desta peça (loja, link do produto, WhatsApp do fornecedor…).</p>
           <div id="links-f"></div>
         </div></div>
-      <div class="card"><div class="ch" style="display:flex;justify-content:space-between;align-items:center"><h2>🪡 Receita de pontos</h2><button class="ba" onclick="addSec()" style="margin:0;padding:5px 12px;font-size:12px">+ Seção</button></div>
+      <div class="card"><div class="ch" style="display:flex;justify-content:space-between;align-items:center"><h2 id="tit-receita">🪡 Receita de pontos</h2><button class="ba" onclick="addSec()" style="margin:0;padding:5px 12px;font-size:12px">+ Seção</button></div>
         <div class="cb" id="receita-f"></div></div>
       <div class="card"><div class="ch"><h2>📸 Fotos</h2></div><div class="cb">
         <p style="font-size:12px;color:#aaa;margin-bottom:10px">Cole URLs (Google Drive, Pinterest…)</p>
@@ -521,7 +522,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
       </div></div>
       <div class="card"><div class="ch"><h2>💡 Observações</h2></div><div class="cb">
         <div class="fg"><label>Notas</label><textarea id="f-obs" rows="4" placeholder="Dicas, gancho, tensão…"></textarea></div>
-        <div class="fg" style="margin-top:10px"><label>Tempo total</label><input type="text" id="f-tmp" placeholder="Ex: 8h (2h/dia em 4 dias)"></div>
+        <div class="fg" id="fg-tempo" style="margin-top:10px"><label>Tempo total</label><input type="text" id="f-tmp" placeholder="Ex: 8h (2h/dia em 4 dias)"></div>
       </div></div>
       <button class="bsv" onclick="salvarProj()">Salvar projeto</button>
       <div style="height:2rem"></div>
@@ -1537,13 +1538,22 @@ function renderLista(){
     </div>`;
   }).join('');
 }
-function mostrarForm(id){
+function mostrarForm(id,isAmostra){
   _eid=id;_mf=[];_sf=[];_ff=[];_lf=[];
-  document.getElementById('form-tit').textContent=id?'Editar projeto':'Novo projeto';
+  const amo = id ? !!(_P.find(x=>(x.id||x._id)===id)?.amostra) : (isAmostra!==undefined?isAmostra:(_projFiltro==='amostras'));
+  _formAmostra=amo;
+  document.getElementById('form-tit').textContent=id?(amo?'Editar amostra':'Editar projeto'):(amo?'Nova amostra de ponto':'Novo projeto');
+  document.getElementById('lbl-nome').textContent=amo?'Nome do ponto *':'Nome *';
+  document.getElementById('lbl-tipo').textContent=amo?'Onde cabe (bolsa, blusão…)':'Tipo';
+  document.getElementById('fg-status').style.display=amo?'none':'';
+  document.getElementById('fg-decisao').style.display=amo?'':'none';
+  document.getElementById('fr-colecao').style.display=amo?'none':'';
+  document.getElementById('fg-tempo').style.display=amo?'none':'';
+  document.getElementById('tit-receita').textContent=amo?'🪡 Sequência do ponto':'🪡 Receita de pontos';
   if(id){const p=_P.find(x=>(x.id||x._id)===id);if(p){
-    document.getElementById('f-n').value=p.nome||'';document.getElementById('f-t').value=p.tipo||'Clutch';document.getElementById('f-s').value=p.status||'rascunho';document.getElementById('f-d').value=p.dataIso||'';document.getElementById('f-tc').value=p.tecnica||'';document.getElementById('f-col').value=p.colecao||'';document.getElementById('f-desc').value=p.descricao||'';document.getElementById('f-obs').value=p.obs||'';document.getElementById('f-tmp').value=p.tempo||'';
+    document.getElementById('f-n').value=p.nome||'';document.getElementById('f-t').value=p.tipo||'Clutch';document.getElementById('f-s').value=p.status||'rascunho';document.getElementById('f-decisao').value=p.decisao||'testando';document.getElementById('f-d').value=p.dataIso||'';document.getElementById('f-tc').value=p.tecnica||'';document.getElementById('f-col').value=p.colecao||'';document.getElementById('f-desc').value=p.descricao||'';document.getElementById('f-obs').value=p.obs||'';document.getElementById('f-tmp').value=p.tempo||'';
     _mf=(p.materiais?JSON.parse(JSON.stringify(p.materiais)):[]).map(m=>({nome:m.nome||'',qtd:parseFloat(m.qtd)||0,und:m.und||'un',custoUnit:parseFloat(m.custoUnit)||0,estoqueId:m.estoqueId||null,obs:m.obs||''}));_sf=p.secoes?JSON.parse(JSON.stringify(p.secoes)):[];_ff=p.fotos?JSON.parse(JSON.stringify(p.fotos)):[];_lf=p.links?JSON.parse(JSON.stringify(p.links)):[];
-  }}else{['f-n','f-tc','f-desc','f-obs','f-tmp','f-col'].forEach(i=>document.getElementById(i).value='');document.getElementById('f-t').value='Clutch';document.getElementById('f-s').value='rascunho';document.getElementById('f-d').value=new Date().toISOString().split('T')[0];addMatF();addMatF();addSec();addFot();}
+  }}else{['f-n','f-tc','f-desc','f-obs','f-tmp','f-col'].forEach(i=>document.getElementById(i).value='');document.getElementById('f-t').value='Clutch';document.getElementById('f-s').value='rascunho';document.getElementById('f-decisao').value='testando';document.getElementById('f-d').value=new Date().toISOString().split('T')[0];addMatF();addSec();addFot();if(!amo)addMatF();}
   renderMF();renderSF();renderFF();renderLF();sv('form');
 }
 function renderMF(){
@@ -1605,7 +1615,8 @@ async function salvarProj(){
   const _tmpProj={materiais:matsValidos,secoes:_sf,fotos:_ff};
   if(JSON.stringify(_tmpProj).length>880000){alert('Este projeto está com fotos demais (limite ~900KB por projeto). Remova alguma foto e salve de novo.');return;}
   const proj={id,nome,tipo:document.getElementById('f-t').value,status:document.getElementById('f-s').value,dataIso:dIso,data:dIso?new Date(dIso+'T12:00:00').toLocaleDateString('pt-BR'):'',tecnica:document.getElementById('f-tc').value,colecao:document.getElementById('f-col').value,descricao:document.getElementById('f-desc').value,obs:document.getElementById('f-obs').value,tempo:document.getElementById('f-tmp').value,materiais:matsValidos,custoMateriais,secoes:_sf.filter(s=>s.titulo||s.passos.some(p=>p)),fotos:_ff.filter(f=>f.url||f.desc),links:_lf.filter(l=>(l.nome||'').trim()||(l.url||'').trim()),...(_trab?{trabalho:_trab}:{}),created_at:_eid?(_P.find(x=>(x.id||x._id)===_eid)?.created_at||firebase.firestore.FieldValue.serverTimestamp()):firebase.firestore.FieldValue.serverTimestamp(),updated_at:firebase.firestore.FieldValue.serverTimestamp()};
-  try{await COL.proj.doc(id).set(proj);_eid=null;voltarLista();toast('✓ Projeto salvo!');}catch(e){toast('❌ Erro: '+e.message);}
+  if(_formAmostra){proj.amostra=true;proj.decisao=document.getElementById('f-decisao').value||'testando';}
+  try{await COL.proj.doc(id).set(proj);_eid=null;voltarLista();toast(_formAmostra?'✓ Amostra salva!':'✓ Projeto salvo!');}catch(e){toast('❌ Erro: '+e.message);}
 }
 function verProj(id){
   const p=_P.find(x=>(x.id||x._id)===id);if(!p)return;
