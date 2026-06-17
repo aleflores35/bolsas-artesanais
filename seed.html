@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🌱 Seed de teste · Studio Bolsas</title>
+<style>
+  :root{--rose:#b06a7a;--gold:#a8843c;--green:#2f8f5b;--red:#c0392b;--ink:#1e1510}
+  *{box-sizing:border-box}
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#FBF5E6;color:var(--ink);margin:0;padding:24px;line-height:1.5}
+  .wrap{max-width:680px;margin:0 auto}
+  h1{font-size:20px;margin:0 0 4px}
+  .sub{color:#8a7a66;font-size:13px;margin:0 0 20px}
+  .card{background:#FFFDF9;border:1px solid #E5D3A8;border-radius:14px;padding:18px;margin-bottom:16px}
+  button{font:inherit;font-weight:600;border-radius:10px;padding:10px 16px;border:1px solid transparent;cursor:pointer}
+  .b-google{background:#fff;border:1px solid #ddd;color:#333}
+  .b-seed{background:var(--green);color:#fff}
+  .b-clean{background:#fff;border:1px solid var(--red);color:var(--red)}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  input{font:inherit;padding:9px 11px;border:1px solid #ddd;border-radius:8px}
+  .who{font-size:13px;color:#555;margin:8px 0}
+  .who b{color:var(--rose)}
+  #log{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;background:#1e1510;color:#e8dcc8;border-radius:10px;padding:14px;max-height:340px;overflow:auto;white-space:pre-wrap;margin-top:12px}
+  .warn{background:#FBE9E7;border:1px solid #f0b8ae;color:#922;border-radius:10px;padding:10px;font-size:12px;margin-bottom:14px}
+  code{background:#eee;padding:1px 5px;border-radius:4px;font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🌱 Seed de teste — Studio Bolsas</h1>
+  <p class="sub">Popula o <b>seu</b> cadastro (logado) com dados de estoque variados pra caçar furos. Cada item criado leva o campo <code>_seed:true</code>, então o botão "Limpar seed" remove só o que foi semeado — nunca dado real.</p>
+
+  <div class="warn">⚠️ Grava no banco de produção <b>bolsas-lisandra</b>, na conta com que você logar. Entre com <b>alessandro.flores16@gmail.com</b> (Google) para semear o seu próprio cadastro. Abra esta página por <code>http://localhost</code> ou pelo domínio Vercel (o login Google não funciona em <code>file://</code>).</div>
+
+  <div class="card">
+    <div class="row">
+      <button class="b-google" id="btn-google">🔓 Entrar com Google</button>
+      <span style="color:#bbb">ou</span>
+      <input id="em" type="email" placeholder="e-mail" style="flex:1;min-width:140px">
+      <input id="pw" type="password" placeholder="senha" style="width:130px">
+      <button class="b-google" id="btn-mail">Entrar</button>
+      <button class="b-google" id="btn-out" disabled>Sair</button>
+    </div>
+    <div class="who" id="who">Não logado.</div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <button class="b-seed" id="btn-seed" disabled>🌱 Popular seed (estoque)</button>
+      <button class="b-clean" id="btn-clean" disabled>🧹 Limpar seed (_seed)</button>
+      <span id="count" style="font-size:13px;color:#777"></span>
+    </div>
+    <div id="log">Aguardando login…</div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+firebase.initializeApp({apiKey:"AIzaSyDPVjyPmwBCtnJJlXyekrW6c4hwkPxQI5g",authDomain:"bolsas-lisandra.firebaseapp.com",projectId:"bolsas-lisandra",storageBucket:"bolsas-lisandra.firebasestorage.app",messagingSenderId:"745351180534",appId:"1:745351180534:web:7c0217504fe87f7153bcd7"});
+const auth=firebase.auth(), db=firebase.firestore();
+const TS=()=>firebase.firestore.FieldValue.serverTimestamp();
+const $=id=>document.getElementById(id);
+const log=(m,c)=>{const el=$('log');if(el.innerHTML.startsWith('Aguardando')){el.innerHTML=(c?`<span style="color:${c}">${m}</span>`:m);}else{el.innerHTML+='\n'+(c?`<span style="color:${c}">${m}</span>`:m);}el.scrollTop=el.scrollHeight;};
+
+// ── dados de seed: estoque variado pra exercitar os casos do app ──
+const MATERIAIS=[
+  // normal, unidade
+  {nome:'Fio de malha cru (novelo)',categoria:'Fio de malha',und:'un',qty:8,qtyMin:3,custo:18.90,fornecedor:'Maria Fios',ultimaCompra:'2026-05-20',obs:'cor cru'},
+  // CONTA DE CHEGADA: comprado por rolo, estocado em grama. 4 rolos x 600g = 2400g, R$408 -> 0,17/g
+  {nome:'Fio náutico Poli 3mm — preto',categoria:'Fio náutico',und:'g',qty:2400,qtyMin:500,custo:0.17,fornecedor:'Náutica RS',ultimaCompra:'2026-05-12',obs:'4 rolos de 600g · conta de chegada'},
+  // chegada + ESTOQUE BAIXO (qty<=qtyMin dispara alerta)
+  {nome:'Fio náutico Perla 4mm — off white',categoria:'Fio náutico',und:'g',qty:300,qtyMin:500,custo:0.26,fornecedor:'Náutica RS',ultimaCompra:'2026-04-30',obs:'acabando · custo por grama'},
+  // ZERO (vermelho no dash)
+  {nome:'Argolas de madeira 8cm',categoria:'Aviamentos / ferragens',und:'un',qty:0,qtyMin:10,custo:3.50,fornecedor:'Casa do Artesão',ultimaCompra:'2026-03-15',obs:'esgotado'},
+  // unidade metro
+  {nome:'Forro de algodão estampado',categoria:'Forro',und:'m',qty:5,qtyMin:2,custo:12.00,fornecedor:'Tecidos Lopes',ultimaCompra:'2026-05-02',obs:''},
+  {nome:'Zíper nº5 20cm',categoria:'Zíper / fechos',und:'un',qty:25,qtyMin:10,custo:2.50,fornecedor:'Aviamentos Sul',ultimaCompra:'2026-05-18',obs:''},
+  {nome:'Etiqueta de marca (tag)',categoria:'Etiquetas',und:'un',qty:100,qtyMin:50,custo:0.40,fornecedor:'Gráfica Rápida',ultimaCompra:'2026-02-10',obs:'logo Studio Bolsas'},
+  {nome:'Caixa de presente kraft',categoria:'Embalagem',und:'un',qty:12,qtyMin:5,custo:4.80,fornecedor:'Embala Tudo',ultimaCompra:'2026-05-22',obs:''},
+  // CATEGORIA FORA DO PADRÃO (testa "Outros"/categoria custom na lista e filtros)
+  {nome:'Botões decorativos perolados',categoria:'Botões decorativos',und:'un',qty:40,qtyMin:20,custo:1.20,fornecedor:'Casa do Artesão',ultimaCompra:'2026-04-05',obs:'categoria custom'},
+  // custo zero (edge p/ valor de estoque)
+  {nome:'Sobra de fio variado',categoria:'Outros',und:'g',qty:850,qtyMin:0,custo:0,fornecedor:'',ultimaCompra:'',obs:'retalhos · custo 0'},
+];
+const PRODUTOS=[
+  {nome:'Bolsa Flora',colecao:'Verão',status:'disponivel',custo:85,preco:320,qty:2,plataforma:'Elo7',naLoja:true,obs:'pronta entrega'},
+  {nome:'Bolsa Jolie',colecao:'Clássica',status:'reservado',custo:70,preco:280,qty:1,plataforma:'Instagram',naLoja:false,obs:'reservada cliente'},
+  {nome:'Mini Bag Lis',colecao:'Mini',status:'vendido',custo:45,preco:180,qty:0,plataforma:'WhatsApp / Direto',naLoja:false,obs:'já vendida'},
+  {nome:'Bolsa Duquesa',colecao:'Luxo',status:'disponivel',custo:120,preco:480,qty:1,plataforma:'WhatsApp / Direto',naLoja:true,obs:'peça premium'},
+  // preço 0 (edge p/ vitrine e precificação)
+  {nome:'Bolsa Bali',colecao:'Praia',status:'disponivel',custo:60,preco:0,qty:3,plataforma:'Feira',naLoja:false,obs:'preço a definir'},
+];
+
+function estCol(uid){return db.collection('users').doc(uid).collection('estoque');}
+
+async function semear(){
+  const u=auth.currentUser; if(!u){alert('Faça login primeiro.');return;}
+  if(!confirm(`Popular o cadastro de ${u.email} com ${MATERIAIS.length} materiais + ${PRODUTOS.length} produtos de teste?`))return;
+  $('btn-seed').disabled=true;
+  try{
+    const col=estCol(u.uid);
+    for(const m of MATERIAIS){
+      await col.add({tipo:'material',nome:m.nome,categoria:m.categoria,und:m.und,qty:m.qty,qtyMin:m.qtyMin,custo:m.custo,fornecedor:m.fornecedor||'',ultimaCompra:m.ultimaCompra||'',linkCompra:'',obs:'[seed] '+(m.obs||''),_seed:true,created_at:TS()});
+      log('+ material  '+m.nome+'  ('+m.qty+' '+m.und+')','#7fd6a0');
+    }
+    for(const p of PRODUTOS){
+      await col.add({tipo:'produto',nome:p.nome,colecao:p.colecao,status:p.status,custo:p.custo,preco:p.preco,qty:p.qty,plataforma:p.plataforma,projetoId:null,projetoNome:null,foto:'',naLoja:p.naLoja,obs:'[seed] '+(p.obs||''),_seed:true,created_at:TS()});
+      log('+ produto   '+p.nome+'  ('+p.status+', '+p.qty+'un)','#7fd6a0');
+    }
+    log('✓ Seed concluído. Abra o app logado nessa conta pra testar o estoque.','#7fd6a0');
+  }catch(e){log('❌ '+e.message,'#ff9a8a');}
+  await atualizarContagem();
+  $('btn-seed').disabled=false;
+}
+
+async function limpar(){
+  const u=auth.currentUser; if(!u){alert('Faça login primeiro.');return;}
+  if(!confirm('Remover TODOS os itens marcados com _seed:true do cadastro de '+u.email+'?'))return;
+  $('btn-clean').disabled=true;
+  try{
+    const snap=await estCol(u.uid).where('_seed','==',true).get();
+    log('Encontrados '+snap.size+' itens de seed para remover…','#f0c674');
+    let n=0;
+    for(const d of snap.docs){await d.ref.delete();n++;log('- removido '+(d.data().nome||d.id),'#f0a0a0');}
+    log('✓ '+n+' itens de seed removidos.','#7fd6a0');
+  }catch(e){log('❌ '+e.message,'#ff9a8a');}
+  await atualizarContagem();
+  $('btn-clean').disabled=false;
+}
+
+async function atualizarContagem(){
+  const u=auth.currentUser; if(!u){$('count').textContent='';return;}
+  try{const s=await estCol(u.uid).where('_seed','==',true).get();$('count').textContent=s.size?(s.size+' itens de seed no cadastro'):'sem itens de seed';}
+  catch(e){$('count').textContent='';}
+}
+
+auth.onAuthStateChanged(async u=>{
+  const logged=!!u;
+  $('btn-seed').disabled=!logged; $('btn-clean').disabled=!logged; $('btn-out').disabled=!logged;
+  if(logged){
+    $('who').innerHTML=`Logado: <b>${u.email||u.uid}</b> · uid <code>${u.uid}</code>`;
+    log('Login OK como '+(u.email||u.uid)+' · uid '+u.uid,'#7fd6a0');
+    await atualizarContagem();
+  }else{
+    $('who').textContent='Não logado.';
+  }
+});
+
+$('btn-google').onclick=()=>auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(e=>log('❌ login Google: '+e.message+(String(e.code||'').includes('unauthorized-domain')?' (domínio não autorizado — use localhost ou o domínio Vercel)':''),'#ff9a8a'));
+$('btn-mail').onclick=()=>auth.signInWithEmailAndPassword($('em').value.trim(),$('pw').value).catch(e=>log('❌ login e-mail: '+e.message,'#ff9a8a'));
+$('btn-out').onclick=()=>auth.signOut();
+$('btn-seed').onclick=semear;
+$('btn-clean').onclick=limpar;
+</script>
+</body>
+</html>
