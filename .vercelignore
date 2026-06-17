@@ -1,0 +1,11 @@
+# Só o APP vai pro ar (index.html + loja.html). Todo o resto fica FORA do deploy
+# público — senão o Vercel serve a raiz inteira e expõe docs/ferramentas/regras.
+_Negocio/
+.claude/
+*.md
+*.py
+*.pdf
+*.xlsx
+*.json
+firestore.rules
+seed.html
