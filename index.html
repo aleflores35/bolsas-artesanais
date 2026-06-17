@@ -470,9 +470,13 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
 <div id="view-caderno" class="view">
   <div id="cv-lista" class="view active">
     <div class="ctr">
+      <div style="display:flex;gap:8px;margin-bottom:.75rem">
+        <button class="fb active" id="seg-pecas" onclick="setProjFiltro('pecas')">👜 Peças</button>
+        <button class="fb" id="seg-amostras" onclick="setProjFiltro('amostras')">🧪 Amostras</button>
+      </div>
       <div style="display:flex;gap:8px;margin-bottom:1rem">
         <div class="sb" style="flex:1;margin:0"><span>🔍</span><input type="text" id="busca" placeholder="Buscar…" oninput="renderLista()"></div>
-        <button class="bg" onclick="mostrarForm(null)">+ Novo</button>
+        <button class="bg" id="btn-novo" onclick="mostrarForm(null)">+ Novo</button>
       </div>
       <div id="lista-proj"></div>
     </div>
@@ -1486,6 +1490,7 @@ async function limparHist(){if(!confirm('Limpar histórico?'))return;const b=db.
 
 // ══ CADERNO ══
 let _eid=null,_mf=[],_sf=[],_ff=[],_lf=[];
+let _projFiltro='pecas',_formAmostra=false;
 function renderLF(){
   const el=document.getElementById('links-f');if(!el)return;
   el.innerHTML=_lf.map((l,i)=>`<div style="display:grid;grid-template-columns:1fr 1.4fr 30px;gap:8px;margin-bottom:8px;align-items:center">
@@ -1497,21 +1502,36 @@ function renderLF(){
 function addLink(){_lf.push({nome:'',url:''});renderLF();}
 function sv(v){['lista','form','det'].forEach(x=>{const el=document.getElementById('cv-'+(x==='det'?'det':x));if(!el)return;el.classList.toggle('active',x===v);el.classList.toggle('view',true);});window.scrollTo(0,0);}
 function voltarLista(){sv('lista');}
+function setProjFiltro(f){_projFiltro=f;
+  const sp=document.getElementById('seg-pecas'),sa=document.getElementById('seg-amostras'),b=document.getElementById('btn-novo');
+  if(sp)sp.classList.toggle('active',f==='pecas');
+  if(sa)sa.classList.toggle('active',f==='amostras');
+  if(b)b.textContent=f==='amostras'?'+ Amostra':'+ Novo';
+  renderLista();
+}
+function decisaoSelo(d){
+  if(d==='aprovado')return '<span class="tag" style="background:var(--green-l);color:var(--green)">👍 Aprovado</span>';
+  if(d==='descartado')return '<span class="tag" style="background:#f0f0f0;color:#888">👎 Descartado</span>';
+  return '<span class="tag" style="background:#fff3cd;color:#856404">🧪 Testando</span>';
+}
 function renderLista(){
   const busca=(document.getElementById('busca')?.value||'').toLowerCase();
-  const pl=_P.filter(p=>!busca||[p.nome,p.tipo,p.tecnica,p.colecao].some(x=>(x||'').toLowerCase().includes(busca)));
+  const amo=_projFiltro==='amostras';
+  const pl=_P.filter(p=>(!!p.amostra===amo)&&(!busca||[p.nome,p.tipo,p.tecnica,p.colecao].some(x=>(x||'').toLowerCase().includes(busca))));
   const el=document.getElementById('lista-proj');if(!el)return;
-  if(!pl.length){el.innerHTML=`<div class="es"><div class="ic">📓</div><p>Nenhum projeto ainda.</p></div>`;return;}
+  if(!pl.length){el.innerHTML=`<div class="es"><div class="ic">${amo?'🧪':'📓'}</div><p>${amo?'Nenhuma amostra de ponto ainda. Registre um ponto novo que você testou.':'Nenhum projeto ainda.'}</p></div>`;return;}
   el.innerHTML=pl.map(p=>{
-    const pv=_H.filter(h=>h.projetoId===(p.id||p._id));const up=pv[0];
-    return `<div class="pc" onclick="verProj('${p.id||p._id}')">
+    const pid=p.id||p._id;
+    const selo=p.amostra?decisaoSelo(p.decisao):`<span class="tag ts-${p.status||'rascunho'}">${sLabel(p.status)}</span>`;
+    const pv=_H.filter(h=>h.projetoId===pid);const up=pv[0];
+    return `<div class="pc" onclick="verProj('${pid}')">
       <div class="pci">
-        <div class="pi"><h3>${p.nome}</h3><div class="meta">${p.data||''} ${p.tecnica?'· '+p.tecnica:''} ${p.colecao?'· 🎨 '+p.colecao:''}</div>
-          <div class="tags">${p.tipo?`<span class="tag tt1">${p.tipo}</span>`:''}<span class="tag ts-${p.status||'rascunho'}">${sLabel(p.status)}</span>${up?`<span class="tag tg">💰 ${up.preco}</span>`:''}</div>
+        <div class="pi"><h3>${esc(p.nome)}</h3><div class="meta">${p.data||''} ${p.tecnica?'· '+esc(p.tecnica):''} ${p.colecao?'· 🎨 '+esc(p.colecao):''}</div>
+          <div class="tags">${p.tipo?`<span class="tag tt1">${esc(p.tipo)}</span>`:''}${selo}${(!p.amostra&&up)?`<span class="tag tg">💰 ${esc(up.preco)}</span>`:''}</div>
         </div>
         <div class="pca" onclick="event.stopPropagation()">
-          <button class="bi" onclick="mostrarForm('${p.id||p._id}')">✏️</button>
-          <button class="bi" onclick="delProj('${p.id||p._id}')">🗑️</button>
+          <button class="bi" onclick="mostrarForm('${pid}')">✏️</button>
+          <button class="bi" onclick="delProj('${pid}')">🗑️</button>
         </div>
       </div>
     </div>`;
