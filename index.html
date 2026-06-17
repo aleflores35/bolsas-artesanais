@@ -278,7 +278,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
   </div>
 </div>
 <header>
-  <div class="ht"><div style="display:flex;align-items:baseline;gap:8px"><h1>👜 Studio Bolsas</h1><span style="font-size:10px;font-weight:600;background:rgba(168,132,60,.35);color:#f5e6c8;border-radius:10px;padding:2px 7px;letter-spacing:.04em">v2.13</span><span id="adm-view" style="display:none;font-size:10px;font-weight:600;background:var(--gold);color:white;border-radius:10px;padding:2px 7px"></span></div><div class="sync"><div class="sd" id="sd"></div><span id="sl">…</span></div></div>
+  <div class="ht"><div style="display:flex;align-items:baseline;gap:8px"><h1>👜 Studio Bolsas</h1><span style="font-size:10px;font-weight:600;background:rgba(168,132,60,.35);color:#f5e6c8;border-radius:10px;padding:2px 7px;letter-spacing:.04em">v2.14</span><span id="adm-view" style="display:none;font-size:10px;font-weight:600;background:var(--gold);color:white;border-radius:10px;padding:2px 7px"></span></div><div class="sync"><div class="sd" id="sd"></div><span id="sl">…</span></div></div>
   <div class="tabs">
     <button class="tab active" onclick="aba('dash')"><span class="ti">📊</span><span class="tl"> Painel</span></button>
     <button class="tab" onclick="aba('caderno')"><span class="ti">📓</span><span class="tl"> Projetos</span></button>
@@ -403,8 +403,8 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
     <div class="ch"><h2>⏱ Mão de obra</h2></div>
     <div class="cb">
       <div class="fr">
-        <div class="fg"><label>Horas</label><input type="number" id="horas" value="4" min="0" step="0.5" oninput="calc()"></div>
-        <div class="fg"><label>R$/hora</label><input type="number" id="vh" value="25" min="0" step="1" oninput="calc()"></div>
+        <div class="fg"><label>Horas</label><input type="text" inputmode="decimal" id="horas" value="4" min="0" step="0.5" oninput="calc()"></div>
+        <div class="fg"><label>R$/hora</label><input type="text" inputmode="decimal" id="vh" value="25" min="0" step="1" oninput="calc()"></div>
       </div>
       <div style="font-size:13px;color:#888">Mão de obra: <strong id="mdo">R$ 100,00</strong></div>
     </div>
@@ -413,8 +413,8 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
     <div class="ch"><h2>📦 Custos fixos</h2></div>
     <div class="cb">
       <div class="fr">
-        <div class="fg"><label>Embalagem (R$)</label><input type="number" id="emb" value="8" min="0" step="0.5" oninput="calc()"></div>
-        <div class="fg"><label>Outros</label><input type="number" id="out" value="5" min="0" step="0.5" oninput="calc()"></div>
+        <div class="fg"><label>Embalagem (R$)</label><input type="text" inputmode="decimal" id="emb" value="8" min="0" step="0.5" oninput="calc()"></div>
+        <div class="fg"><label>Outros</label><input type="text" inputmode="decimal" id="out" value="5" min="0" step="0.5" oninput="calc()"></div>
       </div>
     </div>
   </div>
@@ -431,7 +431,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
             <option value="15">Mercado Livre (15%)</option>
             <option value="custom">Personalizado</option>
           </select></div>
-        <div class="fg" id="ctg" style="display:none"><label>Taxa (%)</label><input type="number" id="tc" value="10" min="0" max="50" oninput="calc()"></div>
+        <div class="fg" id="ctg" style="display:none"><label>Taxa (%)</label><input type="text" inputmode="decimal" id="tc" value="10" min="0" max="50" oninput="calc()"></div>
       </div>
       <div class="fg"><label>Margem de lucro</label>
         <div class="rr"><input type="range" id="mg" min="10" max="80" value="40" step="5" oninput="upMg()"><span class="rv" id="mgv">40%</span></div>
@@ -558,7 +558,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
           <button class="tb despesa" id="tb-d" onclick="setTipoCaixa('despesa')">📉 Despesa</button>
         </div>
         <div class="fr">
-          <div class="fg"><label>Valor (R$) *</label><input type="number" id="c-val" placeholder="0,00" min="0" step="0.01"></div>
+          <div class="fg"><label>Valor (R$) *</label><input type="text" inputmode="decimal" id="c-val" placeholder="0,00" min="0" step="0.01"></div>
           <div class="fg"><label>Data *</label><input type="date" id="c-dt"></div>
         </div>
         <div class="fr s"><div class="fg"><label>Descrição</label><input type="text" id="c-desc" placeholder="Ex: Bolsa Flora — cliente Ana"></div></div>
@@ -572,7 +572,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
             <div class="fg"><label>Status</label><select id="c-sta"><option value="pago">Pago ✓</option><option value="pendente">Pendente ⏳</option></select></div>
           </div>
           <div class="fr">
-            <div class="fg"><label>Custo da peça (R$)</label><input type="number" id="c-cst" placeholder="0,00" min="0" step="0.01"></div>
+            <div class="fg"><label>Custo da peça (R$)</label><input type="text" inputmode="decimal" id="c-cst" placeholder="0,00" min="0" step="0.01"></div>
             <div class="fg"><label>Cliente (opcional)</label><input type="text" id="c-cli" placeholder="Ana, @perfil…"></div>
           </div>
         </div>
@@ -643,9 +643,9 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
           <div class="fr s" id="em-cat-novo-wrap" style="display:none"><div class="fg"><label>Qual é a categoria? (fica salva na lista)</label><input type="text" id="em-cat-novo" placeholder="Ex: Botões decorativos"></div></div>
           <button type="button" class="ba" style="margin:0 0 12px;width:100%" onclick="chegadaManual()">🧮 Conta de chegada — comprei por unidade, estoco em grama</button>
           <div class="fr t">
-            <div class="fg"><label id="lbl-em-q">Qtd atual</label><input type="number" id="em-q" placeholder="0" min="0" step="0.1"></div>
-            <div class="fg"><label>Qtd mínima</label><input type="number" id="em-qm" placeholder="0" min="0" step="0.1"></div>
-            <div class="fg"><label id="lbl-em-c">Custo/und (R$)</label><input type="number" id="em-c" placeholder="0,00" min="0" step="0.01"></div>
+            <div class="fg"><label id="lbl-em-q">Qtd atual</label><input type="text" inputmode="decimal" id="em-q" placeholder="0" min="0" step="0.1"></div>
+            <div class="fg"><label>Qtd mínima</label><input type="text" inputmode="decimal" id="em-qm" placeholder="0" min="0" step="0.1"></div>
+            <div class="fg"><label id="lbl-em-c">Custo/und (R$)</label><input type="text" inputmode="decimal" id="em-c" placeholder="0,00" min="0" step="0.01"></div>
           </div>
           <div class="fr">
             <div class="fg"><label>Fornecedor</label><input type="text" id="em-f" placeholder="Tegape, AliExpress…"></div>
@@ -655,8 +655,8 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
           <div class="fr s"><div class="fg"><label>Obs</label><textarea id="em-obs" rows="2" placeholder="Cor, gramatura…"></textarea></div></div>
           <div class="fr s" style="margin-top:6px"><div class="fg"><label style="display:flex;gap:6px;align-items:center;cursor:pointer;font-weight:600;color:var(--rose)"><input type="checkbox" id="em-lancar" onchange="emToggleLancar()"> 💰 Lançar esta compra como despesa no caixa</label></div></div>
           <div class="fr" id="em-lancar-row" style="display:none">
-            <div class="fg"><label>Valor dos produtos (R$)</label><input type="number" id="em-valorpago" min="0" step="0.01" placeholder="pago nos produtos"></div>
-            <div class="fg"><label>Frete (R$)</label><input type="number" id="em-frete" min="0" step="0.01" placeholder="0,00"></div>
+            <div class="fg"><label>Valor dos produtos (R$)</label><input type="text" inputmode="decimal" id="em-valorpago" min="0" step="0.01" placeholder="pago nos produtos"></div>
+            <div class="fg"><label>Frete (R$)</label><input type="text" inputmode="decimal" id="em-frete" min="0" step="0.01" placeholder="0,00"></div>
           </div>
         </div>
       </div>
@@ -669,9 +669,9 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
             <div class="fg"><label>Status</label><select id="ep-s"><option value="em-producao">Em produção</option><option value="disponivel">Disponível ✓</option><option value="reservado">Reservado</option><option value="vendido">Vendido</option></select></div>
           </div>
           <div class="fr t">
-            <div class="fg"><label>Custo prod. (R$)</label><input type="number" id="ep-c" placeholder="0,00" min="0" step="0.01"></div>
-            <div class="fg"><label>Preço venda (R$)</label><input type="number" id="ep-p" placeholder="0,00" min="0" step="0.01"></div>
-            <div class="fg"><label>Qtd</label><input type="number" id="ep-q" placeholder="1" min="1" value="1"></div>
+            <div class="fg"><label>Custo prod. (R$)</label><input type="text" inputmode="decimal" id="ep-c" placeholder="0,00" min="0" step="0.01"></div>
+            <div class="fg"><label>Preço venda (R$)</label><input type="text" inputmode="decimal" id="ep-p" placeholder="0,00" min="0" step="0.01"></div>
+            <div class="fg"><label>Qtd</label><input type="text" inputmode="decimal" id="ep-q" placeholder="1" min="1" value="1"></div>
           </div>
           <div class="fr">
             <div class="fg"><label>Plataforma</label><select id="ep-plat"><option>WhatsApp / Direto</option><option>Elo7</option><option>Shopee</option><option>Instagram</option><option>Mercado Livre</option><option>Feira</option></select></div>
@@ -709,7 +709,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
             <div class="fg"><label>Data da compra</label><input type="date" id="imp-data"></div>
           </div>
           <div class="fr" style="margin-top:8px">
-            <div class="fg"><label>Frete (R$) — opcional</label><input type="number" id="imp-frete" min="0" step="0.01" placeholder="0,00" oninput="impTotal()"></div>
+            <div class="fg"><label>Frete (R$) — opcional</label><input type="text" inputmode="decimal" id="imp-frete" min="0" step="0.01" placeholder="0,00" oninput="impTotal()"></div>
             <div class="fg"><label>Total da compra</label><input type="text" id="imp-tot" readonly style="font-weight:700;color:var(--rose);background:#FBEFE9"></div>
           </div>
           <p style="font-size:11px;color:#999;margin:2px 0 0">O custo por unidade do material usa só o valor dos produtos (sem frete). O caixa recebe produtos + frete.</p>
@@ -742,10 +742,10 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
         <div class="card"><div class="ch"><h2>🛍 Produto pronto</h2></div><div class="cb">
           <div class="fr">
             <div class="fg"><label>Nome do produto</label><input type="text" id="pr-nome"></div>
-            <div class="fg"><label>Preço de venda (R$)</label><input type="number" id="pr-preco" min="0" step="0.01"></div>
+            <div class="fg"><label>Preço de venda (R$)</label><input type="text" inputmode="decimal" id="pr-preco" min="0" step="0.01"></div>
           </div>
           <div class="fr">
-            <div class="fg"><label>Qtd produzida</label><input type="number" id="pr-qtd" value="1" min="1"></div>
+            <div class="fg"><label>Qtd produzida</label><input type="text" inputmode="decimal" id="pr-qtd" value="1" min="1"></div>
             <div class="fg"><label>Plataforma</label><select id="pr-plat" onchange="prodSugestao()"></select></div>
           </div>
           <div class="fg" style="margin-top:4px"><label>Foto da peça pronta</label>
@@ -759,7 +759,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
           <div style="background:var(--gold-l);border:1px solid #e8d08a;border-radius:10px;padding:10px 12px;margin-top:10px">
             <div style="font-size:11px;font-weight:700;color:var(--gold-d);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">💰 Sugestão de preço — custo real + taxa da plataforma</div>
             <div class="fr">
-              <div class="fg"><label>Mão de obra (R$)</label><input type="number" id="pr-mdo" value="0" min="0" step="1" oninput="prodSugestao()"><div id="pr-mdo-hint" style="font-size:10px;color:var(--gold-d);margin-top:2px;display:none"></div></div>
+              <div class="fg"><label>Mão de obra (R$)</label><input type="text" inputmode="decimal" id="pr-mdo" value="0" min="0" step="1" oninput="prodSugestao()"><div id="pr-mdo-hint" style="font-size:10px;color:var(--gold-d);margin-top:2px;display:none"></div></div>
               <div class="fg"><label>Margem de lucro</label><div class="rr"><input type="range" id="pr-mg" min="10" max="80" value="40" step="5" oninput="prodSugestao()"><span class="rv" id="pr-mgv">40%</span></div></div>
             </div>
             <div id="pr-sug" style="display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;margin-top:4px;flex-wrap:wrap"></div>
@@ -1037,6 +1037,8 @@ async function sair(){if(confirm('Sair da conta?'))await auth.signOut();}
 const MN=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 const MNA=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 function fmt(v){return 'R$ '+(v||0).toFixed(2).replace('.',',').replace(/\B(?=(\d{3})+(?!\d))/g,'.');}
+// Lê valor de CAMPO aceitando vírgula (pt-BR) ou ponto: "89,90"->89.9 · "1.234,56"->1234.56 · "89.90"->89.9
+function numIn(v){var s=String(v==null?'':v).trim();if(s.indexOf(',')>-1)s=s.replace(/\./g,'').replace(',','.');return parseFloat(s)||0;}
 function fmtK(v){return Math.abs(v)>=1000?'R$'+(v/1000).toFixed(1).replace('.',',')+'k':fmt(v);}
 // Taxa por plataforma — lê a tabela configurável (Ajustes). Aceita nomes parciais (ex.: "Instagram Shop").
 function taxaPlat(plat){
@@ -1386,9 +1388,9 @@ let matC=[{nome:'Fio de malha',q:200,u:'g',p:0.08},{nome:'Aviamentos (alça, fec
 function renderMatC(){
   document.getElementById('mat-body').innerHTML=matC.map((m,i)=>`<tr>
     <td class="tn"><input type="text" value="${m.nome}" oninput="matC[${i}].nome=this.value"></td>
-    <td class="tq"><input type="number" value="${m.q}" min="0" step="0.1" oninput="matC[${i}].q=this.value;calc()"></td>
+    <td class="tq"><input type="text" inputmode="decimal" value="${m.q}" min="0" step="0.1" oninput="matC[${i}].q=numIn(this.value);calc()"></td>
     <td class="tu"><select onchange="matC[${i}].u=this.value">${['g','m','un','kit','pç'].map(u=>`<option ${m.u===u?'selected':''}>${u}</option>`).join('')}</select></td>
-    <td class="tp"><input type="number" value="${m.p}" min="0" step="0.01" oninput="matC[${i}].p=this.value;calc()"></td>
+    <td class="tp"><input type="text" inputmode="decimal" value="${m.p}" min="0" step="0.01" oninput="matC[${i}].p=numIn(this.value);calc()"></td>
     <td class="tt" id="mt${i}">${fmt((parseFloat(m.q)||0)*(parseFloat(m.p)||0))}</td>
     <td class="td"><button class="bd" onclick="delMat(${i})">✕</button></td>
   </tr>`).join('');
@@ -1435,18 +1437,18 @@ function importarEstoque(){
   matC.push({nome:m.nome,q:1,u:m.und||'un',p:m.custo||0});renderMatC();
 }
 function upMg(){document.getElementById('mgv').textContent=document.getElementById('mg').value+'%';calc();}
-function getTaxa(){const s=document.getElementById('plat');if(s.value==='custom'){document.getElementById('ctg').style.display='block';return(parseFloat(document.getElementById('tc').value)||0)/100;}document.getElementById('ctg').style.display='none';return parseFloat(s.value)/100||0;}
+function getTaxa(){const s=document.getElementById('plat');if(s.value==='custom'){document.getElementById('ctg').style.display='block';return(numIn(document.getElementById('tc').value)||0)/100;}document.getElementById('ctg').style.display='none';return parseFloat(s.value)/100||0;}
 function calc(){
   let cm=matC.reduce((s,m)=>s+(parseFloat(m.q)||0)*(parseFloat(m.p)||0),0);
   document.getElementById('total-mat').textContent=fmt(cm);
   matC.forEach((_,i)=>{const el=document.getElementById('mt'+i);if(el)el.textContent=fmt((parseFloat(matC[i].q)||0)*(parseFloat(matC[i].p)||0));});
-  const h=parseFloat(document.getElementById('horas').value)||0;
-  const vh2=parseFloat(document.getElementById('vh').value)||0;
+  const h=numIn(document.getElementById('horas').value)||0;
+  const vh2=numIn(document.getElementById('vh').value)||0;
   const mdo2=h*vh2;document.getElementById('mdo').textContent=fmt(mdo2);
-  const emb=parseFloat(document.getElementById('emb').value)||0;
-  const out2=parseFloat(document.getElementById('out').value)||0;
+  const emb=numIn(document.getElementById('emb').value)||0;
+  const out2=numIn(document.getElementById('out').value)||0;
   const ct=cm+mdo2+emb+out2;
-  const taxa=getTaxa();const mg2=parseFloat(document.getElementById('mg').value)/100;
+  const taxa=getTaxa();const mg2=numIn(document.getElementById('mg').value)/100;
   const pMin=taxa<1?ct/(1-taxa):NaN;
   const div=1-taxa-mg2;const pSug=div>0?ct/div:NaN;                 // taxa+margem ≥ 100% → preço impossível (não usa fallback silencioso)
   const luc=isNaN(pSug)?NaN:pSug-pSug*taxa-ct;const mr=pSug>0?luc/pSug*100:0;
@@ -1464,8 +1466,8 @@ async function salvarCalc(){
   const pNome=pId?(selP.options[selP.selectedIndex]?.text||''):null;
   const r=window._calcRes||{};
   if(r.pSug===undefined||isNaN(r.pSug)){toast('Ajuste taxa/margem — o preço ficou inválido (taxa+margem ≥ 100%).');return;}
-  const hN=parseFloat(document.getElementById('horas').value)||0;
-  const vhN=parseFloat(document.getElementById('vh').value)||0;
+  const hN=numIn(document.getElementById('horas').value)||0;
+  const vhN=numIn(document.getElementById('vh').value)||0;
   try{
     await COL.hist.add({nome,projetoId:pId,projetoNome:pNome,preco:fmt(r.pSug),custo:fmt(r.ct),lucro:fmt(r.luc),precoNum:Math.round(r.pSug*100)/100,custoNum:Math.round((r.ct||0)*100)/100,lucroNum:Math.round((r.luc||0)*100)/100,horasNum:hN,vhNum:vhN,mdoNum:Math.round(hN*vhN*100)/100,data:new Date().toLocaleDateString('pt-BR'),created_at:firebase.firestore.FieldValue.serverTimestamp()});
     document.getElementById('nm-pc').value='';document.getElementById('vp').value='';toast('✓ Cálculo salvo!');
@@ -1527,9 +1529,9 @@ function mostrarForm(id){
 function renderMF(){
   const rows=_mf.map((m,i)=>`<div class="mr">
     <input type="text" value="${m.nome||''}" placeholder="Material" oninput="_mf[${i}].nome=this.value">
-    <input type="number" value="${m.qtd||''}" placeholder="0" min="0" step="0.1" oninput="_mf[${i}].qtd=parseFloat(this.value)||0;calcTotalMF()">
+    <input type="text" inputmode="decimal" value="${m.qtd||''}" placeholder="0" min="0" step="0.1" oninput="_mf[${i}].qtd=numIn(this.value);calcTotalMF()">
     <select onchange="_mf[${i}].und=this.value">${['un','g','m','kit','pç','rolo'].map(u=>`<option ${(m.und||'un')===u?'selected':''}>${u}</option>`).join('')}</select>
-    <input type="number" value="${m.custoUnit||0}" placeholder="0,00" min="0" step="0.01" oninput="_mf[${i}].custoUnit=parseFloat(this.value)||0;calcTotalMF()">
+    <input type="text" inputmode="decimal" value="${m.custoUnit||0}" placeholder="0,00" min="0" step="0.01" oninput="_mf[${i}].custoUnit=numIn(this.value);calcTotalMF()">
     <span class="mc" id="mft${i}">${fmt((m.qtd||0)*(m.custoUnit||0))}</span>
     <button class="bds" onclick="delMatF(${i})">✕</button>
   </div>`).join('');
@@ -1668,13 +1670,13 @@ function autoFillCusto(projId){
   if(p.nome&&!descEl.value)descEl.value=p.nome;
 }
 async function salvarTrans(){
-  const val=parseFloat(document.getElementById('c-val').value)||0;
+  const val=numIn(document.getElementById('c-val').value)||0;
   if(!val){alert('Informe o valor.');return;}
   const dIso=document.getElementById('c-dt').value;
   const selP=document.getElementById('c-proj');
   const pId=_tipoCx==='venda'?(selP.value||null):null;
   const pNome=pId?(selP.options[selP.selectedIndex]?.text||null):null;
-  const t={tipo:_tipoCx,valor:val,dataIso:dIso,data:dIso?new Date(dIso+'T12:00:00').toLocaleDateString('pt-BR'):'',descricao:document.getElementById('c-desc').value,obs:document.getElementById('c-obs').value,projetoId:pId,projetoNome:pNome,...(_tipoCx==='venda'?{plataforma:document.getElementById('c-plat').value,formaPagamento:document.getElementById('c-pag').value,status:document.getElementById('c-sta').value,custoPeca:parseFloat(document.getElementById('c-cst').value)||0,cliente:document.getElementById('c-cli').value}:{categoria:document.getElementById('c-cat').value,formaPagamento:document.getElementById('c-pagd').value,status:'pago'}),created_at:_editCx?(_T.find(x=>x._id===_editCx)?.created_at||firebase.firestore.FieldValue.serverTimestamp()):firebase.firestore.FieldValue.serverTimestamp()};
+  const t={tipo:_tipoCx,valor:val,dataIso:dIso,data:dIso?new Date(dIso+'T12:00:00').toLocaleDateString('pt-BR'):'',descricao:document.getElementById('c-desc').value,obs:document.getElementById('c-obs').value,projetoId:pId,projetoNome:pNome,...(_tipoCx==='venda'?{plataforma:document.getElementById('c-plat').value,formaPagamento:document.getElementById('c-pag').value,status:document.getElementById('c-sta').value,custoPeca:numIn(document.getElementById('c-cst').value)||0,cliente:document.getElementById('c-cli').value}:{categoria:document.getElementById('c-cat').value,formaPagamento:document.getElementById('c-pagd').value,status:'pago'}),created_at:_editCx?(_T.find(x=>x._id===_editCx)?.created_at||firebase.firestore.FieldValue.serverTimestamp()):firebase.firestore.FieldValue.serverTimestamp()};
   try{
     if(_editCx)await COL.trans.doc(_editCx).set(t);else await COL.trans.add(t);
     // baixa automática do produto pronto vendido
@@ -1730,19 +1732,19 @@ async function salvarEst(){
     let _cat=document.getElementById('em-cat').value;
     const _catNovo=(document.getElementById('em-cat-novo')?.value||'').trim();
     if(_cat==='Outros'&&_catNovo){_cat=_catNovo;if(!Array.isArray(CFG.categorias)||!CFG.categorias.length)CFG.categorias=CFG_PADRAO.categorias.slice();if(!CFG.categorias.some(c=>(c||'').toLowerCase()===_catNovo.toLowerCase())){CFG.categorias.push(_catNovo);_salvarCategorias();}}
-    item={tipo:'material',nome,categoria:_cat,und:document.getElementById('em-u').value,qty:parseFloat(document.getElementById('em-q').value)||0,qtyMin:parseFloat(document.getElementById('em-qm').value)||0,custo:parseFloat(document.getElementById('em-c').value)||0,fornecedor:document.getElementById('em-f').value,ultimaCompra:document.getElementById('em-uc').value,linkCompra:document.getElementById('em-link').value,obs:document.getElementById('em-obs').value,created_at:_editEst?(_E.find(x=>x._id===_editEst)?.created_at||firebase.firestore.FieldValue.serverTimestamp()):firebase.firestore.FieldValue.serverTimestamp()};
+    item={tipo:'material',nome,categoria:_cat,und:document.getElementById('em-u').value,qty:numIn(document.getElementById('em-q').value)||0,qtyMin:numIn(document.getElementById('em-qm').value)||0,custo:numIn(document.getElementById('em-c').value)||0,fornecedor:document.getElementById('em-f').value,ultimaCompra:document.getElementById('em-uc').value,linkCompra:document.getElementById('em-link').value,obs:document.getElementById('em-obs').value,created_at:_editEst?(_E.find(x=>x._id===_editEst)?.created_at||firebase.firestore.FieldValue.serverTimestamp()):firebase.firestore.FieldValue.serverTimestamp()};
   }else{
     const nome=document.getElementById('ep-n').value.trim();if(!nome){alert('Informe o nome.');return;}
     const selP=document.getElementById('ep-proj');
-    item={tipo:'produto',nome,colecao:document.getElementById('ep-col').value,status:document.getElementById('ep-s').value,custo:parseFloat(document.getElementById('ep-c').value)||0,preco:parseFloat(document.getElementById('ep-p').value)||0,qty:parseInt(document.getElementById('ep-q').value)||1,plataforma:document.getElementById('ep-plat').value,projetoId:selP.value||null,projetoNome:selP.value?(selP.options[selP.selectedIndex]?.text||null):null,foto:_fotos.ep||document.getElementById('ep-ft').value,obs:document.getElementById('ep-o').value,naLoja:document.getElementById('ep-loja')?.checked||false,created_at:_editEst?(_E.find(x=>x._id===_editEst)?.created_at||firebase.firestore.FieldValue.serverTimestamp()):firebase.firestore.FieldValue.serverTimestamp()};
+    item={tipo:'produto',nome,colecao:document.getElementById('ep-col').value,status:document.getElementById('ep-s').value,custo:numIn(document.getElementById('ep-c').value)||0,preco:numIn(document.getElementById('ep-p').value)||0,qty:parseInt(document.getElementById('ep-q').value)||1,plataforma:document.getElementById('ep-plat').value,projetoId:selP.value||null,projetoNome:selP.value?(selP.options[selP.selectedIndex]?.text||null):null,foto:_fotos.ep||document.getElementById('ep-ft').value,obs:document.getElementById('ep-o').value,naLoja:document.getElementById('ep-loja')?.checked||false,created_at:_editEst?(_E.find(x=>x._id===_editEst)?.created_at||firebase.firestore.FieldValue.serverTimestamp()):firebase.firestore.FieldValue.serverTimestamp()};
   }
   try{
     let mid=_editEst;
     if(_editEst)await COL.est.doc(_editEst).update(item);
     else{const ref=await COL.est.add(item);mid=ref.id;}
     if(_etipo==='material'&&!_editEst&&document.getElementById('em-lancar')?.checked){
-      const vp=parseFloat(document.getElementById('em-valorpago').value)||0;
-      const fr=parseFloat(document.getElementById('em-frete').value)||0;
+      const vp=numIn(document.getElementById('em-valorpago').value)||0;
+      const fr=numIn(document.getElementById('em-frete').value)||0;
       const vpR=Math.round(vp*100)/100, frR=Math.round(fr*100)/100;
       const dIso=item.ultimaCompra||new Date().toISOString().slice(0,10);
       const dt=new Date(dIso+'T12:00:00').toLocaleDateString('pt-BR');
@@ -1758,7 +1760,7 @@ async function salvarEst(){
 function emToggleLancar(){
   const lc=document.getElementById('em-lancar');if(!lc)return;
   const row=document.getElementById('em-lancar-row');if(row)row.style.display=lc.checked?'':'none';
-  if(lc.checked){const vp=document.getElementById('em-valorpago');if(vp&&!vp.value){const q=parseFloat(document.getElementById('em-q').value)||0,c=parseFloat(document.getElementById('em-c').value)||0;if(q*c>0)vp.value=Math.round(q*c*100)/100;}}
+  if(lc.checked){const vp=document.getElementById('em-valorpago');if(vp&&!vp.value){const q=numIn(document.getElementById('em-q').value)||0,c=numIn(document.getElementById('em-c').value)||0;if(q*c>0)vp.value=Math.round(q*c*100)/100;}}
 }
 // ══ CATEGORIAS DINÂMICAS (Outros vira item da lista) ══
 function renderCategorias(){
@@ -1789,8 +1791,8 @@ function abrirChegada(opts){
     <div style="font-size:15px;font-weight:700;color:var(--rose);margin-bottom:4px">🧮 Conta de chegada</div>
     <p style="font-size:12px;color:#999;margin-bottom:12px">Comprei por unidade, mas estoco e gasto em grama. Preencha que o app calcula o estoque em gramas e o custo por grama.</p>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-      <div><label style="${CL}">Unidades compradas</label><input type="number" id="ch-un" value="${opts.unidades||1}" min="0" step="1" style="${CI}"></div>
-      <div><label style="${CL}">Gramas por unidade</label><input type="number" id="ch-g" value="${opts.gramas||''}" placeholder="500" min="0" step="1" style="${CI}"></div>
+      <div><label style="${CL}">Unidades compradas</label><input type="text" inputmode="decimal" id="ch-un" value="${opts.unidades||1}" min="0" step="1" style="${CI}"></div>
+      <div><label style="${CL}">Gramas por unidade</label><input type="text" inputmode="decimal" id="ch-g" value="${opts.gramas||''}" placeholder="500" min="0" step="1" style="${CI}"></div>
     </div>
     <div style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0">
       <button type="button" class="bsr" onclick="document.getElementById('ch-g').value=1000;chCalc()">1 kg</button>
@@ -1798,7 +1800,7 @@ function abrirChegada(opts){
       <button type="button" class="bsr" onclick="document.getElementById('ch-g').value=250;chCalc()">250 g</button>
       <button type="button" class="bsr" onclick="document.getElementById('ch-g').value=200;chCalc()">200 g</button>
     </div>
-    <div><label style="${CL}">Valor total pago (R$)</label><input type="number" id="ch-v" value="${opts.valor||''}" placeholder="0,00" min="0" step="0.01" style="${CI}"></div>
+    <div><label style="${CL}">Valor total pago (R$)</label><input type="text" inputmode="decimal" id="ch-v" value="${opts.valor||''}" placeholder="0,00" min="0" step="0.01" style="${CI}"></div>
     <div id="ch-res" style="background:#FBF5E6;border:1px solid #E5D3A8;border-radius:10px;padding:10px;margin:12px 0;font-size:13px;color:#7A5E28"></div>
     <div style="display:flex;gap:8px">
       <button class="bsv" style="margin:0;flex:1" id="ch-ok">✓ Usar este cálculo</button>
@@ -1807,9 +1809,9 @@ function abrirChegada(opts){
   </div>`;
   document.body.appendChild(ov);
   window.chCalc=function(){
-    const un=parseFloat(document.getElementById('ch-un').value)||0;
-    const gr=parseFloat(document.getElementById('ch-g').value)||0;
-    const v=parseFloat(document.getElementById('ch-v').value)||0;
+    const un=numIn(document.getElementById('ch-un').value)||0;
+    const gr=numIn(document.getElementById('ch-g').value)||0;
+    const v=numIn(document.getElementById('ch-v').value)||0;
     const totalG=un*gr,custoG=totalG>0?v/totalG:0;
     window._chRes={totalG,custoG};
     document.getElementById('ch-res').innerHTML=totalG>0?`Estoque: <b>${totalG.toLocaleString('pt-BR')} g</b> &nbsp;·&nbsp; Custo: <b>R$ ${custoG.toFixed(4).replace('.',',')}/g</b>${custoG>0?` &nbsp;<span style="color:#999">(${fmt(custoG*1000)}/kg)</span>`:''}`:'Preencha unidades, gramas e o valor pago.';
@@ -2091,9 +2093,9 @@ function renderImpItens(){
           <option value="novo" ${it.destino==='novo'?'selected':''}>➕ criar novo material</option>${opts}
         </select>
       </div>
-      <input type="number" value="${it.qtd}" min="0" step="0.1" oninput="_impItens[${ix}].qtd=this.value;impTotal()">
+      <input type="text" inputmode="decimal" value="${it.qtd}" min="0" step="0.1" oninput="_impItens[${ix}].qtd=numIn(this.value);impTotal()">
       <input type="text" value="${esc(it.und)}" oninput="_impItens[${ix}].und=this.value">
-      <input type="number" value="${it.custo}" min="0" step="0.01" oninput="_impItens[${ix}].custo=this.value;impTotal()">
+      <input type="text" inputmode="decimal" value="${it.custo}" min="0" step="0.01" oninput="_impItens[${ix}].custo=numIn(this.value);impTotal()">
       <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end"><button class="bds" onclick="_impItens.splice(${ix},1);renderImpItens()">✕</button><button type="button" class="bsr" style="font-size:10px;padding:2px 6px;white-space:nowrap" onclick="chegadaImp(${ix})">🧮 un→g</button></div>
     </div>`;
   }).join('');
@@ -2102,7 +2104,7 @@ function renderImpItens(){
 function impAddLinha(){_impItens.push({sel:true,nome:'',qtd:1,und:'un',custo:0,destino:'novo'});renderImpItens();}
 function impTotal(){
   const prod=(_impItens||[]).filter(i=>i.sel).reduce((s,i)=>s+(parseFloat(i.qtd)||0)*(parseFloat(i.custo)||0),0);
-  const frete=parseFloat(document.getElementById('imp-frete')?.value)||0;
+  const frete=numIn(document.getElementById('imp-frete')?.value)||0;
   const el=document.getElementById('imp-tot');
   if(el)el.value=fmt(prod+frete)+(frete?` (produtos ${fmt(prod)} + frete ${fmt(frete)})`:'');
 }
@@ -2111,7 +2113,7 @@ async function impSalvar(){
   if(!sel.length){toast('Nenhum item selecionado.');return;}
   const dataIso=document.getElementById('imp-data').value||new Date().toISOString().slice(0,10);
   const forn=document.getElementById('imp-forn').value.trim();
-  const frete=parseFloat(document.getElementById('imp-frete').value)||0;
+  const frete=numIn(document.getElementById('imp-frete').value)||0;
   const base=db.collection('users').doc(_uid);
   const batch=db.batch();
   let prod=0;
@@ -2181,7 +2183,7 @@ function prodCarregar(id){
   const mdoEl=document.getElementById('pr-mdo'),hint=document.getElementById('pr-mdo-hint');
   if(mdoEl){
     let mdo=0,fonte='';
-    const vhPad=(h&&h.vhNum)||parseFloat(document.getElementById('vh')?.value)||25;
+    const vhPad=(h&&h.vhNum)||numIn(document.getElementById('vh')?.value)||25;
     if(p.trabalho&&(p.trabalho.segundos||0)>60){
       const hs=Math.round((p.trabalho.segundos/3600)*10)/10;
       mdo=hs*vhPad;
@@ -2193,7 +2195,7 @@ function prodCarregar(id){
       const tm=(p.tempo||'').match(/(\d+(?:[.,]\d+)?)\s*h/i);
       if(tm){
         const hs=parseFloat(tm[1].replace(',','.'));
-        const vhPad=parseFloat(document.getElementById('vh')?.value)||25;
+        const vhPad=numIn(document.getElementById('vh')?.value)||25;
         mdo=hs*vhPad;
         fonte=`estimado pelo tempo do projeto: ${hs}h × ${fmt(vhPad)}/h`;
       }
@@ -2267,9 +2269,9 @@ function renderProdMats(){
       ${m.estId?`<div style="font-size:10px;margin-top:2px;color:${(m.estQty||0)<(m.real||0)?'var(--red)':'var(--green)'}">📦 em estoque: ${m.estQty} ${esc(m.und)}</div>`:`<div style="font-size:10px;margin-top:2px"><button onclick="prodDoEstoque(${i})" style="background:none;border:none;padding:0;color:var(--rose);font-weight:600;cursor:pointer;font-size:10px;text-decoration:underline">📦 vincular ao estoque</button></div>`}
     </div>
     <span style="font-size:12px;color:#aaa;margin-top:9px">${m.plan||0}</span>
-    <input type="number" value="${m.real}" min="0" step="0.1" oninput="_prodMats[${i}].real=parseFloat(this.value)||0;prodTotais()">
+    <input type="text" inputmode="decimal" value="${m.real}" min="0" step="0.1" oninput="_prodMats[${i}].real=numIn(this.value);prodTotais()">
     <span style="font-size:12px;color:#aaa;margin-top:9px">${esc(m.und)}</span>
-    <input type="number" value="${m.custo}" min="0" step="0.01" oninput="_prodMats[${i}].custo=parseFloat(this.value)||0;prodTotais()">
+    <input type="text" inputmode="decimal" value="${m.custo}" min="0" step="0.01" oninput="_prodMats[${i}].custo=numIn(this.value);prodTotais()">
     <div style="display:flex;flex-direction:column;gap:4px;align-items:center">${m.estId?`<button class="bds" title="Pesar a sobra (calcula o consumo em ${esc(m.und)})" onclick="pesarSobra(${i})">⚖️</button>`:''}<button class="bds" onclick="_prodMats.splice(${i},1);renderProdMats()">✕</button></div>
   </div>`).join('');
   prodTotais();
@@ -2431,7 +2433,7 @@ function conferirMateriais(projId){
 function prodSugestao(){
   const el=document.getElementById('pr-sug');if(!el)return;
   const real=_prodMats.reduce((s,m)=>s+(m.real||0)*(m.custo||0),0);
-  const mdo=parseFloat(document.getElementById('pr-mdo')?.value)||0;
+  const mdo=numIn(document.getElementById('pr-mdo')?.value)||0;
   const mgEl=document.getElementById('pr-mg');if(!mgEl)return;
   const mg=parseFloat(mgEl.value)/100;
   const mgv=document.getElementById('pr-mgv');if(mgv)mgv.textContent=mgEl.value+'%';
@@ -2481,7 +2483,7 @@ async function prodConcluir(){
     const custoMateriais=novosMats.reduce((s,mm)=>s+(parseFloat(mm.qtd)||0)*(parseFloat(mm.custoUnit)||0),0);
     batch.update(base.collection('projetos').doc(_prodProjId),{materiais:novosMats,custoMateriais,updated_at:firebase.firestore.FieldValue.serverTimestamp()});
   }
-  batch.set(base.collection('estoque').doc(),{tipo:'produto',nome,colecao:p?.colecao||'',status:'disponivel',custo:Math.round(custoReal*100)/100,preco:parseFloat(document.getElementById('pr-preco').value)||0,qty:qtdProd,plataforma:document.getElementById('pr-plat').value,projetoId:_prodProjId,projetoNome:p?.nome||null,foto:_fotos.pr||'',naLoja:document.getElementById('pr-loja')?.checked||false,obs:'Produzido em '+new Date().toLocaleDateString('pt-BR')+' · custo real '+fmt(custoReal)+(qtdProd>1?' por unidade':''),created_at:firebase.firestore.FieldValue.serverTimestamp()});
+  batch.set(base.collection('estoque').doc(),{tipo:'produto',nome,colecao:p?.colecao||'',status:'disponivel',custo:Math.round(custoReal*100)/100,preco:numIn(document.getElementById('pr-preco').value)||0,qty:qtdProd,plataforma:document.getElementById('pr-plat').value,projetoId:_prodProjId,projetoNome:p?.nome||null,foto:_fotos.pr||'',naLoja:document.getElementById('pr-loja')?.checked||false,obs:'Produzido em '+new Date().toLocaleDateString('pt-BR')+' · custo real '+fmt(custoReal)+(qtdProd>1?' por unidade':''),created_at:firebase.firestore.FieldValue.serverTimestamp()});
   try{
     await batch.commit();
     toast('✓ Produção concluída!'+(baixas?' Baixa em '+baixas+' materiais.':''));
@@ -2681,7 +2683,7 @@ function renderConfig(){
   const tx=document.getElementById('cfg-taxas');
   if(tx)tx.innerHTML=CFG.taxas.map((t,i)=>`<div style="display:grid;grid-template-columns:1fr 100px 30px;gap:8px;margin-bottom:8px;align-items:center">
     <input type="text" value="${esc(t.nome)}" placeholder="Plataforma" style="${CI}" oninput="CFG.taxas[${i}].nome=this.value">
-    <div style="display:flex;align-items:center;gap:4px"><input type="number" value="${t.pct}" min="0" max="80" step="0.5" style="${CI}" oninput="CFG.taxas[${i}].pct=parseFloat(this.value)||0"><span style="font-size:12px;color:#888">%</span></div>
+    <div style="display:flex;align-items:center;gap:4px"><input type="text" inputmode="decimal" value="${t.pct}" min="0" max="80" step="0.5" style="${CI}" oninput="CFG.taxas[${i}].pct=numIn(this.value)"><span style="font-size:12px;color:#888">%</span></div>
     <button class="bds" onclick="CFG.taxas.splice(${i},1);renderConfig()">✕</button>
   </div>`).join('')||'<p style="font-size:13px;color:#bbb;text-align:center;padding:.5rem">Nenhuma plataforma.</p>';
   const fs=document.getElementById('cfg-fases');
@@ -2693,8 +2695,8 @@ function renderConfig(){
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px">
       <div><label style="${CL}">Início</label><input type="date" value="${f.inicio||''}" style="${CI}" oninput="CFG.fases[${i}].inicio=this.value"></div>
-      <div><label style="${CL}">Meta vendas</label><input type="number" value="${f.meta_v||0}" min="0" style="${CI}" oninput="CFG.fases[${i}].meta_v=parseInt(this.value)||0"></div>
-      <div><label style="${CL}">Meta receita R$</label><input type="number" value="${f.meta_r||0}" min="0" style="${CI}" oninput="CFG.fases[${i}].meta_r=parseFloat(this.value)||0"></div>
+      <div><label style="${CL}">Meta vendas</label><input type="text" inputmode="decimal" value="${f.meta_v||0}" min="0" style="${CI}" oninput="CFG.fases[${i}].meta_v=parseInt(this.value)||0"></div>
+      <div><label style="${CL}">Meta receita R$</label><input type="text" inputmode="decimal" value="${f.meta_r||0}" min="0" style="${CI}" oninput="CFG.fases[${i}].meta_r=numIn(this.value)"></div>
     </div>
     <input type="text" value="${esc(f.desc)}" placeholder="Descrição curta" style="${CI}" oninput="CFG.fases[${i}].desc=this.value">
   </div>`).join('')||'<p style="font-size:13px;color:#bbb;text-align:center;padding:.5rem">Nenhuma fase.</p>';
