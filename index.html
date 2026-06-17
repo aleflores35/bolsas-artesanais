@@ -1041,7 +1041,7 @@ function taxaPlat(plat){
   if(!plat)return 0;
   const p=String(plat).toLowerCase().trim();
   const t=CFG.taxas.find(x=>(x.nome||'').toLowerCase().trim()===p)
-    ||CFG.taxas.find(x=>{const n=(x.nome||'').toLowerCase();return n&&p.includes(n);});
+    ||CFG.taxas.find(x=>{const n=(x.nome||'').toLowerCase().trim();return n.length>=4&&(p.includes(n)||n.includes(p));}); // fallback ambos os sentidos, só p/ nomes >=4 (evita "ML"/"a" casar solto)
   return t?(parseFloat(t.pct)||0)/100:0;
 }
 // Reconstrói os selects de plataforma a partir da tabela de taxas
@@ -1677,14 +1677,15 @@ async function salvarTrans(){
     if(_editCx)await COL.trans.doc(_editCx).set(t);else await COL.trans.add(t);
     // baixa automática do produto pronto vendido
     if(_tipoCx==='venda'&&!_editCx){
-      let prodId=_vendaProdId;
-      if(!prodId&&pId){ // venda lançada direto no caixa: se houver 1 único produto pronto desse projeto, dá baixa nele
+      let prodId=_vendaProdId,autoMatch=false;
+      if(!prodId&&pId){ // venda lançada direto no caixa: se houver 1 único produto pronto desse projeto, OFERECE baixa
         const cands=_E.filter(x=>x.tipo==='produto'&&x.projetoId===pId&&x.status!=='vendido'&&(x.qty||0)>0);
-        if(cands.length===1)prodId=cands[0]._id;
+        if(cands.length===1){prodId=cands[0]._id;autoMatch=true;}
       }
       if(prodId){
         const pr=_E.find(x=>x._id===prodId);
-        if(pr){
+        // auto-match (venda vinculada por projeto) pergunta antes; botão "Registrar venda" do produto baixa direto
+        if(pr&&(!autoMatch||confirm('Dar baixa de 1 unidade de "'+(pr.nome||'produto')+'" no estoque?'))){
           const nq=Math.max(0,(pr.qty||1)-1);
           try{await COL.est.doc(prodId).update(nq>0?{qty:nq}:{qty:0,status:'vendido',naLoja:false});}catch(e2){}
         }
@@ -2434,12 +2435,14 @@ function prodSugestao(){
   const mgv=document.getElementById('pr-mgv');if(mgv)mgv.textContent=mgEl.value+'%';
   const taxa=taxaPlat(document.getElementById('pr-plat')?.value);
   const base=real+mdo;
-  const pMin=taxa<1?base/(1-taxa):base;
+  const pMin=taxa<1?base/(1-taxa):NaN;
   const div=1-taxa-mg;
-  const pSug=div>0?base/div:base*2;
-  const luc=pSug*(1-taxa)-base;
-  window._prSugVal=Math.round(pSug*100)/100;
-  el.innerHTML=`<span>Mínimo: <strong>${fmt(pMin)}</strong> · Lucro: <strong style="color:var(--green)">${fmt(luc)}</strong>${taxa>0?` · taxa ${(taxa*100).toFixed(0)}%`:''}</span>
+  const pSug=div>0?base/div:NaN;                 // taxa+margem ≥ 100% → preço impossível (sem fallback silencioso, igual ao calc)
+  const luc=isNaN(pSug)?NaN:pSug*(1-taxa)-base;
+  window._prSugVal=isNaN(pSug)?0:Math.round(pSug*100)/100;
+  el.innerHTML=isNaN(pSug)
+    ?`<span style="color:var(--red)">⚠️ taxa + margem ≥ 100% — reduza a margem.</span>`
+    :`<span>Mínimo: <strong>${fmt(pMin)}</strong> · Lucro: <strong style="color:var(--green)">${fmt(luc)}</strong>${taxa>0?` · taxa ${(taxa*100).toFixed(0)}%`:''}</span>
     <span style="display:flex;align-items:center;gap:8px"><strong style="font-size:17px;color:var(--gold-d)">${fmt(pSug)}</strong>
     <button class="bsr" onclick="document.getElementById('pr-preco').value=window._prSugVal;toast('✓ Preço aplicado!')">Usar este preço</button></span>`;
 }
@@ -2465,7 +2468,12 @@ async function prodConcluir(){
   // o projeto "aprende" o consumo real medido por peça (só materiais com consumo > 0; não zera o que não foi pesado)
   if(p&&_prodProjId&&Array.isArray(p.materiais)){
     const novosMats=p.materiais.map(pm=>{
-      const usado=_prodMats.find(m=>(m.estId&&pm.estoqueId&&m.estId===pm.estoqueId)||((m.nome||'').toLowerCase().trim()===(pm.nome||'').toLowerCase().trim()));
+      let usado=pm.estoqueId?_prodMats.find(m=>m.estId===pm.estoqueId):null;
+      if(!usado){ // só casa por nome se for INEQUÍVOCO (evita cruzar materiais homônimos)
+        const nome=(pm.nome||'').toLowerCase().trim();
+        const iguais=_prodMats.filter(m=>(m.nome||'').toLowerCase().trim()===nome);
+        if(iguais.length===1)usado=iguais[0];
+      }
       return (usado&&(usado.real||0)>0)?{...pm,qtd:usado.real,und:usado.und,custoUnit:usado.custo}:pm;
     });
     const custoMateriais=novosMats.reduce((s,mm)=>s+(parseFloat(mm.qtd)||0)*(parseFloat(mm.custoUnit)||0),0);
