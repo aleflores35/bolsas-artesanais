@@ -16,14 +16,14 @@
 
 ---
 
-## ⚠️ PENDENTE — só o Alessandro consegue fazer (é no CONSOLE, não no código)
+## ✅ Resolvido 17/06 (parte 2) — regras do Firestore PUBLICADAS
+O `firestore.rules` (com o fix da vitrine) foi **publicado em produção** via Firebase CLI: `firebase deploy --only firestore:rules --project bolsas-lisandra` (config `firebase.json` + `.firebaserc` no repo). loja.html segue 200 (vitrine pública intacta). **Daqui pra frente, mudou regra → `firebase deploy --only firestore:rules`** (CLI já logado nesta máquina).
 
-### 1. Publicar as regras do Firestore (`firestore.rules`)
-- **O quê:** o arquivo `firestore.rules` foi atualizado (fecha a brecha de um usuário logado **sobrescrever a vitrine pública de outro**). Mas as regras do Firebase moram **dentro do console**, não no deploy do Vercel. **Mudar o arquivo no repo NÃO ativa** — tem que colar e publicar.
-- **Quando importa:** risco baixo hoje (app é só você + Lisandra). Importa de verdade **se virar SaaS multi-cliente**.
-- **Como (30s):** console.firebase.google.com → projeto **bolsas-lisandra** → **Firestore Database** → aba **Rules** → apagar o conteúdo → colar o conteúdo do arquivo `firestore.rules` (está no repo) → **Publish**.
+---
 
-### 2. (Opcional — hardening) Restringir a API key + domínios autorizados
+## ⚠️ PENDENTE (opcional — hardening de console, não trava nada)
+
+### 1. (Opcional — hardening) Restringir a API key + domínios autorizados
 - A config Firebase no `index.html` é pública (isso é normal no Firebase web, não é segredo). Mas vale confirmar:
   - **Google Cloud Console** → Credentials → restringir a API key ao domínio de produção (`project-anmtx.vercel.app` / domínio próprio) + `localhost`.
   - **Firebase Auth** → Settings → **Authorized domains** → deixar só os domínios certos.
