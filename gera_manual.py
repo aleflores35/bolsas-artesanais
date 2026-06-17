@@ -10,15 +10,25 @@ from reportlab.lib.enums import TA_CENTER
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
+import os
 G='/usr/share/fonts/truetype/google-fonts/'
 D='/usr/share/fonts/truetype/dejavu/'
-pdfmetrics.registerFont(TTFont('Lora',G+'Lora-Variable.ttf'))
-pdfmetrics.registerFont(TTFont('LoraIt',G+'Lora-Italic-Variable.ttf'))
-pdfmetrics.registerFont(TTFont('Pop',G+'Poppins-Regular.ttf'))
-pdfmetrics.registerFont(TTFont('PopL',G+'Poppins-Light.ttf'))
-pdfmetrics.registerFont(TTFont('PopM',G+'Poppins-Medium.ttf'))
-pdfmetrics.registerFont(TTFont('PopB',G+'Poppins-Bold.ttf'))
-pdfmetrics.registerFont(TTFont('DJV',D+'DejaVuSans.ttf'))
+WIN=os.path.join(os.environ.get('WINDIR','C:\\Windows'),'Fonts')  # fallback Windows
+def _reg(name,cands):
+    # registra a 1a fonte que existir (Linux google-fonts/dejavu OU Windows Fonts); ultimo fallback = Arial
+    paths=[]
+    for c in cands: paths+=[G+c,D+c,os.path.join(WIN,c)]
+    paths.append(os.path.join(WIN,'arial.ttf'))
+    for pth in paths:
+        if os.path.exists(pth):
+            pdfmetrics.registerFont(TTFont(name,pth)); return
+_reg('Lora',['Lora-Variable.ttf','georgia.ttf','times.ttf'])
+_reg('LoraIt',['Lora-Italic-Variable.ttf','georgiai.ttf','timesi.ttf'])
+_reg('Pop',['Poppins-Regular.ttf','segoeui.ttf','arial.ttf'])
+_reg('PopL',['Poppins-Light.ttf','segoeui.ttf','arial.ttf'])
+_reg('PopM',['Poppins-Medium.ttf','seguisb.ttf','arialbd.ttf'])
+_reg('PopB',['Poppins-Bold.ttf','arialbd.ttf'])
+_reg('DJV',['DejaVuSans.ttf','seguisym.ttf','arial.ttf'])
 pdfmetrics.registerFontFamily('Pop',normal='Pop',bold='PopB',italic='PopL',boldItalic='PopM')
 
 ROSE=HexColor('#6B1537'); BLUSH=HexColor('#F8EDF1'); BLUSH_B=HexColor('#E7C9D4')
@@ -51,7 +61,7 @@ def pag_bg(c,doc):
     c.saveState()
     c.setFillColor(IVORY); c.rect(0,0,A4[0],A4[1],fill=1,stroke=0)
     c.setFillColor(GOLD); c.setFont('Lora',10); c.drawString(17*mm,A4[1]-13*mm,'Studio Bolsas')
-    c.setFillColor(MUT); c.setFont('PopL',7.5); c.drawRightString(A4[0]-17*mm,A4[1]-13*mm,'manual de uso · versão 2.2')
+    c.setFillColor(MUT); c.setFont('PopL',7.5); c.drawRightString(A4[0]-17*mm,A4[1]-13*mm,'manual de uso · versão 2.13')
     c.setStrokeColor(GOLD_B); c.setLineWidth(0.6); c.line(17*mm,A4[1]-16*mm,A4[0]-17*mm,A4[1]-16*mm)
     c.setFillColor(MUT); c.setFont('PopL',8); c.drawCentredString(A4[0]/2,9*mm,f'·  {doc.page}  ·')
     c.restoreState()
@@ -72,7 +82,7 @@ def C(t,st=CELL): return Paragraph(t,st)
 S.append(Spacer(1,92*mm))
 p('Studio Bolsas',ParagraphStyle('ct',fontName='Lora',fontSize=34,leading=40,textColor=white,alignment=TA_CENTER,spaceAfter=6))
 p('MANUAL DE USO & TREINAMENTO',ParagraphStyle('cs',fontName='PopM',fontSize=10,textColor=GOLD_B,alignment=TA_CENTER,spaceAfter=2))
-p('versão 2.2',ParagraphStyle('cv',fontName='PopL',fontSize=9,textColor=GOLD_B,alignment=TA_CENTER))
+p('versão 2.13',ParagraphStyle('cv',fontName='PopL',fontSize=9,textColor=GOLD_B,alignment=TA_CENTER))
 S.append(Spacer(1,52*mm))
 p('o seu ateliê, organizado com carinho',ParagraphStyle('ci',fontName='LoraIt',fontSize=12,textColor=GOLD_B,alignment=TA_CENTER,spaceAfter=10))
 p('project-anmtx.vercel.app',ParagraphStyle('cl',fontName='PopM',fontSize=12,textColor=white,alignment=TA_CENTER))
@@ -150,6 +160,10 @@ passo(2,'Confira a leitura — o app separa o <b>Frete</b> e mostra o <b>Total d
 passo(3,'O custo/unidade do material usa <b>só o valor dos produtos</b> (sem frete), para não inflar o preço da bolsa; o <b>caixa</b> recebe produtos + frete.')
 dica('No cadastro do material há o campo <b>Link da última compra</b> — guarde ali onde comprou; ele aparece na lista de compras como referência.')
 alerta('Cadastro manual (+ Material) agora tem a opção <b>"💰 Lançar esta compra como despesa no caixa"</b> (valor dos produtos + frete). Sem marcar, é só acerto de inventário.')
+p('Fios comprados por novelo, gastos em grama — a conta de chegada',H2)
+passo(1,'No cadastro do material, toque em <b>🧮 Conta de chegada</b>.')
+passo(2,'Informe quantos <b>novelos/rolos</b> comprou, quantas <b>gramas</b> cada um tem e o <b>valor total pago</b>. O app calcula o estoque em <b>gramas</b> e o <b>custo por grama</b> sozinho.')
+dica('É isso que faz o custo da peça sair exato: o fio entra em gramas com o custo por grama certo, e na produção você pesa a sobra para saber quanto gastou de verdade.')
 p('Conferir materiais e lista de compras',H2)
 passo(1,'No projeto, toque em <b>Conferir</b>: cada material ganha um selo — <b>✓ tem</b>, <b>⚠ parcial</b> ou <b>✕ falta</b>.')
 passo(2,'Dos que faltam, o app monta a <b>lista de compras</b> com quantidades, custo estimado e o <b>link do fornecedor</b> (um toque e abre a página).')
@@ -161,10 +175,12 @@ passo(2,'Marque os projetos que quer produzir — o app <b>soma os materiais de 
 passo(3,'Sai uma <b>lista única do que falta comprar</b>: cada item mostra "precisa / tem / comprar", o custo estimado e o <b>link de compra</b> (do fornecedor do projeto ou da última compra do material). Marque o que entra no pedido e use <b>Copiar lista</b>.')
 dica('Excluiu um material que foi comprado? O app pergunta se quer <b>excluir também a despesa</b> no caixa, para não ficar lançamento órfão.')
 p('Produzir uma peça',H2)
-passo(1,'<b>Produzir</b> > escolha o projeto. Ajuste as quantidades para o que <b>realmente usou</b>; o app avisa se faltar estoque.')
-passo(2,'Tire a <b>foto da peça pronta</b> (📷) — e, se quiser, toque em <b>✨ Premium (IA)</b>: vira foto de catálogo com fundo neutro e luz de estúdio, sem alterar a peça. Você compara antes/depois e escolhe.')
-passo(3,'No quadro <b>Sugestão de preço</b>, a mão de obra já vem preenchida — do cronômetro do Modo Ateliê (tempo real!) ou do cálculo salvo; ajuste a margem e toque em "Usar este preço".')
-passo(4,'<b>Concluir produção</b>: baixa nos materiais + produto pronto com custo real — e já publicado na loja, se marcado.')
+passo(1,'<b>Produzir</b> > escolha o projeto. Os materiais vêm da receita. Faltou algum? <b>📦 Do estoque</b> escolhe da sua lista (traz a unidade e o custo certos); ou <b>+ material avulso</b> para algo fora do estoque.')
+passo(2,'Para fios em grama, toque em <b>⚖️ Pesar a sobra</b>: informe quanto <b>sobrou</b> e o app calcula quanto você <b>gastou de verdade</b> (divide pelo nº de peças, se for um lote). É esse consumo que vira o <b>custo real</b> da peça.')
+passo(3,'Tire a <b>foto da peça pronta</b> (📷) — e, se quiser, <b>✨ Premium (IA)</b>: vira foto de catálogo com fundo neutro, sem alterar a peça. Compare antes/depois e escolha.')
+passo(4,'No quadro <b>Sugestão de preço</b>, a mão de obra já vem do cronômetro do Modo Ateliê (tempo real!) ou do cálculo salvo; ajuste a margem e toque em "Usar este preço".')
+passo(5,'<b>Concluir produção</b>: baixa nos materiais + produto pronto com custo real. O <b>projeto guarda o consumo que você mediu</b> — da próxima vez o custo já vem certo. Publica na loja, se marcado.')
+dica('Comprou por novelo mas gasta em grama? Cadastre o fio com a <b>conta de chegada</b>, vincule na produção com <b>📦 Do estoque</b> e pese a sobra com <b>⚖️</b> — o custo da peça sai no centavo.')
 p('Vender um produto pronto',H2)
 p('<b>Registrar venda</b>: o caixa abre preenchido. Ao salvar, o app <b>dá baixa automática</b> — zerou, vira "Vendido" e sai da loja.')
 
