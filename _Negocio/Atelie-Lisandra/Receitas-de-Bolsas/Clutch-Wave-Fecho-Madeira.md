@@ -13,12 +13,17 @@
 - **Medidas:** peça aberta 35,15 cm (largura) × 38,5 cm (comprimento principal); altura dobrada ~19 cm.
 
 ## Materiais (links fornecidos pelo autor do padrão)
+
+> ⚠️ **Links e preços levantados em jun/2026 pelo autor do padrão — reconferir antes de comprar.**
+> Os três links de Mercado Livre abaixo passam pelo perfil de recomendações `materiaisbl`, com
+> rastreio de afiliado, e **não caem exatamente no item descrito** (conferido em 03/09/2026):
+
 - **Cordão de poliéster (fio náutico) 2 mm — 250–300 m** (gasta um pouco mais de 200 m; usa mais de 1 novelo de 200 m).
-  - ML: https://mercadolivre.com/sec/251L2yy · Shopee: https://s.shopee.com.br/7zxyiga91f · AliExpress: https://s.click.aliexpress.com/e/_m0Al2ZT
+  - ML: https://mercadolivre.com/sec/251L2yy — ⚠️ _cai na lista de recomendações do perfil, não num produto_ · Shopee: https://s.shopee.com.br/7zxyiga91f · AliExpress: https://s.click.aliexpress.com/e/_m0Al2ZT
   - Sugestões de fio 2 mm: Fischer · São João · Círculo · Amazônia · Euroroma.
-- **Agulha de crochê 2,5 mm** — ML: https://mercadolivre.com/sec/28ip5N7 · Shopee: https://s.shopee.com.br/8pfFwfuSXx · Ali: https://s.click.aliexpress.com/e/_mPucYyl
+- **Agulha de crochê 2,5 mm** — ML: https://mercadolivre.com/sec/28ip5N7 — ⚠️ _resolve para “Kit Agulhas Barbante, 8 unidades”, não a agulha 2,5 mm avulsa_ · Shopee: https://s.shopee.com.br/8pfFwfuSXx · Ali: https://s.click.aliexpress.com/e/_mPucYyl
 - **Fecho de madeira com parafusos** — externo 250×125 mm (esp. 25 mm), interno 200×75 mm — Ali: https://s.click.aliexpress.com/e/_mKQEolx · https://s.click.aliexpress.com/e/_ms0da13
-- **Chave de fenda / sextavada H1.5** — ML: https://mercadolivre.com/sec/1bkCp5F · Shopee: https://s.shopee.com.br/3LKJOzI5rO
+- **Chave de fenda / sextavada H1.5** — ML: https://mercadolivre.com/sec/1bkCp5F — ⚠️ _resolve para “Conjunto de Ferramentas 13 em 1”, não a chave H1.5 avulsa_ · Shopee: https://s.shopee.com.br/3LKJOzI5rO
 - **Agulha de tapeceiro, marcadores de ponto, tesoura, isqueiro** (p/ emendar/derreter as pontas do cordão).
 - **Opcional:** tecido + linhas para o forro; máquina de costura.
 - Lista do autor (Shopee): https://collshp.com/omelhordash0pee
