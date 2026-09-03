@@ -1,3 +1,6 @@
 .vercel
 
 .sync-probe.txt
+
+# site restrito do relatorio (contem senha no middleware.js)
+_site-relatorio/
