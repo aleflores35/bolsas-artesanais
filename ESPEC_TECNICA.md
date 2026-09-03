@@ -20,7 +20,7 @@ O protótipo atual já valida o produto: é um SPA em arquivo HTML único (~1.30
 
 ### 1.2 Não-objetivos (v2.0)
 
-App nativo, marketplace próprio, emissão de NF, integração direta com APIs de Elo7/Shopee/ML (taxas continuam como tabela configurável), múltiplos idiomas.
+App nativo, marketplace próprio, emissão de NF, integração direta com APIs de Shopee/ML (~~Elo7~~ — encerrou em mai/2026) (taxas continuam como tabela configurável), múltiplos idiomas.
 
 ---
 
@@ -61,7 +61,7 @@ Dois tipos de item:
 - **Venda**: valor, data, descrição, projeto vinculado, plataforma, forma de pagamento, status (pago/pendente), custo da peça, cliente.
 - **Despesa**: valor, data, descrição, categoria, forma de pagamento.
 - Extrato com filtro (todos/vendas/despesas) por mês; lucro líquido por venda = `valor − custoPeça − valor·taxaPlataforma`.
-- Tabela de taxas: Elo7 12% · Shopee 16% · Instagram 10% · Mercado Livre 15% · Feira/WhatsApp/Direto 0%. *Requisito novo: tabela editável pelo usuário.*
+- Tabela de taxas: Shopee 16% · Instagram 10% · Mercado Livre 15% · Feira/WhatsApp/Direto 0%. *Requisito novo: tabela editável pelo usuário.*
 
 ### 2.6 Requisitos não funcionais
 
@@ -131,7 +131,7 @@ Migração do modelo atual (coleções raiz globais) para dados **isolados por u
 ```
 users/{uid}
 ├── profile            { nome, ateliê, criadoEm }
-├── settings/config    { taxasPlataforma: {Elo7:0.12,...}, valorHoraPadrao,
+├── settings/config    { taxasPlataforma: {Shopee:0.16,...}, valorHoraPadrao,
 │                        fases: [{nome, inicio, fim, metaVendas, metaReceita}],
 │                        modelos: [{nome, desc}] }
 ├── projetos/{id}      { nome, tipo, status: 'rascunho'|'em-andamento'|'concluido',

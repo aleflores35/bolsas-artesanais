@@ -21,7 +21,7 @@ A porta de entrada é o **ateliê têxtil de luxo** (crochê / macramê / bolsas
 1. **Ficha técnica / receita** — passos ordenados + materiais com custo (o "caderno de projetos" / receita de pontos).
 2. **Precificação com mão de obra** — custo material + horas×valor/hora + custos fixos + **taxa de marketplace por canal** + margem → preço sugerido.
 3. **Estoque de matéria-prima fracionada** — feature-assinatura **"conta de chegada": comprei por unidade, estoco/gasto por grama**; baixa automática na produção; qtd mínima; fornecedor.
-4. **Caixa + DRE por canal** — lucro líquido descontando a taxa de cada plataforma (Elo7, Shopee, Instagram, ML) + vitrine com venda via WhatsApp.
+4. **Caixa + DRE por canal** — lucro líquido descontando a taxa de cada plataforma (Shopee, Instagram, ML) + vitrine com venda via WhatsApp.
 
 ## Quem está DENTRO e quem está FORA
 
@@ -47,7 +47,7 @@ Existem players maduros no nicho de artesanato cobrando R$ 19,90–49,90/mês. *
 
 1. **Ficha técnica / receita de pontos específica** — nenhum concorrente tem receita de produção real (consumo de fio por ponto, cordão por nó). O caderno do Studio Bolsas é único aqui.
 2. **Estoque de matéria-prima fracionada** — ninguém calcula consumo por **peso/metragem real**; a "conta de chegada (unidade→grama)" é diferencial concreto.
-3. **Precificação por canal/marketplace** — ninguém calcula preço de saída por canal com taxa atualizada (Elo7 12%, Shopee, ML…).
+3. **Precificação por canal/marketplace** — ninguém calcula preço de saída por canal com taxa atualizada (Shopee 16%, ML 15%, Instagram 10%…).
 4. **Fila de produção vs. capacidade da semana** — gestão de encomendas é rasa em todos.
 5. **Peças compostas / kits** (bolsa = corpo + alça + forro + fecho) — sem suporte dedicado em lugar nenhum.
 

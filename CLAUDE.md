@@ -1,6 +1,6 @@
 # Studio Bolsas — contexto do projeto
 
-App de gestão para o ateliê de bolsas artesanais da Lisandra. Aplicativo web de página única (single-file HTML/CSS/JS) com backend Firebase. **Versão atual: v2.13.**
+App de gestão para o ateliê de bolsas artesanais da Lisandra. Aplicativo web de página única (single-file HTML/CSS/JS) com backend Firebase. **Versão atual: v2.16.** _(este número segue o badge em `index.html` — ao fazer bump lá, atualize aqui.)_
 
 ## Negócio (duas trilhas)
 Em `_Negocio/` há duas frentes que devem ser mantidas separadas:

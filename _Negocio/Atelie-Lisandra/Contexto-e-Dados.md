@@ -15,16 +15,15 @@ _(Falta: foto, faixa de preço e custo de cada um — preencher.)_
 ## Plano de negócio (fases e metas)
 | Fase | Período | Meta |
 |---|---|---|
-| 1 — Aprendizado | Jun–Ago/2026 | estruturar produção e processo |
-| 2 — Primeiras Vendas | — | 10 vendas / R$ 3.000 |
-| 3 — Crescimento | — | 40 vendas / R$ 15.000 |
+| 1 — Aprendizado | 01/06 – 31/08/2026 | estruturar produção e processo |
+| **2 — Primeiras Vendas** | **a partir de 01/09/2026** | **10 vendas / R$ 3.000** |
+| 3 — Crescimento | a partir de 01/12/2026 | 40 vendas / R$ 15.000 |
 
-_(Estamos na Fase 1. As metas estão configuráveis no app.)_
+_(**Fase atual: 2 — Primeiras Vendas**, iniciada em 01/09/2026. Datas conferidas contra `CFG_PADRAO.fases` no `index.html`; as metas são editáveis no app, então o código é a fonte.)_
 
 ## Canais de venda e taxas
 | Canal | Taxa |
 |---|---|
-| Elo7 | 12% |
 | Shopee | 16% |
 | Instagram | 10% |
 | Mercado Livre | 15% |
