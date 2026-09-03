@@ -8,7 +8,7 @@ Authentication → Sign-in method → habilite:
 - **Google** (informe um e-mail de suporte quando pedir)
 
 ## 2. Autorizar o domínio do site
-Authentication → Settings → **Authorized domains** → adicione o domínio do app no Vercel (ex.: `bolsas-artesanais.vercel.app`). Sem isso o login com Google não abre.
+Authentication → Settings → **Authorized domains** → adicione o domínio do app no Vercel: **`project-anmtx.vercel.app`** — atenção, o **nome do projeto** na Vercel é `bolsas-artesanais`, mas o **domínio** é outro; conferir com `vercel projects ls`. Sem isso o login com Google não abre.
 
 ## 3. Publicar o app e migrar os dados
 1. Faça o deploy (git push → Vercel, como sempre).
