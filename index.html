@@ -278,7 +278,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
   </div>
 </div>
 <header>
-  <div class="ht"><div style="display:flex;align-items:baseline;gap:8px"><h1>👜 Studio Bolsas</h1><span style="font-size:10px;font-weight:600;background:rgba(168,132,60,.35);color:#f5e6c8;border-radius:10px;padding:2px 7px;letter-spacing:.04em">v2.15</span><span id="adm-view" style="display:none;font-size:10px;font-weight:600;background:var(--gold);color:white;border-radius:10px;padding:2px 7px"></span></div><div class="sync"><div class="sd" id="sd"></div><span id="sl">…</span></div></div>
+  <div class="ht"><div style="display:flex;align-items:baseline;gap:8px"><h1>👜 Studio Bolsas</h1><span style="font-size:10px;font-weight:600;background:rgba(168,132,60,.35);color:#f5e6c8;border-radius:10px;padding:2px 7px;letter-spacing:.04em">v2.16</span><span id="adm-view" style="display:none;font-size:10px;font-weight:600;background:var(--gold);color:white;border-radius:10px;padding:2px 7px"></span></div><div class="sync"><div class="sd" id="sd"></div><span id="sl">…</span></div></div>
   <div class="tabs">
     <button class="tab active" onclick="aba('dash')"><span class="ti">📊</span><span class="tl"> Painel</span></button>
     <button class="tab" onclick="aba('caderno')"><span class="ti">📓</span><span class="tl"> Projetos</span></button>
@@ -424,8 +424,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
       <div class="fr" style="margin-bottom:16px">
         <div class="fg"><label>Plataforma</label>
           <select id="plat" onchange="calc()">
-            <option value="0">WhatsApp / Direto (0%)</option>
-            <option value="12" selected>Elo7 (12%)</option>
+            <option value="0" selected>WhatsApp / Direto (0%)</option>
             <option value="16">Shopee (16%)</option>
             <option value="10">Instagram Shop (10%)</option>
             <option value="15">Mercado Livre (15%)</option>
@@ -570,7 +569,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
         <div id="cv">
           <div class="fr">
             <div class="fg"><label>Projeto vinculado</label><select id="c-proj" onchange="autoFillCusto(this.value)"><option value="">— Nenhum —</option></select></div>
-            <div class="fg"><label>Plataforma</label><select id="c-plat"><option>WhatsApp / Direto</option><option>Elo7</option><option>Shopee</option><option>Instagram</option><option>Mercado Livre</option><option>Feira</option><option>Outro</option></select></div>
+            <div class="fg"><label>Plataforma</label><select id="c-plat"><option>WhatsApp / Direto</option><option>Shopee</option><option>Instagram</option><option>Mercado Livre</option><option>Feira</option><option>Outro</option></select></div>
           </div>
           <div class="fr">
             <div class="fg"><label>Pagamento</label><select id="c-pag"><option>Pix</option><option>Dinheiro</option><option>Cartão de crédito</option><option>Cartão de débito</option><option>Transferência</option></select></div>
@@ -679,7 +678,7 @@ table.mt input:focus{outline:none;border-color:var(--gold);background:white}
             <div class="fg"><label>Qtd</label><input type="text" inputmode="decimal" id="ep-q" placeholder="1" min="1" value="1"></div>
           </div>
           <div class="fr">
-            <div class="fg"><label>Plataforma</label><select id="ep-plat"><option>WhatsApp / Direto</option><option>Elo7</option><option>Shopee</option><option>Instagram</option><option>Mercado Livre</option><option>Feira</option></select></div>
+            <div class="fg"><label>Plataforma</label><select id="ep-plat"><option>WhatsApp / Direto</option><option>Shopee</option><option>Instagram</option><option>Mercado Livre</option><option>Feira</option></select></div>
             <div class="fg"><label>Vincular projeto</label><select id="ep-proj"><option value="">— Nenhum —</option></select></div>
           </div>
           <div class="fg" style="margin-bottom:10px"><label>Foto do produto</label>
@@ -847,7 +846,7 @@ setTimeout(()=>{document.getElementById('lov').style.display='none';},8000);
 
 // ── CONFIG DO USUÁRIO (taxas, fases, modelos) ──
 const CFG_PADRAO={
-  taxas:[{nome:'WhatsApp / Direto',pct:0},{nome:'Elo7',pct:12},{nome:'Shopee',pct:16},{nome:'Instagram',pct:10},{nome:'Mercado Livre',pct:15},{nome:'Feira',pct:0}],
+  taxas:[{nome:'WhatsApp / Direto',pct:0},{nome:'Shopee',pct:16},{nome:'Instagram',pct:10},{nome:'Mercado Livre',pct:15},{nome:'Feira',pct:0}],
   fases:[
     {nome:'Aprendizado',emoji:'📚',inicio:'2026-06-01',meta_v:0,meta_r:0,desc:'Técnica, portfólio, fotografia'},
     {nome:'Primeiras Vendas',emoji:'🌱',inicio:'2026-09-01',meta_v:10,meta_r:3000,desc:'Validar, feedback, 10 vendas'},
@@ -1060,7 +1059,7 @@ function renderPlatOptions(){
     const cur=cal.value;
     cal.innerHTML=CFG.taxas.map(t=>`<option value="${t.pct}">${t.nome} (${t.pct}%)</option>`).join('')+'<option value="custom">Personalizado</option>';
     if([...cal.options].some(o=>o.value===cur))cal.value=cur;
-    else{const e7=[...cal.options].find(o=>o.text.startsWith('Elo7'));if(e7)cal.value=e7.value;}
+    else if(cal.options.length)cal.value=cal.options[0].value; // canal sem comissao; antes caia no Elo7 (encerrado em mai/2026)
   }
   ['c-plat','ep-plat'].forEach(id=>{
     const s=document.getElementById(id);if(!s)return;
